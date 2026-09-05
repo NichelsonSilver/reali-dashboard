@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plataforma SIG — Inteligencia territorial para expansión | REALI</title>
+<meta name="description" content="Plataforma de inteligencia geoespacial para expansión comercial en Chile: 5.915 farmacias georreferenciadas, demografía del Censo 2024, NSE, aperturas y cierres, y evaluación de sitios con scoring.">
+<link rel="canonical" href="https://www.realidata.cl/sig">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.realidata.cl/sig">
+<meta property="og:site_name" content="REALI">
+<meta property="og:locale" content="es_CL">
+<meta property="og:title" content="Plataforma SIG — Inteligencia territorial para expansión | REALI">
+<meta property="og:description" content="Mapa competitivo nacional, demografía censal por manzana, NSE y evaluación de sitios con scoring y canibalización. Demo disponible.">
+<meta property="og:image" content="https://www.realidata.cl/web/assets/brand-full.png">
+<link rel="icon" type="image/png" href="/web/assets/logo-mark.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "Plataforma SIG de inteligencia territorial",
+  "provider": { "@id": "https://www.realidata.cl/#org" },
+  "serviceType": "Location intelligence / análisis geoespacial de expansión",
+  "areaServed": "Chile",
+  "description": "Plataforma de inteligencia geoespacial para decisiones de expansión: base nacional de farmacias georreferenciadas con actualización mensual, demografía del Censo 2024, clasificación NSE, registro de aperturas y cierres, y evaluación de sitios candidatos con scoring y análisis de canibalización."
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@100..900&family=JetBrains+Mono:wght@400;500;700&family=Montserrat:wght@100..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/web/reali.css">
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="/">
+      <img src="/web/assets/logo-mark.png" alt="" style="height:24px;width:auto">
+      <img src="/web/assets/wordmark-bone-light.png" alt="REALI">
+    </a>
+    <div class="nav-links" id="nav-links">
+      <a href="/#servicios">Servicios</a>
+      <a href="/sig" class="active">Plataforma SIG</a>
+      <a href="/comparador">Comparador</a>
+      <a href="/#seguridad">Seguridad</a>
+      <a href="/#nosotros">Nosotros</a>
+      <a href="/#contacto">Contacto</a>
+      <a class="solo-movil" href="/dashboard" target="_blank" rel="noopener">Abrir demo →</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn btn-ghost" href="/dashboard" target="_blank" rel="noopener" title="Abrir demo SIG">
+        <i data-lucide="map" style="width:15px;height:15px"></i>
+        Abrir demo
+      </a>
+      <a class="btn btn-primary" href="/#contacto">
+        <i data-lucide="calendar" style="width:15px;height:15px"></i>
+        Agendar diagnóstico
+      </a>
+      <button class="nav-burger" id="nav-burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-links">
+        <i data-lucide="menu" style="width:22px;height:22px"></i>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="page-hero">
+  <div class="hero-glow"></div>
+  <div class="page-hero-inner">
+    <div class="crumb"><a href="/">Inicio</a> <span>/</span> <span>Plataforma SIG</span></div>
+    <h1>Inteligencia territorial para <em>decidir dónde crecer</em></h1>
+    <p class="lead">Cada apertura de local es una apuesta de cientos de millones. Nuestra plataforma SIG la respalda con datos: mercado competitivo georreferenciado, demografía censal al nivel de manzana y un motor de evaluación de sitios que puntúa cada ubicación candidata.</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="/dashboard" target="_blank" rel="noopener">
+        <i data-lucide="map" style="width:15px;height:15px"></i>
+        Abrir demo interactivo
+      </a>
+      <a class="btn btn-ghost" href="#modulos">
+        <i data-lucide="layout-grid" style="width:15px;height:15px"></i>
+        Ver módulos
+      </a>
+    </div>
+    <div class="hero-stats" style="grid-template-columns:repeat(4,1fr);margin-top:48px">
+      <div class="stat-card fade-up">
+        <div class="stat-num">5.915</div>
+        <div class="stat-label">FARMACIAS MAPEADAS</div>
+        <div class="stat-desc">Registro nacional con actualización mensual</div>
+      </div>
+      <div class="stat-card fade-up">
+        <div class="stat-num">&lt;30m</div>
+        <div class="stat-label">PRECISIÓN GPS</div>
+        <div class="stat-desc">Geocodificación verificada punto a punto</div>
+      </div>
+      <div class="stat-card fade-up">
+        <div class="stat-num">2024</div>
+        <div class="stat-label">CENSO INTEGRADO</div>
+        <div class="stat-desc">Demografía y NSE al nivel de manzana censal</div>
+      </div>
+      <div class="stat-card fade-up">
+        <div class="stat-num">0-100</div>
+        <div class="stat-label">SCORE DE SITIO</div>
+        <div class="stat-desc">Demanda, NSE, competencia y canibalización</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MÓDULOS -->
+<section class="section" id="modulos" style="padding-top:64px">
+  <div class="section-inner">
+    <div class="section-eyebrow">Módulos de la plataforma</div>
+    <h2 class="section-title">Todo el territorio<br>en una sola pantalla</h2>
+    <p class="section-lead">Seis módulos integrados sobre la misma base de datos. Diseñados para equipos de expansión y usuarios de negocio: sin SQL, sin configuración técnica.</p>
+    <div class="mod-grid fade-up">
+
+      <div class="mod-card">
+        <div class="mod-icon"><i data-lucide="map" style="width:20px;height:20px"></i></div>
+        <h4>Mapa competitivo</h4>
+        <p>Todas las farmacias del país sobre el mapa, con filtros por cadena, región y comuna, clustering inteligente y ficha de cada local. La foto completa del mercado en segundos.</p>
+      </div>
+
+      <div class="mod-card">
+        <div class="mod-icon"><i data-lucide="activity" style="width:20px;height:20px"></i></div>
+        <h4>Aperturas y cierres</h4>
+        <p>Detección de movimientos del mercado comparando snapshots del registro oficial: qué abrió, qué cerró, dónde y de qué cadena. El pulso de la competencia, mes a mes.</p>
+      </div>
+
+      <div class="mod-card">
+        <div class="mod-icon"><i data-lucide="layout-grid" style="width:20px;height:20px"></i></div>
+        <h4>Análisis por cadena</h4>
+        <p>Participación territorial de cada cadena, densidad por comuna y evolución de la red. Identifica dónde domina cada competidor y dónde hay espacio.</p>
+      </div>
+
+      <div class="mod-card">
+        <div class="mod-icon"><i data-lucide="users" style="width:20px;height:20px"></i></div>
+        <h4>Demografía censal</h4>
+        <p>Capa de población, hogares y nivel socioeconómico (metodología AIM Chile: ABC1 a E) al nivel de manzana censal del Censo 2024, superpuesta al mercado competitivo.</p>
+      </div>
+
+      <div class="mod-card" style="border-color:rgba(245,165,36,0.35);background:linear-gradient(145deg,rgba(245,165,36,0.06),#F4F6FA)">
+        <div class="mod-icon"><i data-lucide="target" style="width:20px;height:20px"></i></div>
+        <h4>Evaluar Sitio</h4>
+        <p>El motor territorial: ingresa una dirección y genera el dosier completo del sitio — competencia por radios, mix NSE, población alcanzada, tiendas análogas, canibalización de red propia (modelo Huff) y score 0-100. Exportable a PDF.</p>
+      </div>
+
+      <div class="mod-card">
+        <div class="mod-icon"><i data-lucide="upload" style="width:20px;height:20px"></i></div>
+        <h4>Tus propios datos</h4>
+        <p>Sube ventas o zonas geográficas propias (Excel, CSV, GeoJSON) y crúzalas con el mercado. Los datos se procesan en tu navegador: nunca salen de tu equipo.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FUENTES DE DATOS -->
+<section class="section process-bg">
+  <div class="section-inner">
+    <div class="section-eyebrow">Fuentes de datos</div>
+    <h2 class="section-title">Datos oficiales, tratados con rigor</h2>
+    <p class="section-lead">La plataforma se alimenta de fuentes públicas oficiales y pipelines propios de recolección, deduplicación y geocodificación.</p>
+    <div class="data-sources fade-up">
+      <div class="data-source">
+        <div class="ds-name">Registro MINSAL</div>
+        <p>Registro nacional de farmacias del Ministerio de Salud, procesado y geocodificado mensualmente.</p>
+      </div>
+      <div class="data-source">
+        <div class="ds-name">Censo 2024 (INE)</div>
+        <p>Población y hogares por manzana censal, agregados a los niveles de análisis de la plataforma.</p>
+      </div>
+      <div class="data-source">
+        <div class="ds-name">NSE — AIM Chile</div>
+        <p>Clasificación socioeconómica ABC1 / C2 / C3 / D / E según la metodología oficial de AIM.</p>
+      </div>
+      <div class="data-source">
+        <div class="ds-name">Scrapers propios</div>
+        <p>Verificación cruzada contra los sitios de cada cadena: sucursales, horarios y cobertura real.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CASOS -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-eyebrow">Qué resuelve</div>
+    <h2 class="section-title">Decisiones que hoy se toman con esta plataforma</h2>
+    <div class="cases-grid fade-up" style="margin-top:48px">
+
+      <div class="case-card">
+        <div>
+          <div class="case-industry">Expansión</div>
+          <h3>¿Dónde abro el próximo local?</h3>
+          <p>Compara ubicaciones candidatas con el mismo estándar: demanda poblacional, nivel socioeconómico del entorno, presión competitiva por radios y canibalización sobre la red propia. El score ordena la cartera de sitios de forma objetiva.</p>
+        </div>
+        <div class="case-metrics">
+          <div class="case-metric"><div class="m-val">0-100</div><div class="m-lbl">Score</div></div>
+          <div class="case-metric"><div class="m-val">PDF</div><div class="m-lbl">Dosier</div></div>
+        </div>
+      </div>
+
+      <div class="case-card">
+        <div>
+          <div class="case-industry">Vigilancia competitiva</div>
+          <h3>¿Qué está haciendo la competencia?</h3>
+          <p>Detecta aperturas y cierres de cada cadena apenas aparecen en el registro oficial. Cruza los movimientos con demografía para entender la estrategia territorial del competidor — y anticiparte.</p>
+        </div>
+        <div class="case-metrics">
+          <div class="case-metric"><div class="m-val">Mensual</div><div class="m-lbl">Actualización</div></div>
+          <div class="case-metric"><div class="m-val">100%</div><div class="m-lbl">Cobertura CL</div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CÓMO SE CONTRATA -->
+<section class="section process-bg">
+  <div class="section-inner">
+    <div class="section-eyebrow">Modalidades</div>
+    <h2 class="section-title">Tres formas de trabajar con nosotros</h2>
+    <div class="mod-grid fade-up">
+      <div class="mod-card">
+        <div class="mod-icon"><i data-lucide="database" style="width:20px;height:20px"></i></div>
+        <h4>Solo los datos</h4>
+        <p>El dataset georreferenciado (farmacias u otro vertical) por compra única o suscripción de actualización mensual. Entrega en Excel, CSV o GeoJSON.</p>
+      </div>
+      <div class="mod-card">
+        <div class="mod-icon"><i data-lucide="monitor" style="width:20px;height:20px"></i></div>
+        <h4>La plataforma completa</h4>
+        <p>La aplicación SIG operando con tus datos y los del mercado, con actualización continua y soporte. Lo que ves en el demo, calibrado a tu operación.</p>
+      </div>
+      <div class="mod-card">
+        <div class="mod-icon"><i data-lucide="file-text" style="width:20px;height:20px"></i></div>
+        <h4>Dosieres por sitio</h4>
+        <p>Evaluación de ubicaciones específicas como servicio: nos envías las direcciones candidatas y entregamos el dosier territorial completo de cada una.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section">
+  <div class="section-inner">
+    <div class="cta-banner fade-up">
+      <div class="glow"></div>
+      <h2>Explora el demo con datos reales</h2>
+      <p>El demo corre sobre el registro nacional de farmacias completo. Entra y evalúa la plataforma sin compromiso — sin registro ni clave.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="/dashboard" target="_blank" rel="noopener">
+          <i data-lucide="map" style="width:15px;height:15px"></i>
+          Abrir demo interactivo
+        </a>
+        <a class="btn btn-ghost" href="https://wa.me/56967871050?text=Hola%2C%20vi%20el%20demo%20SIG%20de%20REALI%20y%20quiero%20conversar" target="_blank" rel="noopener">
+          <i data-lucide="message-circle" style="width:15px;height:15px"></i>
+          Hablar con REALI
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">
+      <img src="/web/assets/wordmark-bone-light.png" alt="REALI">
+    </div>
+    <div style="font-size:13px;color:var(--bone-muted);text-align:center">
+      <span style="font-family:var(--font-mono);font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent)">Inteligencia de decisiones basada en datos</span><br>
+      Santiago, Chile — Infraestructura en Google Cloud Platform
+    </div>
+    <div class="footer-meta">
+      © 2026 REALI SpA<br>
+      contacto@realidata.cl<br>
+      +56 9 6787 1050
+    </div>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="/web/reali.js"></script>
+
+</body>
+</html>

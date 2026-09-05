@@ -1,0 +1,12 @@
+{
+  "cleanUrls": false,
+  "routes": [
+    { "src": "/", "dest": "/web/index.html" },
+    { "src": "/sig/?", "dest": "/web/sig.html" },
+    { "src": "/comparador/?", "dest": "/web/comparador.html" },
+    { "src": "/panel/?", "dest": "/web/panel.html" },
+    { "src": "/comparador-demo/?", "dest": "/comparador-demo/index.html" },
+    { "src": "/dashboard/?", "dest": "/index.html" },
+    { "handle": "filesystem" }
+  ]
+}

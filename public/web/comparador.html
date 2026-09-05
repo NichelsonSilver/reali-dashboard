@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Comparador de Precios — Vigilancia de mercado automatizada | REALI</title>
+<meta name="description" content="Vigilancia de precios multi-competidor con scraping diario y matching de productos por ML. Sabe exactamente dónde estás caro, dónde estás barato y cuándo se mueve el mercado.">
+<link rel="canonical" href="https://www.realidata.cl/comparador">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.realidata.cl/comparador">
+<meta property="og:site_name" content="REALI">
+<meta property="og:locale" content="es_CL">
+<meta property="og:title" content="Comparador de Precios — Vigilancia de mercado automatizada | REALI">
+<meta property="og:description" content="Monitoreo de precios de competidores con scraping diario, matching de SKUs por ML y KPIs de posicionamiento. Demo disponible.">
+<meta property="og:image" content="https://www.realidata.cl/web/assets/brand-full.png">
+<link rel="icon" type="image/png" href="/web/assets/logo-mark.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "Comparador de precios y vigilancia de mercado",
+  "provider": { "@id": "https://www.realidata.cl/#org" },
+  "serviceType": "Monitoreo de precios de competidores",
+  "areaServed": "Chile",
+  "description": "Servicio de vigilancia de precios: scrapers diarios sobre los catálogos de los competidores, emparejamiento de productos equivalentes mediante machine learning y tablero comparativo con KPIs de posicionamiento de precio por categoría."
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@100..900&family=JetBrains+Mono:wght@400;500;700&family=Montserrat:wght@100..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/web/reali.css">
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="/">
+      <img src="/web/assets/logo-mark.png" alt="" style="height:24px;width:auto">
+      <img src="/web/assets/wordmark-bone-light.png" alt="REALI">
+    </a>
+    <div class="nav-links" id="nav-links">
+      <a href="/#servicios">Servicios</a>
+      <a href="/sig">Plataforma SIG</a>
+      <a href="/comparador" class="active">Comparador</a>
+      <a href="/#seguridad">Seguridad</a>
+      <a href="/#nosotros">Nosotros</a>
+      <a href="/#contacto">Contacto</a>
+      <a class="solo-movil" href="/comparador-demo/" target="_blank" rel="noopener">Abrir demo →</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn btn-ghost" href="/comparador-demo/" target="_blank" rel="noopener" title="Abrir demo del comparador">
+        <i data-lucide="scan-search" style="width:15px;height:15px"></i>
+        Abrir demo
+      </a>
+      <a class="btn btn-primary" href="/#contacto">
+        <i data-lucide="calendar" style="width:15px;height:15px"></i>
+        Agendar diagnóstico
+      </a>
+      <button class="nav-burger" id="nav-burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-links">
+        <i data-lucide="menu" style="width:22px;height:22px"></i>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="page-hero">
+  <div class="hero-glow"></div>
+  <div class="page-hero-inner">
+    <div class="crumb"><a href="/">Inicio</a> <span>/</span> <span>Comparador de Precios</span></div>
+    <h1>Sabe dónde estás caro <em>antes que tus clientes</em></h1>
+    <p class="lead">Tus competidores cambian precios todos los días. Revisarlos a mano es imposible; no revisarlos cuesta margen o cuesta ventas. El comparador lo hace por ti: scraping diario, productos equivalentes emparejados por ML y un tablero que muestra tu posición exacta en cada categoría.</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="/comparador-demo/" target="_blank" rel="noopener">
+        <i data-lucide="scan-search" style="width:15px;height:15px"></i>
+        Abrir demo interactivo
+      </a>
+      <a class="btn btn-ghost" href="#como-funciona">
+        <i data-lucide="workflow" style="width:15px;height:15px"></i>
+        Cómo funciona
+      </a>
+    </div>
+    <div class="hero-stats" style="grid-template-columns:repeat(4,1fr);margin-top:48px">
+      <div class="stat-card fade-up">
+        <div class="stat-num">24h</div>
+        <div class="stat-label">CICLO DE ACTUALIZACIÓN</div>
+        <div class="stat-desc">Scraping diario de los catálogos monitoreados</div>
+      </div>
+      <div class="stat-card fade-up">
+        <div class="stat-num">ML</div>
+        <div class="stat-label">MATCHING DE SKUS</div>
+        <div class="stat-desc">Productos equivalentes emparejados automáticamente</div>
+      </div>
+      <div class="stat-card fade-up">
+        <div class="stat-num">N+</div>
+        <div class="stat-label">COMPETIDORES</div>
+        <div class="stat-desc">Tantas cadenas como necesite tu vigilancia</div>
+      </div>
+      <div class="stat-card fade-up">
+        <div class="stat-num">0h</div>
+        <div class="stat-label">TRABAJO MANUAL</div>
+        <div class="stat-desc">El pipeline corre solo, con control de fallas</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CÓMO FUNCIONA -->
+<section class="section process-bg" id="como-funciona">
+  <div class="section-inner">
+    <div class="section-eyebrow">Cómo funciona</div>
+    <h2 class="section-title">Del catálogo del competidor<br>a tu decisión de precio</h2>
+    <div class="process-steps fade-up">
+      <div class="process-step">
+        <div class="step-dot active">01</div>
+        <h4>Recolección diaria</h4>
+        <p>Scrapers especializados visitan los catálogos de cada competidor y capturan precio, stock y descripción de cada producto.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-dot">02</div>
+        <h4>Matching por ML</h4>
+        <p>Un modelo empareja tu SKU con el producto equivalente de cada competidor, aunque los nombres y formatos no coincidan.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-dot">03</div>
+        <h4>Análisis de posición</h4>
+        <p>Para cada producto: ¿estás más caro, alineado o más barato? ¿Cuánto es la brecha y contra quién? ¿Cómo se mueve por categoría?</p>
+      </div>
+      <div class="process-step">
+        <div class="step-dot">04</div>
+        <h4>Tablero y alertas</h4>
+        <p>KPIs de posicionamiento, tabla comparativa filtrable y alertas cuando un competidor mueve precios en productos clave.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUÉ INCLUYE -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-eyebrow">Qué incluye</div>
+    <h2 class="section-title">Un tablero, toda tu posición de precios</h2>
+    <div class="mod-grid fade-up">
+      <div class="mod-card">
+        <div class="mod-icon"><i data-lucide="gauge" style="width:20px;height:20px"></i></div>
+        <h4>KPIs de posicionamiento</h4>
+        <p>De un vistazo: cuántos SKUs estás caro, alineado o barato frente al mercado, y la brecha promedio por categoría.</p>
+      </div>
+      <div class="mod-card">
+        <div class="mod-icon"><i data-lucide="table" style="width:20px;height:20px"></i></div>
+        <h4>Tabla comparativa</h4>
+        <p>Producto por producto, tu precio contra cada competidor, con filtros por categoría y posición de precio. Exportable.</p>
+      </div>
+      <div class="mod-card">
+        <div class="mod-icon"><i data-lucide="bell" style="width:20px;height:20px"></i></div>
+        <h4>Alertas de movimiento</h4>
+        <p>Cuando un competidor cambia el precio de un producto clave, te enteras el mismo día — no cuando cae la venta.</p>
+      </div>
+      <div class="mod-card">
+        <div class="mod-icon"><i data-lucide="history" style="width:20px;height:20px"></i></div>
+        <h4>Histórico de precios</h4>
+        <p>La serie de precios de cada SKU en el tiempo: detecta patrones de descuento, ciclos de promoción y estrategias del competidor.</p>
+      </div>
+      <div class="mod-card">
+        <div class="mod-icon"><i data-lucide="shield-check" style="width:20px;height:20px"></i></div>
+        <h4>Control de calidad</h4>
+        <p>Si el scraping de un día falla, el sistema lo marca y arrastra el último precio conocido — nunca decides sobre datos silenciosamente rotos.</p>
+      </div>
+      <div class="mod-card">
+        <div class="mod-icon"><i data-lucide="puzzle" style="width:20px;height:20px"></i></div>
+        <h4>A tu medida</h4>
+        <p>Competidores, categorías y frecuencia se definen contigo. Entrega en tablero web, Excel automático o API hacia tus sistemas.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section">
+  <div class="section-inner">
+    <div class="cta-banner fade-up">
+      <div class="glow"></div>
+      <h2>Ve el comparador en acción</h2>
+      <p>El demo usa datos de demostración del rubro ferretero. El mismo motor se adapta a tu industria y a tus competidores.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="/comparador-demo/" target="_blank" rel="noopener">
+          <i data-lucide="scan-search" style="width:15px;height:15px"></i>
+          Abrir demo interactivo
+        </a>
+        <a class="btn btn-ghost" href="https://wa.me/56967871050?text=Hola%2C%20me%20interesa%20el%20comparador%20de%20precios%20de%20REALI" target="_blank" rel="noopener">
+          <i data-lucide="message-circle" style="width:15px;height:15px"></i>
+          Cotizar para mi industria
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">
+      <img src="/web/assets/wordmark-bone-light.png" alt="REALI">
+    </div>
+    <div style="font-size:13px;color:var(--bone-muted);text-align:center">
+      <span style="font-family:var(--font-mono);font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent)">Inteligencia de decisiones basada en datos</span><br>
+      Santiago, Chile — Infraestructura en Google Cloud Platform
+    </div>
+    <div class="footer-meta">
+      © 2026 REALI SpA<br>
+      contacto@realidata.cl<br>
+      +56 9 6787 1050
+    </div>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="/web/reali.js"></script>
+
+</body>
+</html>

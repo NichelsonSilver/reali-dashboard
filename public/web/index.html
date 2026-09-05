@@ -1,0 +1,774 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>REALI — Inteligencia de decisiones basada en datos</title>
+<meta name="description" content="Infraestructura de datos a medida para empresas enterprise. Analítica geoespacial, automatización con IA e infraestructura GCP con estándares de seguridad enterprise.">
+<link rel="canonical" href="https://www.realidata.cl/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.realidata.cl/">
+<meta property="og:site_name" content="REALI">
+<meta property="og:locale" content="es_CL">
+<meta property="og:title" content="REALI — Inteligencia de decisiones basada en datos">
+<meta property="og:description" content="Inteligencia de ubicación para farmacias y retail en Chile: datos de mercado georreferenciados, análisis de expansión y automatización con IA sobre infraestructura GCP.">
+<!-- pendiente: generar imagen OG 1200×630; brand-full (1024×1024 cuadrada) funciona pero recorta en LinkedIn -->
+<meta property="og:image" content="https://www.realidata.cl/web/assets/brand-full.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="REALI — Inteligencia de decisiones basada en datos">
+<meta name="twitter:description" content="Inteligencia de ubicación para farmacias y retail en Chile: datos de mercado, análisis de expansión y automatización con IA.">
+<meta name="twitter:image" content="https://www.realidata.cl/web/assets/brand-full.png">
+<link rel="icon" type="image/png" href="/web/assets/logo-mark.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://www.realidata.cl/#org",
+      "name": "REALI SpA",
+      "url": "https://www.realidata.cl/",
+      "logo": "https://www.realidata.cl/web/assets/logo-mark.png",
+      "description": "Firma chilena de inteligencia de ubicación (location intelligence) y de infraestructura de datos para farmacias, retail y banca: datos de mercado georreferenciados, análisis geoespacial de expansión y automatización con IA en Google Cloud Platform.",
+      "email": "contacto@realidata.cl",
+      "telephone": "+56967871050",
+      "address": { "@type": "PostalAddress", "addressLocality": "Santiago", "addressCountry": "CL" },
+      "areaServed": "Chile",
+      "knowsAbout": ["inteligencia de ubicación", "análisis geoespacial", "expansión de farmacias", "datos de mercado", "automatización con IA"]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "¿Qué tipo de empresas trabajan con REALI?", "acceptedAnswer": { "@type": "Answer", "text": "Empresas con operaciones activas que necesitan datos de mercado, análisis de expansión o automatización de procesos de datos. Principalmente retail, farmacias, banca, e-commerce y logística. El alcance lo define el diagnóstico inicial, sin paquetes mínimos obligatorios." } },
+        { "@type": "Question", "name": "¿Cuánto tiempo toma la primera entrega?", "acceptedAnswer": { "@type": "Answer", "text": "Un dataset de inteligencia de mercado puede estar disponible en 1–2 semanas. Un proyecto de infraestructura completa en GCP toma entre 4 y 8 semanas. El diagnóstico inicial es gratuito y define los plazos exactos." } },
+        { "@type": "Question", "name": "¿Los datos que entrego son compartidos con otros clientes?", "acceptedAnswer": { "@type": "Answer", "text": "No. Cada cliente opera en una VPC privada dedicada en GCP, completamente aislada. Los datos del cliente son activos exclusivos que nunca se mezclan ni se reutilizan en otros proyectos." } },
+        { "@type": "Question", "name": "¿Necesito equipo técnico interno para trabajar con REALI?", "acceptedAnswer": { "@type": "Answer", "text": "No es requisito. Los dashboards están diseñados para usuarios de negocio, sin SQL ni configuración técnica. Si hay equipo técnico, se entrega la arquitectura documentada y pipelines auditables; si no, REALI opera la solución." } },
+        { "@type": "Question", "name": "¿Cómo funciona el modelo de precios?", "acceptedAnswer": { "@type": "Answer", "text": "Los datos de mercado tienen precio por dataset o suscripción de actualización mensual; los proyectos de análisis se cotizan por alcance; la infraestructura y automatización operan en retainer mensual. Todo se define en el diagnóstico." } },
+        { "@type": "Question", "name": "¿Qué diferencia a REALI de una consultora de datos genérica?", "acceptedAnswer": { "@type": "Answer", "text": "Conocimiento de industria real: el fundador desarrolló los pipelines de expansión farmacéutica desde dentro de una de las mayores cadenas farmacéuticas del país. Se entiende el problema antes de proponer la solución, sin cobrar horas de aprendizaje del negocio." } },
+        { "@type": "Question", "name": "¿Puedo contratar solo los datos sin la infraestructura?", "acceptedAnswer": { "@type": "Answer", "text": "Sí. Los servicios son modulares: solo el dataset de farmacias, solo el análisis de expansión de una región, o la arquitectura completa con pipelines activos." } },
+        { "@type": "Question", "name": "¿Dónde se almacenan mis datos?", "acceptedAnswer": { "@type": "Answer", "text": "En Google Cloud Platform, en la región que el cliente defina. Por defecto us-central1, con opción southamerica-east1 (São Paulo) para residencia de datos en LATAM. Sin movimiento de datos no autorizado." } }
+      ]
+    }
+  ]
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@100..900&family=JetBrains+Mono:wght@400;500;700&family=Montserrat:wght@100..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/web/reali.css">
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="#inicio">
+      <img src="/web/assets/logo-mark.png" alt="" style="height:24px;width:auto">
+      <img src="/web/assets/wordmark-bone-light.png" alt="REALI">
+    </a>
+    <div class="nav-links" id="nav-links">
+      <a href="#servicios">Servicios</a>
+      <a href="/sig">Plataforma SIG</a>
+      <a href="/comparador">Comparador</a>
+      <a href="#seguridad">Seguridad</a>
+      <a href="#nosotros">Nosotros</a>
+      <a href="#contacto">Contacto</a>
+      <a class="solo-movil" href="/dashboard" target="_blank" rel="noopener">App SIG →</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn btn-ghost" href="/dashboard" target="_blank" rel="noopener" title="Abrir dashboard SIG">
+        <i data-lucide="map" style="width:15px;height:15px"></i>
+        App SIG
+      </a>
+      <a class="btn btn-primary" href="#contacto">
+        <i data-lucide="calendar" style="width:15px;height:15px"></i>
+        Agendar diagnóstico
+      </a>
+      <button class="nav-burger" id="nav-burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-links">
+        <i data-lucide="menu" style="width:22px;height:22px"></i>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="inicio">
+  <div class="hero-glow"></div>
+  <div class="hero-glow-2"></div>
+  <div class="hero-tagline-center">
+    <h1 style="font-family:var(--font-display);font-size:clamp(34px,9vw,72px);line-height:1.05;letter-spacing:-0.02em;margin-bottom:16px;color:#0B1A2E">Inteligencia de <em style="font-style:normal;color:var(--accent-dim)">decisiones</em><br>basada en datos</h1>
+    <p style="font-family:var(--font-heading);font-size:clamp(16px,1.8vw,22px);font-weight:500;color:#6B7280;margin-bottom:32px;line-height:1.4">Datos, automatización e inteligencia artificial a medida para empresas que deciden con precisión</p>
+    <div class="hero-actions" style="justify-content:center">
+      <a class="btn btn-primary" href="#servicios">
+        <i data-lucide="layers" style="width:15px;height:15px"></i>
+        Explorar servicios
+      </a>
+      <a class="btn btn-ghost" href="#productos">
+        <i data-lucide="monitor-play" style="width:15px;height:15px"></i>
+        Productos en operación
+      </a>
+    </div>
+  </div>
+  <div style="width:100%;max-width:1280px;padding:48px 48px 0;margin:0 auto">
+    <p class="hero-sub" style="text-align:center;max-width:680px;margin:0 auto 24px">Desde inteligencia geoespacial y vigilancia de mercado hasta agentes IA, integraciones MCP e ingeniería de datos: construimos la capa de datos que convierte información compleja en ventajas competitivas reales.</p>
+    <div class="hero-stats" style="grid-template-columns:repeat(4,1fr)">
+      <div class="stat-card fade-up">
+        <div class="stat-num">5.915</div>
+        <div class="stat-label">PUNTOS DE DATOS</div>
+        <div class="stat-desc">Farmacias activas en Chile — precisión &lt;30 m</div>
+      </div>
+      <div class="stat-card fade-up">
+        <div class="stat-num">99.9%</div>
+        <div class="stat-label">UPTIME SLA</div>
+        <div class="stat-desc">Infraestructura GCP con redundancia multi-región</div>
+      </div>
+      <div class="stat-card fade-up">
+        <div class="stat-num">12+</div>
+        <div class="stat-label">INDUSTRIAS</div>
+        <div class="stat-desc">Retail, farmacias, banca, supermercados, salud</div>
+      </div>
+      <div class="stat-card fade-up">
+        <div class="stat-num">AES-256</div>
+        <div class="stat-label">CIFRADO</div>
+        <div class="stat-desc">Estándar enterprise en tránsito y en reposo</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICIOS -->
+<section class="section" id="servicios">
+  <div class="section-inner">
+    <div class="section-eyebrow">Líneas de servicio</div>
+    <h2 class="section-title">Soluciones construidas<br>para decisiones de alto impacto</h2>
+    <p class="section-lead">No vendemos dashboards genéricos. Construimos infraestructura de datos a medida, calibrada para las complejidades operativas de cada cliente.</p>
+    <div class="services-grid fade-up">
+
+      <a class="service-card featured" href="/sig">
+        <div class="service-icon"><i data-lucide="map" style="width:20px;height:20px"></i></div>
+        <div class="service-num">01 — INTELIGENCIA GEOESPACIAL</div>
+        <h3>Location intelligence &amp; SIG</h3>
+        <p>Mapas de mercado georreferenciados, scoring de ubicaciones, demografía censal y evaluación de sitios para expansión. Cada apertura respaldada por datos, no por intuición.</p>
+        <span class="service-tag">Plataforma en operación →</span>
+      </a>
+
+      <a class="service-card" href="/comparador">
+        <div class="service-icon"><i data-lucide="scan-search" style="width:20px;height:20px"></i></div>
+        <div class="service-num">02 — VIGILANCIA DE MERCADO</div>
+        <h3>Monitoreo de precios y competencia</h3>
+        <p>Scrapers especializados que siguen precios, aperturas y movimientos de competidores. Comparador multi-cadena con matching de productos por ML y alertas automáticas.</p>
+        <span class="service-tag">Demo disponible →</span>
+      </a>
+
+      <div class="service-card">
+        <div class="service-icon amber"><i data-lucide="workflow" style="width:20px;height:20px"></i></div>
+        <div class="service-num">03 — AUTOMATIZACIÓN DE PROCESOS</div>
+        <h3>Flujos que corren solos</h3>
+        <p>Pipelines automáticos de recolección, limpieza, enriquecimiento y reportería. Procesos que hoy toman horas de trabajo manual quedan corriendo 24/7 sin intervención humana.</p>
+        <span class="service-tag amber">Cero horas manuales</span>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon amber"><i data-lucide="bot" style="width:20px;height:20px"></i></div>
+        <div class="service-num">04 — AGENTES IA &amp; MCP</div>
+        <h3>IA conectada a tus sistemas</h3>
+        <p>Implementación de agentes IA sobre la operación real: conectores MCP hacia ERPs, servicios tributarios, APIs y documentos internos. Copilotos que trabajan con los datos del negocio, con permisos controlados.</p>
+        <span class="service-tag amber">IA Aplicada</span>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon"><i data-lucide="server" style="width:20px;height:20px"></i></div>
+        <div class="service-num">05 — DATA ENGINEERING</div>
+        <h3>Arquitectura de datos cloud-native</h3>
+        <p>Diseño e implementación en GCP: pipelines ETL/ELT, almacenamiento seguro, calidad y gobierno de datos, APIs y dashboards operativos integrados a los sistemas existentes.</p>
+        <span class="service-tag">Infraestructura</span>
+      </div>
+
+      <div class="service-card" style="background:linear-gradient(145deg,rgba(245,165,36,0.05),#F4F6FA);border-color:rgba(245,165,36,0.2)">
+        <div class="service-icon"><i data-lucide="trending-up" style="width:20px;height:20px"></i></div>
+        <div class="service-num">06 — DATA SCIENCE &amp; ML</div>
+        <h3>Modelos predictivos</h3>
+        <p>Forecasting de demanda, clasificación de riesgo y scoring de oportunidades comerciales. Machine learning aplicado a los datos reales del negocio, medido contra resultados.</p>
+        <span class="service-tag">ML Aplicado</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTOS EN OPERACIÓN -->
+<section class="section" id="productos" style="padding-top:0">
+  <div class="section-inner">
+    <div class="section-eyebrow">Productos en operación</div>
+    <h2 class="section-title">Pruébalo antes de contratarlo</h2>
+    <p class="section-lead">No mostramos mockups: estas son las plataformas reales que operan hoy. Explora los demos y evalúa el nivel de la solución con tus propios ojos.</p>
+    <div class="products-grid fade-up">
+
+      <div class="product-card">
+        <div class="product-status"><span class="dot"></span>En operación</div>
+        <h3>Plataforma SIG Farmacéutica</h3>
+        <p>Inteligencia territorial para expansión: 5.915 farmacias georreferenciadas, demografía del Censo 2024 por manzana, NSE, aperturas y cierres, y evaluación de sitios con scoring y análisis de canibalización.</p>
+        <div class="product-feats">
+          <span>Mapa competitivo</span><span>Censo 2024</span><span>NSE</span><span>Scoring de sitios</span><span>Dosier PDF</span>
+        </div>
+        <div class="product-actions">
+          <a class="btn btn-primary" href="/sig">Conocer el servicio</a>
+          <a class="btn btn-ghost" href="/dashboard" target="_blank" rel="noopener">
+            <i data-lucide="external-link" style="width:14px;height:14px"></i>
+            Abrir demo
+          </a>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-status"><span class="dot"></span>En operación</div>
+        <h3>Comparador de Precios</h3>
+        <p>Vigilancia de precios multi-competidor con scraping diario y matching de productos por ML. KPIs de posicionamiento, brechas de precio por categoría y alertas cuando el mercado se mueve.</p>
+        <div class="product-feats">
+          <span>Scraping diario</span><span>Matching ML</span><span>KPIs de precio</span><span>Multi-cadena</span><span>Alertas</span>
+        </div>
+        <div class="product-actions">
+          <a class="btn btn-primary" href="/comparador">Conocer el servicio</a>
+          <a class="btn btn-ghost" href="/comparador-demo/" target="_blank" rel="noopener">
+            <i data-lucide="external-link" style="width:14px;height:14px"></i>
+            Abrir demo
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PROCESO -->
+<section class="section process-bg">
+  <div class="section-inner">
+    <div class="section-eyebrow">Metodología</div>
+    <h2 class="section-title">Cómo trabajamos</h2>
+    <p class="section-lead">Cada proyecto comienza con un diagnóstico real del negocio, no con una propuesta estándar.</p>
+    <div class="process-steps fade-up">
+      <div class="process-step">
+        <div class="step-dot active">01</div>
+        <h4>Diagnóstico</h4>
+        <p>Entendemos el problema de fondo: qué decisiones se traban, qué datos existen y qué falta.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-dot">02</div>
+        <h4>Arquitectura</h4>
+        <p>Diseñamos la infraestructura mínima necesaria para resolver el problema — sin sobreingeniería.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-dot">03</div>
+        <h4>Implementación</h4>
+        <p>Construimos, probamos e integramos en GCP con los estándares de seguridad del cliente.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-dot">04</div>
+        <h4>Operación continua</h4>
+        <p>Entregamos y operamos: pipelines activos, alertas automáticas y soporte de mejora continua.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CASOS DE USO -->
+<section class="section" id="casos">
+  <div class="section-inner">
+    <div class="section-eyebrow">Aplicaciones</div>
+    <h2 class="section-title">Casos de uso reales</h2>
+    <p class="section-lead">Soluciones que resuelven problemas concretos de expansión, operaciones y vigilancia de mercado en industrias de alto movimiento.</p>
+    <div class="cases-grid fade-up">
+
+      <div class="case-card">
+        <div>
+          <div class="case-industry">Farmacias / Salud</div>
+          <h3>Mapa de competencia farmacéutica</h3>
+          <p>Base nacional de 5.915 farmacias georreferenciadas con actualización mensual. Permite identificar zonas de alta densidad competitiva, brechas de cobertura y oportunidades de apertura con datos demográficos integrados.</p>
+        </div>
+        <div class="case-metrics">
+          <div class="case-metric"><div class="m-val">5.9K</div><div class="m-lbl">Registros</div></div>
+          <div class="case-metric"><div class="m-val">&lt;30m</div><div class="m-lbl">Precisión GPS</div></div>
+        </div>
+      </div>
+
+      <div class="case-card">
+        <div>
+          <div class="case-industry">Retail / Expansión</div>
+          <h3>Scoring de nuevas ubicaciones</h3>
+          <p>Modelo que combina datos demográficos del Censo 2024, flujos de movilidad, competencia directa y datos socioeconómicos para puntuar cada manzana como candidata a apertura de local.</p>
+        </div>
+        <div class="case-metrics">
+          <div class="case-metric"><div class="m-val">360°</div><div class="m-lbl">Cobertura</div></div>
+          <div class="case-metric"><div class="m-val">ML</div><div class="m-lbl">Scoring</div></div>
+        </div>
+      </div>
+
+      <div class="case-card">
+        <div>
+          <div class="case-industry">E-commerce / Operaciones</div>
+          <h3>Automatización de reportería comercial</h3>
+          <p>Pipeline automático que extrae datos de ventas, calcula KPIs por SKU, detecta anomalías y genera reportes mensuales sin intervención humana. Integrado con ERP y canales de comunicación del equipo.</p>
+        </div>
+        <div class="case-metrics">
+          <div class="case-metric"><div class="m-val">0h</div><div class="m-lbl">Manual</div></div>
+          <div class="case-metric"><div class="m-val">Auto</div><div class="m-lbl">Reporting</div></div>
+        </div>
+      </div>
+
+      <div class="case-card">
+        <div>
+          <div class="case-industry">Inteligencia de mercado</div>
+          <h3>Vigilancia de precios y aperturas</h3>
+          <p>Scrapers especializados que monitorean aperturas, cierres y cambios de precios en cadenas competidoras en tiempo real. Alertas automáticas cuando el mercado se mueve.</p>
+        </div>
+        <div class="case-metrics">
+          <div class="case-metric"><div class="m-val">24/7</div><div class="m-lbl">Monitoreo</div></div>
+          <div class="case-metric"><div class="m-val">Real-time</div><div class="m-lbl">Alertas</div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SEGURIDAD -->
+<section class="section security-bg" id="seguridad">
+  <div class="section-inner">
+    <div class="security-header fade-up">
+      <div>
+        <div class="gcp-badge">
+          <i data-lucide="cloud" style="width:16px;height:16px;color:var(--accent-deep)"></i>
+          <span>Infraestructura certificada en Google Cloud Platform</span>
+        </div>
+        <div class="section-eyebrow">Seguridad & Privacidad de datos</div>
+        <h2 class="section-title">Estándares enterprise,<br>sin excepciones</h2>
+        <p style="font-size:16px;color:var(--bone-muted);line-height:1.7;max-width:520px">Los datos del cliente son el activo más valioso que administramos. Toda la arquitectura de REALI está diseñada desde cero con seguridad como requisito no negociable — no como añadido posterior.</p>
+      </div>
+      <div class="security-visual">
+        <div class="sec-metric"><span class="m-val">AES-256</span><span class="m-lbl">Cifrado en reposo</span></div>
+        <div class="sec-metric"><span class="m-val">TLS 1.3</span><span class="m-lbl">Cifrado en tránsito</span></div>
+        <div class="sec-metric"><span class="m-val">Zero Trust</span><span class="m-lbl">Modelo de acceso</span></div>
+        <div class="sec-metric"><span class="m-val">99.99%</span><span class="m-lbl">Disponibilidad GCP</span></div>
+      </div>
+    </div>
+
+    <div class="security-pillars fade-up">
+
+      <div class="pillar">
+        <div class="pillar-icon"><i data-lucide="lock" style="width:20px;height:20px"></i></div>
+        <h4>Cifrado total de datos</h4>
+        <p>Todos los datos en reposo son cifrados con AES-256. Las comunicaciones utilizan TLS 1.3 exclusivamente. Las claves de cifrado son gestionadas mediante Cloud KMS de GCP, con rotación automática programada.</p>
+        <div class="pillar-tags">
+          <span class="pillar-tag">AES-256</span>
+          <span class="pillar-tag">TLS 1.3</span>
+          <span class="pillar-tag">Cloud KMS</span>
+        </div>
+      </div>
+
+      <div class="pillar">
+        <div class="pillar-icon"><i data-lucide="user-check" style="width:20px;height:20px"></i></div>
+        <h4>Gestión de identidad y acceso</h4>
+        <p>Modelo Zero Trust aplicado a cada recurso. IAM de GCP con principio de mínimo privilegio. Autenticación multifactor obligatoria. Accesos auditados y revocados automáticamente cuando ya no son necesarios.</p>
+        <div class="pillar-tags">
+          <span class="pillar-tag">Zero Trust</span>
+          <span class="pillar-tag">IAM</span>
+          <span class="pillar-tag">MFA</span>
+          <span class="pillar-tag">RBAC</span>
+        </div>
+      </div>
+
+      <div class="pillar">
+        <div class="pillar-icon"><i data-lucide="network" style="width:20px;height:20px"></i></div>
+        <h4>Aislamiento de red privada</h4>
+        <p>Cada cliente opera en una VPC privada dedicada en GCP, completamente aislada de otros entornos. Firewall rules granulares, Private Google Access y Cloud NAT para tráfico saliente controlado.</p>
+        <div class="pillar-tags">
+          <span class="pillar-tag">VPC Privada</span>
+          <span class="pillar-tag">Firewall GCP</span>
+          <span class="pillar-tag">Private Access</span>
+        </div>
+      </div>
+
+      <div class="pillar">
+        <div class="pillar-icon"><i data-lucide="file-text" style="width:20px;height:20px"></i></div>
+        <h4>Auditoría y trazabilidad</h4>
+        <p>Cloud Audit Logs captura cada acción sobre los datos: quién accedió, desde dónde, cuándo y qué operación realizó. Los logs son inmutables y se retienen por 90 días por defecto, ampliables contractualmente.</p>
+        <div class="pillar-tags">
+          <span class="pillar-tag">Cloud Audit Logs</span>
+          <span class="pillar-tag">SIEM</span>
+          <span class="pillar-tag">Inmutable</span>
+        </div>
+      </div>
+
+      <div class="pillar">
+        <div class="pillar-icon"><i data-lucide="map-pin" style="width:20px;height:20px"></i></div>
+        <h4>Residencia de datos</h4>
+        <p>Los datos se almacenan en la región de GCP que el cliente defina — por defecto us-central1 con opción southamerica-east1 (São Paulo) para cumplimiento de residencia en LATAM. Sin movimiento de datos no autorizado.</p>
+        <div class="pillar-tags">
+          <span class="pillar-tag">Data Residency</span>
+          <span class="pillar-tag">LATAM Region</span>
+          <span class="pillar-tag">BigQuery</span>
+        </div>
+      </div>
+
+      <div class="pillar">
+        <div class="pillar-icon"><i data-lucide="shield" style="width:20px;height:20px"></i></div>
+        <h4>Prevención de fuga de datos (DLP)</h4>
+        <p>Cloud DLP de GCP inspecciona y clasifica información sensible automáticamente. Políticas de retención y eliminación de datos configurables. Acceso de producción nunca expone datos en texto claro a desarrolladores.</p>
+        <div class="pillar-tags">
+          <span class="pillar-tag">Cloud DLP</span>
+          <span class="pillar-tag">Clasificación</span>
+          <span class="pillar-tag">Data masking</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="fade-up">
+      <div class="section-eyebrow" style="margin-top:48px">Marco regulatorio</div>
+      <p style="font-size:15px;color:var(--bone-muted);margin-bottom:20px">Google Cloud Platform, la plataforma subyacente de REALI, opera bajo los siguientes marcos de cumplimiento. Los contratos incluyen cláusulas de cumplimiento específicas para cada cliente.</p>
+      <div class="compliance-row">
+        <div class="compliance-badge"><div class="cb-dot"></div><span>ISO/IEC 27001</span></div>
+        <div class="compliance-badge"><div class="cb-dot"></div><span>SOC 2 Type II</span></div>
+        <div class="compliance-badge"><div class="cb-dot"></div><span>GDPR</span></div>
+        <div class="compliance-badge"><div class="cb-dot"></div><span>Ley 19.628 (Chile)</span></div>
+        <div class="compliance-badge"><div class="cb-dot"></div><span>PCI DSS</span></div>
+        <div class="compliance-badge"><div class="cb-dot"></div><span>HIPAA eligible</span></div>
+        <div class="compliance-badge"><div class="cb-dot"></div><span>FedRAMP High</span></div>
+      </div>
+    </div>
+
+    <div class="security-arch fade-up">
+      <div class="arch-title">Arquitectura de seguridad — capas de protección</div>
+      <div class="arch-layers">
+        <div class="arch-layer">
+          <div class="layer-label">Acceso</div>
+          <div class="layer-content">
+            <span class="layer-item accent">Zero Trust IAM</span>
+            <span class="layer-item">MFA obligatorio</span>
+            <span class="layer-item">RBAC granular</span>
+            <span class="layer-item">Service accounts dedicadas</span>
+          </div>
+        </div>
+        <div class="arch-layer">
+          <div class="layer-label">Red</div>
+          <div class="layer-content">
+            <span class="layer-item accent">VPC privada por cliente</span>
+            <span class="layer-item">Firewall rules</span>
+            <span class="layer-item">Cloud Armor (WAF)</span>
+            <span class="layer-item">Private Service Connect</span>
+          </div>
+        </div>
+        <div class="arch-layer">
+          <div class="layer-label">Datos en tránsito</div>
+          <div class="layer-content">
+            <span class="layer-item accent">TLS 1.3</span>
+            <span class="layer-item">HTTPS obligatorio</span>
+            <span class="layer-item">Certificate pinning</span>
+          </div>
+        </div>
+        <div class="arch-layer">
+          <div class="layer-label">Datos en reposo</div>
+          <div class="layer-content">
+            <span class="layer-item accent">AES-256 (Google default)</span>
+            <span class="layer-item">CMEK opcional</span>
+            <span class="layer-item">Cloud KMS</span>
+            <span class="layer-item">Bucket-level policies</span>
+          </div>
+        </div>
+        <div class="arch-layer">
+          <div class="layer-label">Observabilidad</div>
+          <div class="layer-content">
+            <span class="layer-item accent">Cloud Audit Logs</span>
+            <span class="layer-item">Security Command Center</span>
+            <span class="layer-item">Alertas en tiempo real</span>
+            <span class="layer-item">Cloud Monitoring</span>
+          </div>
+        </div>
+        <div class="arch-layer">
+          <div class="layer-label">Continuidad</div>
+          <div class="layer-content">
+            <span class="layer-item accent">DR multi-región</span>
+            <span class="layer-item">Backups automatizados</span>
+            <span class="layer-item">RTO &lt; 4h</span>
+            <span class="layer-item">SLA 99.9% uptime</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOBRE NOSOTROS -->
+<section class="section about-bg" id="nosotros">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div>
+        <div class="section-eyebrow">Quiénes somos</div>
+        <h2 class="section-title">Experiencia de primera línea en la industria que servimos</h2>
+        <p style="font-size:16px;color:var(--bone-muted);line-height:1.7;margin-bottom:32px">REALI no es una agencia de tecnología genérica. Es una firma fundada por un analista que trabajó desde adentro resolviendo exactamente los problemas que hoy ofrecemos solucionar.</p>
+        <div class="about-points">
+          <div class="about-point">
+            <div class="about-divider"></div>
+            <h4>Conocimiento de industria, no solo de tecnología</h4>
+            <p>Entendemos cómo se toman decisiones de expansión en retail farmacéutico, qué datos son críticos y qué metodologías funcionan — porque las usamos internamente en empresas del sector.</p>
+          </div>
+          <div class="about-point">
+            <div class="about-divider"></div>
+            <h4>Infraestructura construida para escalar</h4>
+            <p>Toda solución se entrega como activo del cliente: código documentado, pipelines auditables y arquitectura que puede operar y mantener un equipo interno.</p>
+          </div>
+          <div class="about-point">
+            <div class="about-divider"></div>
+            <h4>Modelo de relación a largo plazo</h4>
+            <p>El objetivo no es cerrar un proyecto puntual. Es convertirse en el socio tecnológico de datos que la empresa necesita durante años.</p>
+          </div>
+        </div>
+        <div class="stack-row" style="margin-top:32px">
+          <div class="stack-item"><i data-lucide="cloud" style="width:14px;height:14px;color:var(--accent-dim)"></i> Google Cloud</div>
+          <div class="stack-item"><i data-lucide="bar-chart-2" style="width:14px;height:14px;color:var(--accent-dim)"></i> BigQuery</div>
+          <div class="stack-item"><i data-lucide="map" style="width:14px;height:14px;color:var(--accent-dim)"></i> GeoPandas</div>
+          <div class="stack-item"><i data-lucide="bot" style="width:14px;height:14px;color:var(--accent-dim)"></i> LLM Agents</div>
+          <div class="stack-item"><i data-lucide="code-2" style="width:14px;height:14px;color:var(--accent-dim)"></i> Python</div>
+          <div class="stack-item"><i data-lucide="layout-dashboard" style="width:14px;height:14px;color:var(--accent-dim)"></i> Looker Studio</div>
+        </div>
+      </div>
+      <div>
+        <div class="founder-card">
+          <div class="founder-header">
+            <div class="founder-avatar">N</div>
+            <div>
+              <div class="founder-name">Nichelson Churata N.</div>
+              <div class="founder-title">Fundador & Director de datos</div>
+            </div>
+          </div>
+          <p class="founder-bio">Analista de datos especializado en geoespacial, inteligencia comercial y automatización con IA. Ex-analista en una de las mayores cadenas farmacéuticas de Chile, donde desarrolló los pipelines de mapeo de competencia farmacéutica, análisis de expansión y datos demográficos que hoy forman el núcleo de REALI.</p>
+          <div class="exp-list">
+            <div class="exp-item"><div class="exp-dot"></div>Mapeo geoespacial de 5.915 farmacias a nivel nacional con precisión &lt;30m</div>
+            <div class="exp-item"><div class="exp-dot"></div>Análisis de expansión comercial para decisiones de apertura de locales en Chile</div>
+            <div class="exp-item"><div class="exp-dot"></div>Desarrollo de scrapers de POI para 12+ cadenas en Chile, Colombia y Ecuador</div>
+            <div class="exp-item"><div class="exp-dot"></div>Modelos de proyección de demanda con datos demográficos del Censo 2024</div>
+            <div class="exp-item"><div class="exp-dot"></div>Automatización de reportería comercial con agentes IA y pipelines GCP</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section faq-bg" id="faq">
+  <div class="section-inner">
+    <div class="section-eyebrow">Preguntas frecuentes</div>
+    <h2 class="section-title">Lo que nos preguntan<br>antes de empezar</h2>
+    <p class="section-lead">Respuestas directas a las dudas más comunes sobre cómo trabajamos, qué entregamos y cómo protegemos los datos del cliente.</p>
+    <div class="faq-list fade-up">
+
+      <div class="faq-item">
+        <button class="faq-q">
+          <span>¿Qué tipo de empresas trabajan con REALI?</span>
+          <i data-lucide="chevron-down" class="faq-chevron" style="width:20px;height:20px"></i>
+        </button>
+        <div class="faq-a">
+          <p>Empresas con operaciones activas que necesitan datos de mercado, análisis de expansión o automatización de procesos de datos. Trabajamos principalmente con retail, farmacias, banca, e-commerce y logística. No tenemos paquetes mínimos obligatorios — el alcance lo define el diagnóstico inicial.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">
+          <span>¿Cuánto tiempo toma la primera entrega?</span>
+          <i data-lucide="chevron-down" class="faq-chevron" style="width:20px;height:20px"></i>
+        </button>
+        <div class="faq-a">
+          <p>Depende del alcance. Un dataset de inteligencia de mercado listo para usar puede estar disponible en 1–2 semanas. Un proyecto de infraestructura completa en GCP toma entre 4 y 8 semanas. El diagnóstico inicial es gratuito y define los plazos exactos antes de comprometer recursos.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">
+          <span>¿Los datos que entrego son compartidos con otros clientes?</span>
+          <i data-lucide="chevron-down" class="faq-chevron" style="width:20px;height:20px"></i>
+        </button>
+        <div class="faq-a">
+          <p>No. Cada cliente opera en una VPC privada dedicada en GCP, completamente aislada de otros entornos. Los datos que nos entrega — y los que generamos para tu empresa — son activos exclusivos que nunca se mezclan ni se reutilizan en otros proyectos.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">
+          <span>¿Necesito equipo técnico interno para trabajar con REALI?</span>
+          <i data-lucide="chevron-down" class="faq-chevron" style="width:20px;height:20px"></i>
+        </button>
+        <div class="faq-a">
+          <p>No es requisito. Los dashboards están diseñados para usuarios de negocio — sin SQL ni configuración técnica. Si tienes equipo técnico, entregamos la arquitectura documentada y los pipelines auditables para que puedan operar de forma autónoma. Si no tienes equipo, nosotros operamos.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">
+          <span>¿Cómo funciona el modelo de precios?</span>
+          <i data-lucide="chevron-down" class="faq-chevron" style="width:20px;height:20px"></i>
+        </button>
+        <div class="faq-a">
+          <p>Según el tipo de servicio: los datos de mercado tienen precio por dataset o por suscripción de actualización mensual; los proyectos de análisis se cotizan por alcance; la infraestructura y automatización operan en retainer mensual. Todo se define en el diagnóstico — sin sorpresas.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">
+          <span>¿Qué diferencia a REALI de una consultora de datos genérica?</span>
+          <i data-lucide="chevron-down" class="faq-chevron" style="width:20px;height:20px"></i>
+        </button>
+        <div class="faq-a">
+          <p>Conocimiento de industria real, no solo de tecnología. El fundador desarrolló los pipelines de expansión farmacéutica desde dentro de una de las mayores cadenas farmacéuticas del país — no como consultor externo. Eso significa que entendemos el problema antes de proponer la solución, y que no cobramos horas de "aprendizaje" del negocio del cliente.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">
+          <span>¿Puedo contratar solo los datos sin la infraestructura?</span>
+          <i data-lucide="chevron-down" class="faq-chevron" style="width:20px;height:20px"></i>
+        </button>
+        <div class="faq-a">
+          <p>Sí. Puedes contratar solo el dataset de farmacias, solo el análisis de expansión para una región específica, o la arquitectura completa con pipelines activos. Los servicios son modulares — contratas lo que resuelve tu problema hoy, y puedes escalar después.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">
+          <span>¿Dónde se almacenan mis datos?</span>
+          <i data-lucide="chevron-down" class="faq-chevron" style="width:20px;height:20px"></i>
+        </button>
+        <div class="faq-a">
+          <p>En Google Cloud Platform, en la región que el cliente defina. Por defecto <span style="font-family:var(--font-mono);font-size:13px">us-central1</span>, con opción <span style="font-family:var(--font-mono);font-size:13px">southamerica-east1</span> (São Paulo) para cumplimiento de residencia en LATAM. No hay movimiento de datos no autorizado ni entre regiones sin consentimiento explícito.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section class="section contact-bg" id="contacto">
+  <div class="contact-glow"></div>
+  <div class="section-inner" style="position:relative">
+    <div class="contact-grid">
+      <div>
+        <div class="section-eyebrow">Habla con nosotros</div>
+        <h2 class="section-title">El primer paso es un diagnóstico sin compromiso</h2>
+        <p style="font-size:16px;color:var(--bone-muted);line-height:1.7;margin-bottom:12px">Cuéntanos el problema de datos que tienes. En 30 minutos te decimos si podemos resolverlo, cómo lo haríamos y qué costaría.</p>
+        <p style="font-size:14px;color:var(--bone-muted);line-height:1.7;margin-bottom:32px">Sin presentaciones genéricas. Sin propuestas estándar.</p>
+        <div class="contact-options">
+          <a class="contact-option" href="https://wa.me/56967871050" target="_blank" rel="noopener">
+            <div class="co-icon teal"><i data-lucide="message-circle" style="width:18px;height:18px"></i></div>
+            <div>
+              <div class="co-label">WhatsApp directo</div>
+              <div class="co-sub">+56 9 6787 1050 — respuesta en menos de 2 horas</div>
+            </div>
+            <i data-lucide="arrow-right" style="width:16px;height:16px;color:var(--bone-muted);margin-left:auto"></i>
+          </a>
+          <a class="contact-option" href="mailto:contacto@realidata.cl">
+            <div class="co-icon amber"><i data-lucide="mail" style="width:18px;height:18px"></i></div>
+            <div>
+              <div class="co-label">Correo electrónico</div>
+              <div class="co-sub">contacto@realidata.cl</div>
+            </div>
+            <i data-lucide="arrow-right" style="width:16px;height:16px;color:var(--bone-muted);margin-left:auto"></i>
+          </a>
+        </div>
+      </div>
+      <div>
+        <div class="contact-card">
+          <div style="font-family:var(--font-heading);font-size:18px;font-weight:700;margin-bottom:6px">Solicita un diagnóstico</div>
+          <p style="font-size:13px;color:var(--bone-muted)">Cuéntanos sobre tu empresa y el desafío de datos que enfrentas.</p>
+          <form id="diagnostic-form" class="contact-form" onsubmit="handleForm(event)">
+            <div class="form-row">
+              <div class="field">
+                <label for="f-nombre">Nombre</label>
+                <input id="f-nombre" name="nombre" type="text" placeholder="Tu nombre" required>
+              </div>
+              <div class="field">
+                <label for="f-empresa">Empresa</label>
+                <input id="f-empresa" name="empresa" type="text" placeholder="Razón social" required>
+              </div>
+            </div>
+            <div class="field">
+              <label for="f-correo">Correo</label>
+              <input id="f-correo" name="correo" type="email" placeholder="correo@empresa.com" required>
+            </div>
+            <div class="field">
+              <label for="f-industria">Industria</label>
+              <select id="f-industria" name="industria">
+                <option value="">Selecciona tu industria</option>
+                <option>Retail / Supermercados</option>
+                <option>Farmacias / Salud</option>
+                <option>Banca / Finanzas</option>
+                <option>E-commerce</option>
+                <option>Inmobiliaria</option>
+                <option>Logística</option>
+                <option>Otro</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="f-desafio">¿Cuál es tu desafío?</label>
+              <textarea id="f-desafio" name="desafio" placeholder="Ej: Necesitamos mapear la competencia en nuevas regiones antes de abrir locales..." required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary btn-full">
+              <i data-lucide="send" style="width:15px;height:15px"></i>
+              Enviar solicitud
+            </button>
+          </form>
+          <div id="form-success" style="display:none;text-align:center;padding:32px 0">
+            <i data-lucide="check-circle" style="width:40px;height:40px;color:var(--accent-dim);margin:0 auto 12px"></i>
+            <div style="font-weight:700;margin-bottom:6px">Solicitud enviada</div>
+            <p style="font-size:13px;color:var(--bone-muted)">Te contactamos en menos de 24 horas hábiles.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">
+      <img src="/web/assets/wordmark-bone-light.png" alt="REALI">
+    </div>
+    <div style="font-size:13px;color:var(--bone-muted);text-align:center">
+      <span style="font-family:var(--font-mono);font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent)">Inteligencia de decisiones basada en datos</span><br>
+      Santiago, Chile — Infraestructura en Google Cloud Platform
+    </div>
+    <div class="footer-meta">
+      © 2026 REALI SpA<br>
+      contacto@realidata.cl<br>
+      +56 9 6787 1050
+    </div>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="/web/reali.js"></script>
+<script>
+const WHATSAPP_NUMBER = '56967871050';
+
+function handleForm(e) {
+  e.preventDefault();
+  const data = Object.fromEntries(new FormData(e.target).entries());
+
+  const industria = data.industria ? `, perteneciente a la industria ${data.industria}` : '';
+  const mensaje = `*Nuevo contacto desde realidata.cl*
+
+Hola, soy *${data.nombre}* (${data.correo}), de la empresa *${data.empresa}*${industria}.
+
+Te contacto por la siguiente razón:
+${data.desafio}`;
+
+  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(mensaje)}`, '_blank', 'noopener');
+  e.target.style.display = 'none';
+  document.getElementById('form-success').style.display = 'block';
+  lucide.createIcons();
+}
+</script>
+
+</body>
+</html>

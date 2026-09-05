@@ -1,0 +1,64 @@
+# Dependencias
+node_modules/
+.pnp
+.pnp.js
+
+# Build
+dist/
+build/
+
+# Variables de entorno
+.env
+.env.local
+.env.*.local
+
+# Certificados digitales y firma electrónica (NUNCA versionar)
+*.pem
+*.pfx
+*.p12
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Cache
+.eslintcache
+*.tsbuildinfo
+
+# Python
+__pycache__/
+
+# Claude Code local settings
+.claude/
+
+# ── Endurecimiento de secretos y datos ──
+# Secretos: nunca versionar. Solo viajan las plantillas *.example.
+.env
+.env.*
+!.env.example
+!.env.*.example
+*.key
+*.crt
+credentials.json
+service-account*.json
+
+# Datos: bloqueados por defecto. Este repo solo publica el demo degradado
+# de farmacias (ver README); el maestro no vive acá.
+*.csv
+*.parquet
+*.db
+*.sqlite
+*.sqlite3
+!src/data/*.csv
+farmacias.full.csv

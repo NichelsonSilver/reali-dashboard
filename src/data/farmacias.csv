@@ -1,0 +1,297 @@
+id,nombre,cadena,direccion,comuna,region,lat,lon,tipo,telefono,horario
+h6675,ACEVEDO,Independiente,"Exequiel Fernandez 175, Local 6,",Ñuñoa,Metropolitana,-33.455951,-70.599893,Privada,,Semanal Lunes - Viernes: 09:00 a 18:00 hrs. Sábado: 09:00 a 14:00 hrs. Domingo: Cerrado
+h8106,AGUIRRE,Independiente,"Avenida Francisco Bilbao 3088,",Providencia,Metropolitana,-33.431708,-70.58528,Privada,,Semanal Lunes - Viernes: 10:00 a 19:00 hrs. Sábado: 10:00 a 14:00 hrs. Domingo: Cerrado
+h7195,AGUIRRE,Independiente,"Avenida Irarrazaval N° 1546,",Ñuñoa,Metropolitana,-33.452818,-70.61457,Privada,,Semanal Lunes - Viernes: 09:00 a 19:00 hrs. Sábado: 10:00 a 14:00 hrs. Domingo: Cerrado
+h11721,Ahumada,Ahumada,"Avenida Irarrazaval 3115,",Ñuñoa,Metropolitana,-33.455128,-70.598434,Privada,,Semanal Lunes - Viernes: 07:30 a 22:00 hrs. Sábado: 08:30 a 22:00 hrs. Domingo: 08:30 a 18:00 hrs. Festivos: 10:00 a 18:00 hrs.
+h1318,AHUMADA,Ahumada,"Av. Irarrazaval 2928. Interior Lider,",Ñuñoa,Metropolitana,-33.454501,-70.600622,Privada,,Semanal Lunes - Sábado: 08:30 a 22:30 hrs. Domingo: 09:00 a 22:30 hrs.
+h5817,AHUMADA,Ahumada,"Avenida El Bosque 164,",Providencia,Metropolitana,-33.421769,-70.598369,Privada,,Semanal Lunes - Viernes: 08:00 a 21:00 hrs. Sábado - Domingo: 09:00 a 21:00 hrs. Festivos: 09:00 a 21:00 hrs.
+h1319,AHUMADA,Ahumada,"Avenida Pedro De Valdivia 2523,",Ñuñoa,Metropolitana,-33.445854,-70.60633,Privada,,Semanal Lunes - Viernes: 08:00 a 22:30 hrs. Sábado: 10:00 a 21:30 hrs. Domingo: 10:30 a 21:30 hrs. Festivos: 10:30 a 21:30 hrs.
+h5820,AHUMADA,Ahumada,"Andrés Bello 2447, Local 192, Costanera Center,",Providencia,Metropolitana,-33.418062,-70.607317,Privada,,Semanal Lunes - Domingo: 09:00 a 22:00 hrs. Festivos: 09:00 a 22:00 hrs.
+h12392,AHUMADA,Ahumada,"Avenida Providencia 2663,",Providencia,Metropolitana,-33.417865,-70.602468,Privada,,Semanal Lunes - Viernes: 08:30 a 21:00 hrs. Sábado: 09:00 a 20:00 hrs. Domingo: 10:00 a 20:00 hrs. Festivos: 10:00 a 20:00 hrs.
+h1321,AHUMADA,Ahumada,"Pedro De Valdivia 3774,",Ñuñoa,Metropolitana,-33.457276,-70.605386,Privada,,Semanal Lunes - Sábado: 09:00 a 22:00 hrs. Domingo: Cerrado
+h1322,AHUMADA,Ahumada,"Simon Bolivar 3756,",Ñuñoa,Metropolitana,-33.448486,-70.591267,Privada,,Semanal Lunes - Viernes: 08:00 a 00:00 hrs. Sábado: 09:00 a 00:00 hrs. Domingo: Cerrado
+h1323,AHUMADA,Ahumada,"Simon Bolivar 4800 L- 115,",Ñuñoa,Metropolitana,-33.448271,-70.58056,Privada,,Semanal Lunes - Sábado: 09:00 a 22:00 hrs. Domingo: 10:00 a 22:00 hrs.
+h1299,AHUMADA,Ahumada,"Salvador 1866,",Ñuñoa,Metropolitana,-33.450133,-70.621565,Privada,,Semanal Lunes - Domingo: 08:30 a 21:30 hrs. Festivos: 08:30 a 21:30 hrs.
+h1324,AHUMADA,Ahumada,"Sucre 3250,",Ñuñoa,Metropolitana,-33.447787,-70.597554,Privada,,Semanal Lunes - Sábado: 08:00 a 23:00 hrs. Domingo: 09:00 a 23:00 hrs.
+h1437,AHUMADA,Ahumada,"11 De Septiembre 1313,",Providencia,Metropolitana,-33.429506,-70.61957,Privada,,Semanal Lunes - Viernes: 08:00 a 23:00 hrs. Sábado: 09:00 a 21:00 hrs. Domingo: Cerrado
+h1438,AHUMADA,Ahumada,"Av. Andres Bello 2447. Interior Costanera Center,",Providencia,Metropolitana,-33.417668,-70.608283,Privada,,Semanal Lunes - Sábado: 08:30 a 22:00 hrs. Domingo: 09:00 a 22:00 hrs. Festivos: 09:00 a 22:00 hrs.
+h11289,AHUMADA,Ahumada,"Calle Ricardo Lyon 3154,",Ñuñoa,Metropolitana,-33.450169,-70.602103,Privada,,Semanal Lunes - Sábado: 09:00 a 21:00 hrs. Domingo: Cerrado
+h1440,AHUMADA,Ahumada,"Francisco Bilbao 2489,",Providencia,Metropolitana,-33.436597,-70.599078,Privada,,Semanal Lunes - Sábado: 08:30 a 22:30 hrs. Domingo: 09:00 a 22:00 hrs. Festivos: 09:00 a 22:00 hrs.
+h1441,AHUMADA,Ahumada,"Francisco Bilbao 3785,",Providencia,Metropolitana,-33.431708,-70.583843,Privada,,Semanal Lunes - Sábado: 08:00 a 00:00 hrs. Domingo: 10:00 a 22:00 hrs.
+h1442,AHUMADA,Ahumada,"La Concepcion 135,",Providencia,Metropolitana,-33.424527,-70.6159,Privada,,Semanal Lunes - Viernes: 08:00 a 22:00 hrs. Sábado: 08:30 a 16:00 hrs. Domingo: Cerrado
+h1444,AHUMADA,Ahumada,"Pedro De Valdivia 1885,",Providencia,Metropolitana,-33.439533,-70.607918,Privada,,Semanal Lunes - Sábado: 08:00 a 22:00 hrs. Domingo: 09:00 a 22:00 hrs.
+h1314,AHUMADA,Ahumada,"Campo De Deportes 156,",Ñuñoa,Metropolitana,-33.45502,-70.609098,Privada,,Semanal Lunes - Viernes: 08:00 a 23:00 hrs. Sábado: 09:00 a 23:00 hrs. Domingo: 10:00 a 20:00 hrs.
+h11534,AHUMADA,Ahumada,"Avenida Providencia 2208,",Providencia,Metropolitana,-33.421518,-70.60854,Privada,,Semanal Lunes - Viernes: 08:00 a 21:00 hrs. Sábado: 09:00 a 18:00 hrs. Domingo: Cerrado
+h1445,AHUMADA,Ahumada,"Av. Providencia 2001,",Providencia,Metropolitana,-33.423578,-70.612424,Privada,,Semanal Lunes - Sábado: 08:00 a 22:00 hrs. Domingo: Cerrado
+h1315,AHUMADA,Ahumada,"Emilia Tellez 5593,",Ñuñoa,Metropolitana,-33.441485,-70.572899,Privada,,Semanal Lunes - Viernes: 08:00 a 23:00 hrs. Sábado: 09:00 a 23:00 hrs. Domingo: Cerrado
+h4277,AHUMADA,Ahumada,"Av. Jose Pedro Alessandri 1166. Local 4014. Portal ñuñoa,",Ñuñoa,Metropolitana,-33.464848,-70.598262,Privada,,Semanal Lunes - Domingo: 09:00 a 22:00 hrs. Festivos: 09:00 a 22:00 hrs.
+h1448,AHUMADA,Ahumada,"Rancagua 0180,",Providencia,Metropolitana,-33.441002,-70.630406,Privada,,Semanal Lunes - Sábado: 08:00 a 22:30 hrs. Domingo: 09:00 a 22:00 hrs.
+h1316,AHUMADA,Ahumada,"Av. Grecia 245. Interior Lider,",Ñuñoa,Metropolitana,-33.455307,-70.627123,Privada,,Semanal Lunes - Sábado: 08:00 a 22:00 hrs. Domingo: 09:00 a 21:30 hrs. Festivos: 09:00 a 21:30 hrs.
+h10958,AHUMADA,Ahumada,"Avenida Andres Bello 2447,",Providencia,Metropolitana,-33.417811,-70.607811,Privada,,Semanal Lunes - Sábado: 08:00 a 21:00 hrs. Domingo: 09:00 a 21:00 hrs. Festivos: 09:00 a 21:00 hrs.
+h1449,AHUMADA,Ahumada,"Salvador 89,",Providencia,Metropolitana,-33.434663,-70.6262,Privada,,Semanal Lunes - Viernes: 08:00 a 22:00 hrs. Sábado: 08:00 a 17:00 hrs. Domingo: Cerrado
+h1317,AHUMADA,Ahumada,"Avenida Grecia 3031,",Ñuñoa,Metropolitana,-33.464634,-70.600065,Privada,,Semanal Lunes - Viernes: 08:00 a 23:00 hrs. Sábado: 09:00 a 23:00 hrs. Domingo: Cerrado
+h6957,AMABIEN,Independiente,"Calle Pedro De Oña 031,",Ñuñoa,Metropolitana,-33.454018,-70.629633,Privada,,Semanal Lunes - Viernes: 10:00 a 20:00 hrs. Sábado: 10:00 a 15:00 hrs. Domingo: Cerrado
+h7336,Amapolas,Independiente,"Avenida Francisco Bilbao N° 2948, Locales 3 Y 4,",Providencia,Metropolitana,-33.434681,-70.588499,Privada,,Semanal Lunes - Viernes: 10:00 a 14:00 y 16:00 a 20:00 hrs. Sábado: 10:00 a 15:00 hrs. Domingo: Cerrado
+h1453,ARAVIL,Independiente,"Providencia 1773,",Providencia,Metropolitana,-33.426193,-70.614763,Privada,,Semanal Lunes - Viernes: 09:30 a 21:00 hrs. Sábado: 10:00 a 15:00 hrs. Domingo: Cerrado
+h1454,ASODI,Independiente,"Rancagua 250,",Providencia,Metropolitana,-33.440787,-70.629569,Privada,,Semanal Lunes - Viernes: 09:00 a 18:00 hrs. Sábado y Domingo: Cerrado
+h12524,Aurora,Independiente,"Avenida General Bustamante 751,",Ñuñoa,Metropolitana,-33.451816,-70.629397,Privada,,Semanal Lunes - Viernes: 09:00 a 21:00 hrs. Sábado: 09:00 a 20:00 hrs. Domingo: Cerrado
+h7912,BIOALBA,Independiente,"Avenida Providencia 2633,",Providencia,Metropolitana,-33.418671,-70.60191,Privada,,Semanal Lunes - Viernes: 09:00 a 18:30 hrs. Sábado: 10:00 a 13:00 hrs. Domingo: Cerrado
+h6759,BIOCUBA,Independiente,"Pedro De Valdivia N°331,",Providencia,Metropolitana,-33.426569,-70.613583,Privada,,Semanal Lunes - Viernes: 09:30 a 18:00 hrs. Sábado: 10:00 a 14:00 hrs. Domingo: Cerrado
+h1455,BIOFORMULA,Independiente,"General Flores 38,",Providencia,Metropolitana,-33.427715,-70.618561,Privada,,Semanal Lunes: 08:30 a 21:30 hrs. Martes: 08:30 a 20:00 hrs. Miércoles - Viernes: 08:30 a 22:00 hrs. Sábado: 09:00 a 14:00 hrs. Domingo: Cerrado
+h4374,BIOSPHARE,Independiente,"Guarda Vieja 27,",Providencia,Metropolitana,-33.423005,-70.611029,Privada,,Semanal Lunes - Viernes: 10:00 a 19:30 hrs. Sábado - Domingo: 10:00 a 14:00 hrs.
+h1326,BLANCO,Independiente,"Hamburgo 1065,",Ñuñoa,Metropolitana,-33.444636,-70.577212,Privada,,Semanal Lunes - Sábado: 11:00 a 15:00 y 17:00 a 22:00 hrs. Domingo: Cerrado
+h7909,CAPAX,Independiente,"Irarrazaval 1642, Local 4,",Ñuñoa,Metropolitana,-33.452621,-70.613669,Privada,,Semanal Lunes - Viernes: 10:00 a 21:00 hrs. Sábado: 10:00 a 15:00 hrs. Domingo: Cerrado
+h7432,CEM,Independiente,"Vicuña Mackenna 210,",Providencia,Metropolitana,-33.444099,-70.633024,Privada,,Semanal Lunes - Viernes: 09:15 a 13:00 y 13:45 a 17:30 hrs. Sábado y Domingo: Cerrado
+h8184,CENTRAL,Independiente,"Providencia 2372, Local 6,",Providencia,Metropolitana,-33.419709,-70.606588,Privada,,Semanal Lunes - Sábado: 10:00 a 20:00 hrs. Domingo: Cerrado
+h11028,Central,Independiente,"Avenida Providencia 2372,",Providencia,Metropolitana,-33.419924,-70.606545,Privada,,Semanal Lunes - Sábado: 10:00 a 20:00 hrs. Domingo: Cerrado
+h5309,CENTRAL DE HOMEOPATÍA,Independiente,"Avenida Suecia 3598,",Ñuñoa,Metropolitana,-33.453481,-70.599957,Privada,,Semanal Lunes - Sábado: 09:30 a 20:00 hrs. Domingo: Cerrado
+h1481,CESFAR,Independiente,"General Holley 2371,",Providencia,Metropolitana,-33.419405,-70.607317,Privada,,Semanal Lunes - Viernes: 09:00 a 19:00 hrs. Sábado: 00:00 a 00:00 hrs. Domingo: Cerrado
+h7472,CHILE,Independiente,"Zañartu N° 1100, Local 4,",Ñuñoa,Metropolitana,-33.472814,-70.620943,Privada,,Semanal Lunes - Viernes: 10:00 a 19:00 hrs. Sábado: 10:00 a 15:00 hrs. Domingo: Cerrado
+h6122,CHILEFARMA,Independiente,"Los Leones 1458, Local 103,",Providencia,Metropolitana,-33.432604,-70.601824,Privada,,Semanal Lunes - Viernes: 10:00 a 21:00 hrs. Sábado: 10:00 a 15:00 hrs. Domingo: Cerrado
+h7298,CONSTITUCION,Independiente,"Av. Nueva Providencia 2600-2610,",Providencia,Metropolitana,-33.417829,-70.602983,Privada,,Semanal Lunes - Viernes: 10:00 a 19:00 hrs. Sábado: 10:00 a 14:00 hrs. Domingo: Cerrado
+h6604,COOPERCARAB,Independiente,"Avenida Antonio Varas 2519,",Ñuñoa,Metropolitana,-33.450276,-70.610171,Privada,,Semanal Lunes - Jueves: 08:30 a 18:30 hrs. Viernes: 08:30 a 16:00 hrs. Sábado y Domingo: Cerrado
+h1338,CRUZ VERDE,Cruz Verde,"Avenida Jose Pedro Alessandri 331,",Ñuñoa,Metropolitana,-33.458207,-70.598326,Privada,,Semanal Lunes - Viernes: 09:00 a 22:00 hrs. Sábado - Domingo: 10:00 a 22:00 hrs.
+h1474,CRUZ VERDE,Cruz Verde,"Ricardo Lyon 62,",Providencia,Metropolitana,-33.422467,-70.60957,Privada,,Semanal Lunes - Viernes: 09:00 a 22:00 hrs. Sábado: 09:30 a 21:30 hrs. Domingo: 10:30 a 21:30 hrs.
+h1339,CRUZ VERDE,Cruz Verde,"Av. Ossa 1220,",Ñuñoa,Metropolitana,-33.442756,-70.57262,Privada,,Semanal Lunes - Sábado: 08:30 a 23:00 hrs. Domingo: 10:00 a 22:30 hrs. Festivos: 10:00 a 22:30 hrs.
+h11774,CRUZ VERDE,Cruz Verde,"Avenida Providencia 03,",Providencia,Metropolitana,-33.437528,-70.634998,Privada,,Semanal Lunes - Viernes: 10:30 a 19:30 hrs. Sábado y Domingo: Cerrado
+h4796,CRUZ VERDE,Cruz Verde,"Avenida Francisco Bilbao 2851,",Providencia,Metropolitana,-33.435594,-70.591653,Privada,,Semanal Lunes - Viernes: 08:30 a 22:00 hrs. Sábado: 09:30 a 22:00 hrs. Domingo: 10:00 a 21:00 hrs. Festivos: 10:00 a 21:00 hrs.
+h1475,CRUZ VERDE,Cruz Verde,"Salvador 42,",Providencia,Metropolitana,-33.43409,-70.626329,Privada,,Semanal Lunes - Viernes: 08:00 a 21:00 hrs. Sábado: 09:00 a 15:00 hrs. Domingo: Cerrado
+h1340,CRUZ VERDE,Cruz Verde,"Avenida Pedro De Valdivia 2520,",Ñuñoa,Metropolitana,-33.445567,-70.606116,Privada,,Semanal Lunes - Sábado: 08:30 a 18:00 hrs. Domingo: Cerrado
+h4470,CRUZ VERDE,Cruz Verde,"Avenida Irarrazaval 2401, Local 13,",Ñuñoa,Metropolitana,-33.454089,-70.606159,Privada,,Semanal Lunes - Viernes: 08:30 a 22:00 hrs. Sábado: 09:00 a 21:00 hrs. Domingo: 10:00 a 20:00 hrs. Festivos: 10:00 a 20:00 hrs.
+h4797,CRUZ VERDE,Cruz Verde,"Las Bellotas 182,",Providencia,Metropolitana,-33.422145,-70.608218,Privada,,Semanal Lunes - Viernes: 08:00 a 22:00 hrs. Sábado: 09:30 a 21:00 hrs. Domingo: 10:00 a 21:00 hrs. Festivos: 10:00 a 21:00 hrs.
+h4262,CRUZ VERDE,Cruz Verde,"Dublé Almeyda 4231,",Ñuñoa,Metropolitana,-33.457974,-70.586053,Privada,,Semanal Lunes - Viernes: 09:00 a 22:00 hrs. Sábado: 09:30 a 21:30 hrs. Domingo: 10:30 a 21:00 hrs. Festivos: 10:30 a 21:00 hrs.
+h1476,CRUZ VERDE,Cruz Verde,"Santa Isabel 865 Local 2,",Providencia,Metropolitana,-33.445102,-70.619849,Privada,,Semanal Lunes - Viernes: 08:30 a 22:00 hrs. Sábado: 09:00 a 22:00 hrs. Domingo: 10:00 a 22:00 hrs. Festivos: 10:00 a 22:00 hrs.
+h1341,CRUZ VERDE,Cruz Verde,"Av. Pedro De Valdivia 3601 Local 1,",Ñuñoa,Metropolitana,-33.455647,-70.605236,Privada,,Semanal Lunes - Martes: 08:30 a 22:00 hrs. Miércoles: 08:30 a 21:30 hrs. Jueves - Viernes: 08:30 a 22:00 hrs. Sábado - Domingo: 10:00 a 21:00 hrs.
+h11007,Cruz Verde,Cruz Verde,"Avenida Irarrazaval 3612,",Ñuñoa,Metropolitana,-33.455146,-70.592941,Privada,,Semanal Lunes - Viernes: 09:00 a 20:00 hrs. Sábado: 10:00 a 16:00 hrs. Domingo: Cerrado
+h5323,CRUZ VERDE,Cruz Verde,"Avenida Manuel Montt 1221, Local 101,",Providencia,Metropolitana,-33.439068,-70.615814,Privada,,Semanal Lunes - Viernes: 08:30 a 22:00 hrs. Sábado: 09:30 a 22:00 hrs. Domingo: 10:00 a 20:00 hrs.
+h6103,CRUZ VERDE,Cruz Verde,"Avenida Pedro De Valdivia 1698,",Providencia,Metropolitana,-33.438172,-70.607317,Privada,,Semanal Lunes - Viernes: 08:00 a 21:30 hrs. Sábado: 09:00 a 20:00 hrs. Domingo: Cerrado
+h12066,CRUZ VERDE,Cruz Verde,"Avenida Carlos Antunez 2490,",Providencia,Metropolitana,-33.426515,-70.602039,Privada,,Semanal Lunes - Viernes: 10:00 a 20:00 hrs. Sábado y Domingo: Cerrado
+h1477,CRUZ VERDE,Cruz Verde,"Seminario 101,",Providencia,Metropolitana,-33.440894,-70.629934,Privada,,Semanal Lunes - Viernes: 09:30 a 22:00 hrs. Sábado: 10:00 a 22:00 hrs. Domingo: Cerrado
+h1342,CRUZ VERDE,Cruz Verde,"Tobalaba 4507 Local 1,",Ñuñoa,Metropolitana,-33.434036,-70.582362,Privada,,Semanal Lunes - Viernes: 08:30 a 23:00 hrs. Sábado: 09:30 a 23:00 hrs. Domingo: 09:00 a 22:00 hrs.
+h6507,CRUZ VERDE,Cruz Verde,"Eliodoro Yañez N° 2616, Local 114,",Providencia,Metropolitana,-33.429022,-70.598777,Privada,,Semanal Lunes - Sábado: 08:30 a 18:00 hrs. Domingo: Cerrado
+h10485,CRUZ VERDE,Cruz Verde,"Avenida Providencia 628, Local 103,",Providencia,Metropolitana,-33.430222,-70.622531,Privada,,Semanal Lunes - Viernes: 08:30 a 18:30 hrs. Sábado: 10:00 a 14:00 hrs. Domingo: Cerrado
+h4570,CRUZ VERDE,Cruz Verde,"Av. Salvador 1822, Local 1,",Ñuñoa,Metropolitana,-33.449721,-70.621672,Privada,,Semanal Lunes - Viernes: 08:30 a 22:00 hrs. Sábado: 09:00 a 21:00 hrs. Domingo: 10:00 a 20:00 hrs. Festivos: 10:00 a 20:00 hrs.
+h1461,CRUZ VERDE,Cruz Verde,"Barcelona 2095,",Providencia,Metropolitana,-33.425082,-70.610729,Privada,,Semanal Lunes - Viernes: 08:00 a 21:00 hrs. Sábado: 09:00 a 14:30 hrs. Domingo: Cerrado
+h1462,CRUZ VERDE,Cruz Verde,"Bellavista 415,",Providencia,Metropolitana,-33.431977,-70.62929,Privada,,Semanal Lunes - Domingo: 08:00 a 00:00 hrs. Festivos: 08:00 a 00:00 hrs.
+h4113,CRUZ VERDE,Cruz Verde,"Av. Jose Domingo Cañas 2151. Locales A-b-c-d,",Ñuñoa,Metropolitana,-33.456846,-70.608669,Privada,,Semanal Lunes - Jueves: 08:30 a 22:00 hrs. Viernes - Sábado: 09:00 a 22:00 hrs. Domingo: Cerrado
+h9135,Cruz Verde,Cruz Verde,"Avenida Irarrázaval 2461,",Ñuñoa,Metropolitana,-33.454322,-70.605429,Privada,,Semanal Lunes - Sábado: 07:30 a 21:30 hrs. Domingo: Cerrado Festivos: 10:00 a 19:00 hrs.
+h12090,CRUZ VERDE,Cruz Verde,"Avenida Salvador 702,",Providencia,Metropolitana,-33.439891,-70.624462,Privada,,Semanal Lunes - Viernes: 10:30 a 19:00 hrs. Sábado y Domingo: Cerrado
+h4431,CRUZ VERDE,Cruz Verde,"Doctor Barros Borgoño 63, Local 2,",Providencia,Metropolitana,-33.429326,-70.618883,Privada,,Semanal Sábado y Domingo: Cerrado
+h1464,CRUZ VERDE,Cruz Verde,"Avenida Francisco Bilbao 2191,",Providencia,Metropolitana,-33.437796,-70.604206,Privada,,Semanal Lunes - Domingo: 08:30 a 21:30 hrs. Festivos: 08:30 a 21:30 hrs.
+h1327,CRUZ VERDE,Cruz Verde,"Antonio Varas 2280. Local 1,",Ñuñoa,Metropolitana,-33.448325,-70.610665,Privada,,Semanal Lunes - Viernes: 08:30 a 23:00 hrs. Sábado: 09:00 a 23:00 hrs. Domingo: 10:00 a 22:00 hrs.
+h4543,CRUZ VERDE,Cruz Verde,"Pedro Torres 384. Local 1,",Ñuñoa,Metropolitana,-33.451279,-70.58925,Privada,,Semanal Lunes - Sábado: 09:00 a 22:00 hrs. Domingo: 10:00 a 22:00 hrs. Festivos: 10:00 a 22:00 hrs.
+h6993,CRUZ VERDE,Cruz Verde,"General Bustamante 1001,",Ñuñoa,Metropolitana,-33.453821,-70.628882,Privada,,Semanal Lunes - Viernes: 09:00 a 20:00 hrs. Sábado: 10:00 a 20:00 hrs. Domingo: 10:00 a 19:00 hrs. Festivos: 10:00 a 19:00 hrs.
+h1465,CRUZ VERDE,Cruz Verde,"Av. Los Conquistadores 1850 Interior Clinica Indisa,",Providencia,Metropolitana,-33.421178,-70.61781,Privada,,Semanal Lunes - Viernes: 08:30 a 20:30 hrs. Sábado: 09:00 a 13:30 hrs. Domingo: Cerrado
+h6703,CRUZ VERDE,Cruz Verde,"Americo Vespucio 925, Local 8, Interior Lider,",Ñuñoa,Metropolitana,-33.463309,-70.574573,Privada,,Semanal Lunes - Domingo: 10:00 a 21:00 hrs. Festivos: 10:00 a 21:00 hrs.
+h1328,CRUZ VERDE,Cruz Verde,"Coventry 601,",Ñuñoa,Metropolitana,-33.448557,-70.58071,Privada,,Semanal Lunes - Sábado: 08:30 a 22:00 hrs. Domingo: 10:00 a 22:00 hrs. Festivos: 10:00 a 22:00 hrs.
+h6434,CRUZ VERDE,Cruz Verde,"Avenida Manuel Montt 2222, Local 1,",Ñuñoa,Metropolitana,-33.44811,-70.613454,Privada,,Semanal Lunes - Viernes: 09:00 a 22:00 hrs. Sábado: 10:00 a 20:00 hrs. Domingo: Cerrado
+h1466,CRUZ VERDE,Cruz Verde,"Providencia 1310,",Providencia,Metropolitana,-33.428718,-70.620192,Privada,,Semanal Lunes - Viernes: 08:00 a 22:00 hrs. Sábado: 09:00 a 21:00 hrs. Domingo: Cerrado
+h1331,CRUZ VERDE,Cruz Verde,"Irarrazaval 1489. Monserrat,",Ñuñoa,Metropolitana,-33.453051,-70.615471,Privada,,Semanal Lunes - Domingo: 08:30 a 22:00 hrs. Festivos: 08:30 a 22:00 hrs.
+h1467,CRUZ VERDE,Cruz Verde,"Santa Beatriz 22,",Providencia,Metropolitana,-33.427536,-70.617338,Privada,,Semanal Lunes - Viernes: 08:30 a 22:30 hrs. Sábado: 09:30 a 20:00 hrs. Domingo: Cerrado
+h6709,CRUZ VERDE,Cruz Verde,"Jose Manuel Infante 927,",Providencia,Metropolitana,-33.439694,-70.621522,Privada,,Semanal Lunes - Viernes: 09:00 a 18:30 hrs. Sábado: 10:30 a 13:00 hrs. Domingo: Cerrado
+h1332,CRUZ VERDE,Cruz Verde,"Av. Irarrazaval 2520,",Ñuñoa,Metropolitana,-33.454089,-70.604764,Privada,,Semanal Lunes - Viernes: 08:30 a 22:00 hrs. Sábado: 09:00 a 20:30 hrs. Domingo: Cerrado
+h9820,CRUZ VERDE,Cruz Verde,"Avenida Nueva Providencia 1885, Local 102,",Providencia,Metropolitana,-33.425745,-70.613819,Privada,,Semanal Lunes - Viernes: 10:30 a 19:30 hrs. Sábado y Domingo: Cerrado
+h1468,CRUZ VERDE,Cruz Verde,"Avenida Providencia 2012,",Providencia,Metropolitana,-33.423363,-70.612338,Privada,,Semanal Lunes - Viernes: 08:00 a 22:00 hrs. Sábado: 10:00 a 21:00 hrs. Domingo: Cerrado
+h1333,CRUZ VERDE,Cruz Verde,"Av. Irarrazaval 2768 ,",Ñuñoa,Metropolitana,-33.45434,-70.602318,Privada,,Semanal Lunes - Viernes: 09:00 a 20:00 hrs. Sábado: 10:00 a 18:00 hrs. Domingo: Cerrado
+h5924,CRUZ VERDE,Cruz Verde,"Avenida Providencia N° 1956, Local B,",Providencia,Metropolitana,-33.424133,-70.613132,Privada,,Semanal Lunes - Viernes: 08:00 a 22:00 hrs. Sábado: 10:00 a 21:00 hrs. Domingo: Cerrado
+h4526,CRUZ VERDE,Cruz Verde,"Av. Holanda 2954, Local 1,",Ñuñoa,Metropolitana,-33.445746,-70.597254,Privada,,Semanal Lunes - Viernes: 09:00 a 22:00 hrs. Sábado: 10:00 a 21:00 hrs. Domingo: Cerrado
+h1470,CRUZ VERDE,Cruz Verde,"Av. Providencia 2502. Local 1,",Providencia,Metropolitana,-33.419244,-70.604184,Privada,,Semanal Lunes - Viernes: 09:00 a 20:00 hrs. Sábado y Domingo: Cerrado
+h1335,CRUZ VERDE,Cruz Verde,"Irarrazaval 4949,",Ñuñoa,Metropolitana,-33.454483,-70.579036,Privada,,Semanal Lunes - Sábado: 08:00 a 22:00 hrs. Domingo: 09:00 a 21:00 hrs.
+h1336,CRUZ VERDE,Cruz Verde,"Irarrazaval 5696,",Ñuñoa,Metropolitana,-33.453427,-70.571569,Privada,,Semanal Lunes - Viernes: 08:30 a 22:00 hrs. Sábado: 09:00 a 22:00 hrs. Domingo: Cerrado
+h1471,CRUZ VERDE,Cruz Verde,"Avenida Providencia 2594,",Providencia,Metropolitana,-33.418706,-70.602811,Privada,,Semanal Lunes - Viernes: 08:30 a 22:30 hrs. Sábado: 09:00 a 19:00 hrs. Domingo: Cerrado
+h4816,CRUZ VERDE,Cruz Verde,"Avenida Providencia 2120,",Providencia,Metropolitana,-33.422629,-70.611137,Privada,,Semanal Lunes - Viernes: 08:00 a 22:00 hrs. Sábado: 10:00 a 20:30 hrs. Domingo: Cerrado
+h1337,CRUZ VERDE,Cruz Verde,"Jose Pedro Alessandri 1166. Portal ñuñoa,",Ñuñoa,Metropolitana,-33.465296,-70.598241,Privada,,Semanal Lunes - Domingo: 10:00 a 22:00 hrs. Festivos: 10:00 a 22:00 hrs.
+h1472,CRUZ VERDE,Cruz Verde,"Providencia 2699,",Providencia,Metropolitana,-33.418259,-70.601545,Privada,,Semanal Lunes - Viernes: 08:00 a 22:00 hrs. Sábado: 09:00 a 20:00 hrs. Domingo: Cerrado
+h10893,Cruz Verde,Cruz Verde,"Calle Padre Mariano 55,",Providencia,Metropolitana,-33.425924,-70.615943,Privada,,Semanal Lunes - Viernes: 11:00 a 20:00 hrs. Sábado y Domingo: Cerrado
+h7661,Curie,Independiente,"Calle Carlos Wilson 1461,",Providencia,Metropolitana,-33.44247,-70.613154,Privada,,Semanal Lunes - Viernes: 10:00 a 20:00 hrs. Sábado: 10:00 a 19:00 hrs. Domingo: Cerrado
+h7222,DAMYFAR,Independiente,"Avenida Irarrazaval 3636,",Ñuñoa,Metropolitana,-33.454949,-70.592619,Privada,,Semanal Lunes - Viernes: 10:00 a 20:00 hrs. Sábado: 10:00 a 14:00 hrs. Domingo: Cerrado
+h12053,DB Farma,Independiente,"Avenida General Jose Artigas 3002,",Ñuñoa,Metropolitana,-33.446409,-70.598777,Privada,,Semanal Lunes - Viernes: 09:30 a 14:30 y 15:00 a 18:00 hrs. Sábado y Domingo: Cerrado
+h9051,DEL DR SIMI,Dr. Simi,"Avenida Francisco Bilbao 1350, Local 102,",Providencia,Metropolitana,-33.439121,-70.614999,Privada,,Semanal Lunes - Viernes: 10:00 a 20:00 hrs. Sábado y Domingo: Cerrado
+h9935,Del Dr Simi,Dr. Simi,"Avenida Santa Isabel,",Providencia,Metropolitana,-33.446248,-70.625277,Privada,,Semanal Lunes - Viernes: 09:00 a 20:00 hrs. Sábado - Domingo: 10:00 a 18:00 hrs. Festivos: 10:00 a 18:00 hrs.
+h4795,DEL DR. SIMI,Dr. Simi,"Avenida Irarrazaval 3239,",Ñuñoa,Metropolitana,-33.455092,-70.597189,Privada,,Semanal Lunes - Viernes: 08:00 a 20:00 hrs. Sábado: 09:00 a 17:00 hrs. Domingo: Cerrado
+h10807,Del Dr. Simi,Dr. Simi,"Avenida Irarrazaval 4860,",Ñuñoa,Metropolitana,-33.454286,-70.579594,Privada,,Semanal Lunes - Sábado: 10:00 a 19:00 hrs. Domingo: Cerrado
+h9927,Del Dr. Simi,Dr. Simi,"Avenida Pedro De Valdivia 2451,",Providencia,Metropolitana,-33.445227,-70.606459,Privada,,Semanal Lunes - Viernes: 09:00 a 19:00 hrs. Sábado: 09:00 a 15:00 hrs. Domingo: Cerrado
+h1478,DEL DR. SIMI,Dr. Simi,"Providencia 1470,",Providencia,Metropolitana,-33.427661,-70.617617,Privada,,Semanal Lunes - Viernes: 08:30 a 19:30 hrs. Sábado: 09:00 a 19:00 hrs. Domingo: Cerrado
+h9377,Del Dr. Simi,Dr. Simi,"Avenida Providencia 2218, Local 2,",Providencia,Metropolitana,-33.421447,-70.609613,Privada,,Semanal Lunes - Viernes: 09:00 a 19:00 hrs. Sábado y Domingo: Cerrado
+h1345,DEL DR. SIMI,Dr. Simi,"Avenida Irarrazaval 024,",Ñuñoa,Metropolitana,-33.451959,-70.630449,Privada,,Semanal Lunes: 10:00 a 20:00 hrs. Martes - Jueves: 10:00 a 19:30 hrs. Viernes: 10:00 a 19:00 hrs. Sábado y Domingo: Cerrado
+h1479,DEL DR. SIMI,Dr. Simi,"Providencia 2532,",Providencia,Metropolitana,-33.419065,-70.603734,Privada,,Semanal Lunes - Viernes: 10:00 a 19:00 hrs. Sábado: 10:00 a 15:00 hrs. Domingo: Cerrado
+h1346,DEL DR. SIMI,Dr. Simi,"Irarrazaval 5662,",Ñuñoa,Metropolitana,-33.453517,-70.572041,Privada,,Semanal Lunes - Viernes: 07:00 a 21:00 hrs. Sábado: 08:00 a 21:00 hrs. Domingo: Cerrado Festivos: 08:00 a 21:00 hrs.
+h1480,DEL DR. SIMI,Dr. Simi,"Avenida Seminario 97,",Providencia,Metropolitana,-33.440751,-70.630105,Privada,,Semanal Lunes - Viernes: 09:30 a 19:30 hrs. Sábado: 10:00 a 19:00 hrs. Domingo: Cerrado
+h1347,DEL DR. SIMI,Dr. Simi,"Avenida Pedro De Valdivia 3376,",Ñuñoa,Metropolitana,-33.453481,-70.604807,Privada,,Semanal Lunes - Viernes: 09:00 a 19:00 hrs. Sábado: 09:00 a 14:00 hrs. Domingo: Cerrado
+h7391,DEL DR. SIMI,Dr. Simi,"Providencia 1266 L-6,",Providencia,Metropolitana,-33.428807,-70.620578,Privada,,Semanal Lunes - Viernes: 09:00 a 19:00 hrs. Sábado y Domingo: Cerrado
+h12530,DEL DR. SIMI,Dr. Simi,"Avenida Salvador 327,",Providencia,Metropolitana,-33.436847,-70.625835,Privada,,Semanal Lunes - Viernes: 08:00 a 19:00 hrs. Sábado y Domingo: Cerrado
+h12223,DEL DR. SIMI,Dr. Simi,"Avenida Pedro De Valdivia 5273,",Ñuñoa,Metropolitana,-33.472169,-70.606652,Privada,,Semanal Lunes: 09:00 a 20:00 hrs. Martes - Jueves: 09:00 a 19:00 hrs. Viernes: 09:00 a 17:00 hrs. Sábado y Domingo: Cerrado
+h5086,DEL DR. SIMI,Dr. Simi,"Avenida Providencia 1947, Local 2,",Providencia,Metropolitana,-33.424008,-70.612961,Privada,,Semanal Lunes - Viernes: 10:00 a 20:00 hrs. Sábado y Domingo: Cerrado
+h9841,Del Dr. Simi,Dr. Simi,"Luis Thayer Ojeda 098, Local 103,",Providencia,Metropolitana,-33.431493,-70.611072,Privada,,Semanal Lunes - Viernes: 09:00 a 19:00 hrs. Sábado: 10:00 a 15:00 hrs. Domingo: Cerrado
+h7331,DEL DR. SIMI,Dr. Simi,"Avenida Providencia N° 2080 - 2084, Locales 7 Y 8,",Providencia,Metropolitana,-33.422772,-70.611802,Privada,,Semanal Lunes - Viernes: 09:00 a 19:00 hrs. Sábado y Domingo: Cerrado
+h12575,DEL DR. SIMI,Dr. Simi,"Avenida Campo De Deportes 100,",Ñuñoa,Metropolitana,-33.454662,-70.608927,Privada,,Semanal Lunes - Viernes: 10:00 a 18:00 hrs. Sábado: 10:00 a 15:00 hrs. Domingo: Cerrado
+h10080,DEL DR. SIMI,Dr. Simi,"Eliodoro Yáñez 2943,",Providencia,Metropolitana,-33.427285,-70.591996,Privada,,Semanal Lunes - Viernes: 08:00 a 21:00 hrs. Sábado: 09:00 a 19:30 hrs. Domingo: Cerrado
+h8142,DR SIMI,Dr. Simi,"Avenida Irarrázaval 1717,",Ñuñoa,Metropolitana,-33.453391,-70.61324,Privada,,Semanal Sábado y Domingo: Cerrado
+h8157,Dr. Ponce,Independiente,"Avenida Antonio Varas 841,",Providencia,Metropolitana,-33.435146,-70.615257,Privada,,Semanal Lunes - Viernes: 09:30 a 19:30 hrs. Sábado: 10:00 a 15:00 hrs. Domingo: Cerrado
+h9630,ECO FARMACIAS,Independiente,"Avenida Providencia 2518, Local 5,",Providencia,Metropolitana,-33.418957,-70.604034,Privada,,Semanal Lunes - Viernes: 09:00 a 19:00 hrs. Sábado: 10:00 a 14:00 hrs. Domingo: Cerrado
+h7341,ECO FARMACIAS,Independiente,"Providencia 2076,",Providencia,Metropolitana,-33.422915,-70.611759,Privada,,Semanal Lunes - Viernes: 09:00 a 19:00 hrs. Sábado: 10:00 a 15:00 hrs. Domingo: Cerrado
+h6728,ECO FARMACIAS,Independiente,"Avenida Irrarazaval 2879,",Ñuñoa,Metropolitana,-33.454823,-70.601159,Privada,,Semanal Lunes - Viernes: 10:00 a 14:00 y 15:00 a 19:00 hrs. Sábado: 10:00 a 15:00 hrs. Domingo: Cerrado
+h9819,ECO FARMACIAS,Independiente,"Avenida Ricardo Lyon 33, Local 2,",Providencia,Metropolitana,-33.422163,-70.609935,Privada,,Semanal Lunes - Viernes: 09:00 a 19:00 hrs. Sábado: 10:00 a 14:00 hrs. Domingo: Cerrado
+h5759,ECO SALUD,Independiente,"Avenida Manuel Montt 1465,",Providencia,Metropolitana,-33.441252,-70.615342,Privada,,Semanal Lunes - Viernes: 10:00 a 14:00 y 16:00 a 20:00 hrs. Sábado: 10:00 a 14:00 hrs. Domingo: Cerrado
+h8107,ECOFARMACIA,Independiente,"Providencia 1312,",Providencia,Metropolitana,-33.428538,-70.620085,Privada,,Semanal Sábado y Domingo: Cerrado
+h5468,ECOPHARMA,Independiente,"Avenida Manuel Antonio Matta N° 60, Local 3,",Ñuñoa,Metropolitana,-33.455038,-70.628947,Privada,,Semanal Lunes - Viernes: 10:00 a 20:00 hrs. Sábado: 10:00 a 18:00 hrs. Domingo: Cerrado
+h5909,EKONOPLUS,Independiente,"Cirujano Videla 1315 L-2,",Ñuñoa,Metropolitana,-33.451565,-70.61751,Privada,,Semanal Lunes - Viernes: 10:00 a 12:00 y 15:00 a 22:00 hrs. Sábado: 10:00 a 19:00 hrs. Domingo: Cerrado
+h11183,FARMA OLGA,Independiente,"Avenida Irarrázaval 2366,",Ñuñoa,Metropolitana,-33.45357,-70.60633,Privada,,Semanal Lunes - Sábado: 09:00 a 19:00 hrs. Domingo: Cerrado
+h7243,FARMA VITALITY,Independiente,"Santa Beatriz N°113,",Providencia,Metropolitana,-33.426551,-70.618046,Privada,,Semanal Lunes - Sábado: 09:00 a 14:00 y 16:00 a 20:00 hrs. Domingo: 10:00 a 18:00 hrs. Festivos: 10:00 a 18:00 hrs.
+h7459,FARMAAHORRO,Independiente,"Avenida Rancagua N° 0112,",Providencia,Metropolitana,-33.441181,-70.630964,Privada,,Semanal Lunes - Viernes: 10:00 a 19:00 hrs. Sábado: 10:00 a 15:00 hrs. Domingo: Cerrado
+h7259,FARMABIEN,Independiente,"Avenida Irarrázaval 5350,",Ñuñoa,Metropolitana,-33.45323,-70.574401,Privada,,Semanal Lunes - Sábado: 10:00 a 19:00 hrs. Domingo: Cerrado
+h7012,FARMABIENESTAR SPA,Independiente,"Holanda 286, Local 3,",Providencia,Metropolitana,-33.420909,-70.602961,Privada,,Semanal Lunes - Viernes: 08:00 a 18:00 hrs. Sábado: 10:00 a 15:00 hrs. Domingo: Cerrado Festivos: 10:00 a 15:00 hrs.
+h6454,FARMAFULL,Independiente,"Avenida José Pedro Alessandri N° 61, Local 1,",Ñuñoa,Metropolitana,-33.455432,-70.598262,Privada,,Semanal Lunes - Sábado: 10:00 a 19:00 hrs. Domingo: Cerrado
+h11517,FARMALINE,Independiente,"Calle San Eugenio 1485,",Ñuñoa,Metropolitana,-33.46594,-70.62399,Privada,,Semanal Lunes - Viernes: 09:00 a 15:00 y 17:00 a 20:00 hrs. Sábado: 10:00 a 14:00 hrs. Domingo: Cerrado
+h10147,Farmanorte,Independiente,"Avenida Manuel Montt 712,",Providencia,Metropolitana,-33.434502,-70.616523,Privada,,Semanal Lunes - Viernes: 08:00 a 21:30 hrs. Sábado: 10:00 a 20:00 hrs. Domingo: Cerrado
+h7073,FARMAOFERTAS,Independiente,"Avenida Irarrázaval 200,",Ñuñoa,Metropolitana,-33.452228,-70.628732,Privada,,Semanal Sábado y Domingo: Cerrado
+h7776,FARMATENCION,Independiente,"Avenida Irarrázaval 2220, L-3,",Ñuñoa,Metropolitana,-33.453517,-70.607982,Privada,,Semanal Lunes - Viernes: 09:30 a 20:00 hrs. Sábado: 11:00 a 16:00 hrs. Domingo: Cerrado
+h10064,Farmatica,Independiente,"Calle Los Avellanos 2551,",Ñuñoa,Metropolitana,-33.473422,-70.605686,Privada,,Semanal Lunes - Viernes: 11:00 a 21:00 hrs. Sábado: 09:00 a 14:00 hrs. Domingo: 11:00 a 14:00 hrs.
+h11983,FARMAUNION,Independiente,"Avenida Irarrazaval 5455,",Ñuñoa,Metropolitana,-33.453517,-70.573972,Privada,,Semanal Lunes - Viernes: 09:00 a 15:00 y 17:00 a 20:00 hrs. Sábado: 10:00 a 17:00 hrs. Domingo: Cerrado
+h8029,Farmavitale,Independiente,"Avenida Los Leones N° 2605, Local 105,",Providencia,Metropolitana,-33.442559,-70.599721,Privada,,Semanal Lunes - Viernes: 10:00 a 19:00 hrs. Sábado: 10:00 a 14:00 hrs. Domingo: Cerrado
+h10301,Farmazon,Independiente,"Huelén 15,",Providencia,Metropolitana,-33.431296,-70.623432,Privada,,Semanal Lunes - Viernes: 10:00 a 18:00 hrs. Sábado: 10:00 a 15:00 hrs. Domingo: Cerrado
+h1497,FARS FARMACIA MEDICUS,Independiente,"Antonio Varas 303, Local 9,",Providencia,Metropolitana,-33.430473,-70.616952,Privada,,Semanal Lunes - Viernes: 09:00 a 18:00 hrs. Sábado: 10:00 a 13:00 hrs. Domingo: Cerrado
+h6428,FRACCION,Independiente,"Antonio Bellet 302,",Providencia,Metropolitana,-33.424921,-70.618947,Privada,,Semanal Lunes - Viernes: 09:00 a 20:00 hrs. Sábado: 10:00 a 18:00 hrs. Domingo: Cerrado
+h4025,FUNDACION DIABETES JUVENIL,Independiente,"Lota 2344,",Providencia,Metropolitana,-33.423309,-70.605622,Privada,,Semanal Lunes - Viernes: 10:00 a 19:00 hrs. Sábado: 10:00 a 13:00 hrs. Domingo: Cerrado
+h4103,GALENICA,Independiente,"Providencia 2592,",Providencia,Metropolitana,-33.418563,-70.603197,Privada,,Semanal Lunes - Viernes: 09:00 a 19:30 hrs. Sábado y Domingo: Cerrado
+h1348,GALENICA,Independiente,"Irarrazaval 2661,",Ñuñoa,Metropolitana,-33.454268,-70.603648,Privada,,Semanal Lunes - Viernes: 09:00 a 21:00 hrs. Sábado: 10:00 a 14:00 hrs. Domingo: Cerrado
+h1457,GALFARMA,Independiente,"Salvador 149,",Providencia,Metropolitana,-33.435254,-70.625985,Privada,,Semanal Lunes - Viernes: 08:00 a 21:00 hrs. Sábado: 09:00 a 14:00 hrs. Domingo: Cerrado
+h8112,GO FARM!,Independiente,"Santa Isabel 1292,",Providencia,Metropolitana,-33.446695,-70.614205,Privada,,Semanal Sábado y Domingo: Cerrado
+h7332,GOFARM!,Independiente,"Crecente Errázuriz N° 1785,",Ñuñoa,Metropolitana,-33.458135,-70.613025,Privada,,Semanal Lunes - Domingo: 07:00 a 21:00 hrs. Festivos: 07:00 a 21:00 hrs.
+h9459,GrupFarma,Independiente,"Irarrázaval 4395,",Ñuñoa,Metropolitana,-33.459514,-70.597876,Privada,,Semanal Lunes - Viernes: 09:00 a 19:00 hrs. Sábado: 10:00 a 18:00 hrs. Domingo: Cerrado
+h9246,HAHNNEMAN,Independiente,"Avenida Apoquindo 6210,",Providencia,Metropolitana,-33.408228,-70.566376,Privada,,Semanal Lunes - Viernes: 10:00 a 19:00 hrs. Sábado: 10:00 a 14:30 hrs. Domingo: Cerrado
+h12026,Home,Independiente,"Calle Exequiel Fernández 2000,",Ñuñoa,Metropolitana,-33.473404,-70.601073,Privada,,Semanal Lunes - Sábado: 11:00 a 21:00 hrs. Domingo: Cerrado
+h1484,INGLESA,Independiente,"Luis Thayer Ojeda 157,",Providencia,Metropolitana,-33.419906,-70.602232,Privada,,Semanal Lunes - Viernes: 09:30 a 19:30 hrs. Sábado y Domingo: Cerrado
+h1349,INSTITUCIONAL,Independiente,"Brown Norte 235. Pdi,",Ñuñoa,Metropolitana,-33.453248,-70.59176,Privada,,Semanal Lunes - Domingo: 08:30 a 21:30 hrs. Festivos: 08:30 a 21:30 hrs.
+h7343,INTEGRAL,Independiente,"Avenida Irarrázaval 660, Local 5,",Ñuñoa,Metropolitana,-33.452747,-70.623689,Privada,,Semanal Lunes - Viernes: 09:30 a 19:30 hrs. Sábado: 10:00 a 15:00 hrs. Domingo: Cerrado
+h7903,Jesús del Gran Poder,Independiente,"Bellavista N°018,",Providencia,Metropolitana,-33.434412,-70.635405,Privada,,Semanal Lunes - Viernes: 10:00 a 14:00 y 16:00 a 20:00 hrs. Sábado: 00:00 a 14:00 y 16:00 a 20:00 hrs. Domingo: Cerrado
+h7106,KNOP,Knop,"Irrarazaval 2546,",Ñuñoa,Metropolitana,-33.453964,-70.604571,Privada,,Semanal Sábado y Domingo: Cerrado
+h7108,KNOP,Knop,"Providencia 1333,",Providencia,Metropolitana,-33.428377,-70.619591,Privada,,Semanal Lunes - Viernes: 09:30 a 19:30 hrs. Sábado: 09:30 a 14:00 hrs. Domingo: Cerrado
+h7111,KNOP,Knop,"Irrarazaval 2810,",Ñuñoa,Metropolitana,-33.454376,-70.601824,Privada,,Semanal Lunes - Viernes: 10:00 a 19:00 hrs. Sábado: 10:00 a 15:00 hrs. Domingo: Cerrado
+h7113,KNOP,Knop,"Av. Nueva Providencia 2176,",Providencia,Metropolitana,-33.422718,-70.609763,Privada,,Semanal Lunes - Viernes: 10:00 a 19:00 hrs. Sábado: 10:00 a 15:00 hrs. Domingo: Cerrado
+h4432,KNOP,Knop,"Avenida Providencia 2580, L-018,",Providencia,Metropolitana,-33.418778,-70.603112,Privada,,Semanal Sábado y Domingo: Cerrado
+h7122,KNOP,Knop,"Providencia 2242,",Providencia,Metropolitana,-33.421214,-70.609055,Privada,,Semanal Lunes - Viernes: 10:00 a 19:00 hrs. Sábado: 10:00 a 15:00 hrs. Domingo: Cerrado
+h7099,KNOP,Knop,"Providencia 2031,",Providencia,Metropolitana,-33.42125,-70.609034,Privada,,Semanal Lunes - Domingo: 00:00 a 00:00 hrs. Festivos: 00:00 a 00:00 hrs.
+h7126,KNOP,Knop,"Irrarazaval 5674 Local 3,",Ñuñoa,Metropolitana,-33.453302,-70.571783,Privada,,Semanal Lunes - Viernes: 10:00 a 19:00 hrs. Sábado: 10:00 a 15:00 hrs. Domingo: Cerrado
+h5071,LA BOTICA ITALIA,Independiente,"Avenida Santa Isabel 0301,",Providencia,Metropolitana,-33.446856,-70.627209,Privada,,Semanal Lunes - Viernes: 08:00 a 21:00 hrs. Sábado - Domingo: 10:00 a 18:00 hrs. Festivos: 10:00 a 18:00 hrs.
+h9235,LA BOTIKA,Independiente,"Avenida Presidente José Batlle Y Ordóñez 3933 Local 2,",Ñuñoa,Metropolitana,-33.450258,-70.588241,Privada,,Semanal Lunes - Sábado: 10:00 a 14:00 y 17:00 a 21:00 hrs. Domingo: Cerrado
+h7402,LA FARMA,Independiente,"Avenida Providencia 1753, Local I,",Providencia,Metropolitana,-33.426228,-70.614763,Privada,,Semanal Lunes - Sábado: 10:00 a 21:00 hrs. Domingo: 10:00 a 20:00 hrs.
+h9106,La Rebaja,Independiente,"Simón Bolívar 2137,",Ñuñoa,Metropolitana,-33.451064,-70.60912,Privada,,Semanal Lunes - Sábado: 09:00 a 21:00 hrs. Domingo: Cerrado
+h6986,LA REBAJA,Independiente,"Avenida Irarrazaval 3443,",Ñuñoa,Metropolitana,-33.455647,-70.595151,Privada,,Semanal Lunes - Sábado: 09:00 a 21:00 hrs. Domingo: 11:00 a 19:00 hrs. Festivos: 11:00 a 19:00 hrs.
+h6460,LA REBAJA,Independiente,"Avenida Providencia N° 2153,",Providencia,Metropolitana,-33.421268,-70.609077,Privada,,Semanal Lunes - Sábado: 09:00 a 14:00 y 16:00 a 21:00 hrs. Domingo: Cerrado
+h977,LA REBAJA,Independiente,"Irrarazaval 4971 L-6,",Ñuñoa,Metropolitana,-33.454537,-70.577813,Privada,,Semanal Lunes - Viernes: 10:00 a 13:00 y 15:00 a 21:00 hrs. Sábado: 10:00 a 15:00 hrs. Domingo: Cerrado
+h9148,La Rebaja,Independiente,"Avenida Vicuña Mackenna 660,",Ñuñoa,Metropolitana,-33.450097,-70.630813,Privada,,Semanal Lunes - Sábado: 09:00 a 21:00 hrs. Domingo: Cerrado
+h6464,LA REBAJA,Independiente,"Avenida Providencia N° 1090,",Providencia,Metropolitana,-33.429917,-70.622702,Privada,,Semanal Lunes - Viernes: 09:00 a 21:00 hrs. Sábado: 09:00 a 20:00 hrs. Domingo: Cerrado
+h6542,LA REBAJA,Independiente,"Avenida Nueva Providencia N° 2566,",Providencia,Metropolitana,-33.417632,-70.603798,Privada,,Semanal Lunes - Sábado: 10:00 a 21:00 hrs. Domingo: Cerrado
+h4280,LATINOAMERICANA,Independiente,"Pedro De Valdivia 3584,",Ñuñoa,Metropolitana,-33.455504,-70.605129,Privada,,Semanal Lunes - Viernes: 09:00 a 19:30 hrs. Sábado: 09:00 a 14:00 hrs. Domingo: Cerrado
+h7908,LATINOAMERICANA,Independiente,"Avenida Irarrazaval 3064,",Ñuñoa,Metropolitana,-33.45434,-70.599056,Privada,,Semanal Sábado y Domingo: Cerrado
+h12143,LATINOAMERICANA,Independiente,"Avenida Irarrázaval 2300,",Ñuñoa,Metropolitana,-33.453606,-70.606952,Privada,,Semanal Lunes - Viernes: 10:00 a 18:00 hrs. Sábado: 10:00 a 14:00 hrs. Domingo: Cerrado
+h4430,LEMBACH,Independiente,"Avenida Manuel Montt 536,",Providencia,Metropolitana,-33.433159,-70.617445,Privada,,Semanal Lunes - Viernes: 09:00 a 21:00 hrs. Sábado y Domingo: Cerrado
+h1485,LIDO,Independiente,"Eliodoro Yañez 2865,",Providencia,Metropolitana,-33.428037,-70.593885,Privada,,Semanal Lunes - Domingo: 08:30 a 21:30 hrs. Festivos: 08:30 a 21:30 hrs.
+h9529,LIFEPHARMACY,Independiente,"Avenida Providencia 2676, Local 108,",Providencia,Metropolitana,-33.41842,-70.60206,Privada,,Semanal Lunes - Viernes: 09:00 a 18:00 hrs. Sábado: 10:30 a 14:30 hrs. Domingo: Cerrado
+h6996,LIGA CHILENA CONTRA LA EPILEPSIA,Independiente,"Avenida Providencia N° 2411, Local 17,",Providencia,Metropolitana,-33.419763,-70.605579,Privada,,Semanal Lunes - Viernes: 09:30 a 19:00 hrs. Sábado: 10:00 a 14:00 hrs. Domingo: Cerrado
+h4235,LINCE,Independiente,"Condell 679. Local103-104,",Providencia,Metropolitana,-33.441575,-70.627423,Privada,,Semanal Lunes - Viernes: 09:00 a 18:00 hrs. Sábado - Domingo: 00:00 a 00:00 hrs. Festivos: 00:00 a 00:00 hrs.
+h5893,LO OSSA,Independiente,"Alcalde Eduardo Castillo Velasco N° 5474,",Ñuñoa,Metropolitana,-33.462038,-70.574809,Privada,,Semanal Lunes - Viernes: 10:00 a 19:00 hrs. Sábado: 10:00 a 16:00 hrs. Domingo: Cerrado
+h4434,LOS ORIENTALES,Independiente,"Avenida Irarrazabal 4818,",Ñuñoa,Metropolitana,-33.454448,-70.580045,Privada,,Semanal Lunes - Domingo: 00:00 a 00:00 hrs. Festivos: 00:00 a 00:00 hrs.
+h11025,Lyon,Independiente,"Avenida Ricardo Lyon 401,",Providencia,Metropolitana,-33.42553,-70.608669,Privada,,Semanal Lunes - Viernes: 10:00 a 20:00 hrs. Sábado y Domingo: Cerrado
+h7696,MAICAO,Maicao,"Avenida Manuel Antonio Matta N° 60, Local 12,",Ñuñoa,Metropolitana,-33.45502,-70.628603,Privada,,Semanal Lunes - Viernes: 10:00 a 19:00 hrs. Sábado y Domingo: Cerrado
+h10250,MAICAO,Maicao,"Avenida Providencia 1303, Local 1,",Providencia,Metropolitana,-33.428915,-70.620149,Privada,,Semanal Lunes - Viernes: 10:00 a 19:00 hrs. Sábado y Domingo: Cerrado
+h9725,MAICAO,Maicao,"Avenida Irarrázaval 2771,",Ñuñoa,Metropolitana,-33.454537,-70.602403,Privada,,Semanal Lunes - Viernes: 10:00 a 19:00 hrs. Sábado y Domingo: Cerrado
+h7649,MAICAO,Maicao,"Avenida Providencia 1936,",Providencia,Metropolitana,-33.423918,-70.61354,Privada,,Semanal Lunes - Viernes: 09:00 a 19:00 hrs. Sábado y Domingo: Cerrado
+h10902,Manquel,Independiente,"Avenida Nueva Providencia 1365,",Providencia,Metropolitana,-33.429201,-70.618668,Privada,,Semanal Lunes - Viernes: 08:00 a 22:00 hrs. Sábado: 09:00 a 20:00 hrs. Domingo: Cerrado
+h3100,MANRIQUEZ,Independiente,"Avenida Vicuña Mackenna 298,",Providencia,Metropolitana,-33.445156,-70.632573,Privada,,Semanal Lunes - Sábado: 10:00 a 20:00 hrs. Domingo: Cerrado
+h5325,Manríquez,Independiente,"Manuel Montt 435, Local 104,",Providencia,Metropolitana,-33.432353,-70.618175,Privada,,Semanal Lunes - Sábado: 10:00 a 20:00 hrs. Domingo: Cerrado
+h7390,MAS AHORRO,Independiente,"Manuel Montt 1077 L-4,",Providencia,Metropolitana,-33.437796,-70.616029,Privada,,Semanal Lunes - Viernes: 10:00 a 19:00 hrs. Sábado: 10:00 a 14:00 hrs. Domingo: Cerrado
+h8040,MAXIPHARMA,Independiente,"Irarrazaval 2087,",Ñuñoa,Metropolitana,-33.453857,-70.609356,Privada,,Semanal Sábado y Domingo: Cerrado
+h5314,MEDFARMA,Independiente,"Avenida Providencia 1037,",Providencia,Metropolitana,-33.430705,-70.622874,Privada,,Semanal Lunes - Viernes: 09:00 a 18:00 hrs. Sábado y Domingo: Cerrado
+h8143,MEDICAR,Independiente,"Avenida Eliodoro Yáñez 1103,",Providencia,Metropolitana,-33.433821,-70.619419,Privada,,Semanal Sábado y Domingo: Cerrado
+h1486,MIIFARMACIA,Independiente,"Avenida Manuel Montt N° 1556, Local B,",Providencia,Metropolitana,-33.442004,-70.614849,Privada,,Semanal Lunes - Viernes: 09:00 a 13:00 y 13:30 a 18:30 hrs. Sábado y Domingo: Cerrado
+h9632,MILE,Independiente,"Avenida Santa Isabel 0217,",Providencia,Metropolitana,-33.446856,-70.628346,Privada,,Semanal Lunes - Sábado: 10:00 a 19:00 hrs. Domingo: Cerrado
+h6485,MONTES,Independiente,"Avenida Seminario 505,",Providencia,Metropolitana,-33.447018,-70.628689,Privada,,Semanal Lunes - Viernes: 10:00 a 17:00 hrs. Sábado: 14:00 a 18:00 hrs. Domingo: Cerrado
+h9400,Morapharma Farmacias,Independiente,"Avenida Irarrazaval 3200,",Ñuñoa,Metropolitana,-33.454734,-70.597618,Privada,,Semanal Lunes - Viernes: 07:30 a 20:00 hrs. Sábado: 10:00 a 19:00 hrs. Domingo: Cerrado
+h9536,Novasalud.com,Independiente,"Las Urbinas 59,",Providencia,Metropolitana,-33.42227,-70.611802,Privada,,Semanal Lunes - Viernes: 09:00 a 14:30 y 15:00 a 18:00 hrs. Sábado: 09:00 a 14:00 hrs. Domingo: Cerrado
+h7732,NUEVA FARMACIA,Independiente,"Manuel Montt N°267,",Providencia,Metropolitana,-33.430902,-70.61899,Privada,,Semanal Sábado y Domingo: Cerrado
+h7695,OBELISCO,Independiente,"Manuel Montt 686 L-2,",Providencia,Metropolitana,-33.434358,-70.616608,Privada,,Semanal Lunes - Viernes: 10:00 a 19:00 hrs. Sábado: 10:00 a 15:00 hrs. Domingo: Cerrado
+h6922,OCHOA,Independiente,"Avenida Pedro De Valdivia 3598,",Ñuñoa,Metropolitana,-33.45554,-70.605,Privada,,Semanal Lunes - Viernes: 10:00 a 18:00 hrs. Sábado: 10:00 a 14:00 hrs. Domingo: Cerrado
+h6157,OFTÁLMIKA,Independiente,"Av. Los Leones 419,",Providencia,Metropolitana,-33.423524,-70.604657,Privada,,Semanal Lunes - Viernes: 10:00 a 19:00 hrs. Sábado y Domingo: Cerrado
+h7375,OLIVEROS,Independiente,"Francisco Bilbao 1941 Local 3,",Providencia,Metropolitana,-33.438638,-70.608712,Privada,,Semanal Lunes - Domingo: 10:00 a 14:00 y 17:00 a 21:00 hrs.
+h6983,OPENFARMA,Independiente,"Las Bellotas 292,",Providencia,Metropolitana,-33.422682,-70.607189,Privada,,Semanal Lunes - Viernes: 09:00 a 18:00 hrs. Sábado y Domingo: Cerrado
+h9465,OXFAR,Independiente,"Antonio Bellet 147, Local 103,",Providencia,Metropolitana,-33.425942,-70.617553,Privada,,Semanal Lunes - Viernes: 09:30 a 19:30 hrs. Sábado y Domingo: Cerrado
+h1351,PHARMA 93,Independiente,"Exequiel Fernandez 93,",Ñuñoa,Metropolitana,-33.455522,-70.599678,Privada,,Semanal Lunes - Viernes: 09:00 a 20:00 hrs. Sábado y Domingo: Cerrado
+h1493,PHARMA 93,Independiente,"Coyancura 2221,",Providencia,Metropolitana,-33.423721,-70.608712,Privada,,Semanal Lunes - Viernes: 09:30 a 20:00 hrs. Sábado: 10:00 a 14:00 hrs. Domingo: Cerrado
+h7739,PHARMED,Independiente,"Pedro De Valdivia 2272, Local 102,",Providencia,Metropolitana,-33.443258,-70.606244,Privada,,Semanal Lunes - Viernes: 09:00 a 21:00 hrs. Sábado - Domingo: 10:00 a 20:00 hrs. Festivos: 10:00 a 20:00 hrs.
+h4229,PROFAR,Independiente,"Perez Valenzuela 1077,",Providencia,Metropolitana,-33.428753,-70.623174,Privada,,Semanal Lunes - Martes: 08:45 a 18:30 hrs. Miércoles: 08:45 a 20:00 hrs. Jueves - Viernes: 08:45 a 18:30 hrs. Sábado y Domingo: Cerrado
+h4318,PUCÓN,Independiente,"Avenida Irarrazaval N°765,",Ñuñoa,Metropolitana,-33.453534,-70.623089,Privada,,Semanal Lunes - Sábado: 10:00 a 18:00 hrs. Domingo: Cerrado
+h9287,PUNTO FARMA,Independiente,"Román Díaz 2217, Local 1,",Ñuñoa,Metropolitana,-33.45144,-70.616759,Privada,,Semanal Lunes - Viernes: 09:00 a 19:00 hrs. Sábado: 09:00 a 14:00 hrs. Domingo: Cerrado
+h1352,R Y C,Independiente,"Ignacio Carrera Pinto 3777,",Ñuñoa,Metropolitana,-33.470505,-70.591245,Privada,,Semanal Lunes - Viernes: 10:00 a 14:00 y 17:00 a 20:00 hrs. Sábado: 10:00 a 14:00 y 17:00 a 19:00 hrs. Domingo: Cerrado
+h5091,R&M FARMACIAS,Independiente,"Avenida Irarrazaval 1302,",Ñuñoa,Metropolitana,-33.452908,-70.61751,Privada,,Semanal Lunes - Viernes: 09:30 a 19:30 hrs. Sábado y Domingo: Cerrado
+h6113,RADANET,Independiente,"General José Artigas 3001, Local 3,",Ñuñoa,Metropolitana,-33.446319,-70.599099,Privada,,Semanal Lunes - Viernes: 09:30 a 14:00 y 15:00 a 19:30 hrs. Sábado: 09:30 a 14:00 hrs. Domingo: Cerrado
+h1325,REAL,Independiente,"Simon Bolivar 3751,",Ñuñoa,Metropolitana,-33.448665,-70.591546,Privada,,Semanal Lunes - Sábado: 10:00 a 13:00 y 16:00 a 20:00 hrs. Domingo: Cerrado
+h12181,Redoxx,Independiente,"Calle Zañartu 2540,",Ñuñoa,Metropolitana,-33.472008,-70.605944,Privada,,Semanal Lunes - Sábado: 10:00 a 20:00 hrs. Domingo: Cerrado
+h1354,REDOXX,Independiente,"Obispo Orrego 1015,",Ñuñoa,Metropolitana,-33.462933,-70.620192,Privada,,Semanal Lunes - Viernes: 10:00 a 13:00 y 14:00 a 20:00 hrs. Sábado: 10:00 a 16:00 hrs. Domingo: Cerrado
+h9985,Redoxx,Independiente,"Avenida Presidente José Batlle Y Ordóñez 4502,",Ñuñoa,Metropolitana,-33.452299,-70.583649,Privada,,Semanal Lunes - Viernes: 10:00 a 19:00 hrs. Sábado: 10:00 a 14:00 hrs. Domingo: Cerrado
+h1489,REDSANA,Independiente,"Av. Salvador 149. Interior Edificio Galeno,",Providencia,Metropolitana,-33.435558,-70.626007,Privada,,Semanal Lunes: 08:30 a 13:00 y 14:00 a 19:00 hrs. Martes: 09:00 a 13:00 y 14:00 a 19:00 hrs. Miércoles - Viernes: 08:30 a 13:00 y 14:00 a 19:00 hrs. Sábado y Domingo: Cerrado
+h1482,RPFARMA,Independiente,"Providencia 1438,",Providencia,Metropolitana,-33.427876,-70.618132,Privada,,Semanal Lunes - Viernes: 09:00 a 21:00 hrs. Sábado: 10:00 a 15:00 hrs. Domingo: Cerrado
+h1358,SALCOBRAND,Salcobrand,"Suecia 3071,",Ñuñoa,Metropolitana,-33.448163,-70.600687,Privada,,Semanal Lunes - Domingo: 08:30 a 22:00 hrs.
+h12350,Salcobrand,Salcobrand,"Avenida Presidente José Batlle Y Ordoñez 3933,",Ñuñoa,Metropolitana,-33.450276,-70.588263,Privada,,Semanal Lunes - Domingo: 09:00 a 20:30 hrs. Festivos: 09:00 a 20:30 hrs.
+h4468,SALCOBRAND,Salcobrand,"Hamburgo 671 Local 1,",Ñuñoa,Metropolitana,-33.448271,-70.576697,Privada,,Semanal Lunes - Domingo: 09:00 a 22:00 hrs. Festivos: 09:00 a 22:00 hrs.
+h4532,SALCOBRAND,Salcobrand,"Av. Tobalaba 5151. Local105,",Ñuñoa,Metropolitana,-33.436561,-70.577534,Privada,,Semanal Lunes - Domingo: 09:00 a 22:00 hrs. Festivos: 09:00 a 22:00 hrs.
+h1498,SALCOBRAND,Salcobrand,"Avenida Providencia 1364,",Providencia,Metropolitana,-33.428342,-70.619269,Privada,,Semanal Lunes - Viernes: 08:30 a 21:00 hrs. Sábado: 09:00 a 16:00 hrs. Domingo: Cerrado
+h1432,SALCOBRAND,Salcobrand,"Nueva Providencia 1355,",Providencia,Metropolitana,-33.429183,-70.618861,Privada,,Semanal Lunes - Viernes: 08:00 a 21:00 hrs. Sábado - Domingo: 10:00 a 20:00 hrs. Festivos: 10:00 a 20:00 hrs.
+h6722,SALCOBRAND,Salcobrand,"Av. Irarrazaval 2704, L-3,",Ñuñoa,Metropolitana,-33.454072,-70.603176,Privada,,Semanal Lunes - Viernes: 09:00 a 21:00 hrs. Sábado: 10:00 a 18:00 hrs. Domingo: Cerrado
+h1499,SALCOBRAND,Salcobrand,"Providencia 1694,",Providencia,Metropolitana,-33.426407,-70.615664,Privada,,Semanal Lunes - Viernes: 08:30 a 21:00 hrs. Sábado: 09:00 a 16:00 hrs. Domingo: Cerrado
+h1435,SALCOBRAND,Salcobrand,"Los Leones 1185,",Providencia,Metropolitana,-33.430204,-70.60279,Privada,,Semanal Lunes - Viernes: 08:00 a 00:00 hrs. Sábado - Domingo: 09:00 a 00:00 hrs.
+h1501,SALCOBRAND,Salcobrand,"Providencia 2203,",Providencia,Metropolitana,-33.421787,-70.609785,Privada,,Semanal Lunes - Viernes: 08:30 a 21:00 hrs. Sábado: 09:00 a 16:00 hrs. Domingo: Cerrado
+h4105,SALCOBRAND,Salcobrand,"Avenida Tobalaba 1375,",Providencia,Metropolitana,-33.426479,-70.590902,Privada,,Semanal Lunes - Viernes: 08:00 a 21:00 hrs. Sábado: 10:00 a 19:00 hrs. Domingo: Cerrado
+h10015,Salcobrand,Salcobrand,"Avenida Nueva Providencia 1919,",Providencia,Metropolitana,-33.425584,-70.613325,Privada,,Semanal Sábado y Domingo: Cerrado
+h1502,SALCOBRAND,Salcobrand,"Providencia 2295,",Providencia,Metropolitana,-33.420784,-70.608154,Privada,,Semanal Lunes - Viernes: 09:00 a 21:00 hrs. Sábado y Domingo: Cerrado
+h1301,SALCOBRAND,Salcobrand,"Antonio Varas 2108,",Ñuñoa,Metropolitana,-33.446463,-70.611287,Privada,,Semanal Lunes - Sábado: 09:00 a 22:00 hrs. Domingo: 11:00 a 21:45 hrs. Festivos: 11:00 a 21:45 hrs.
+h1503,SALCOBRAND,Salcobrand,"Providencia 2593,",Providencia,Metropolitana,-33.418742,-70.60279,Privada,,Semanal Lunes - Viernes: 08:00 a 22:00 hrs. Sábado: 09:00 a 18:00 hrs. Domingo: Cerrado
+h12274,salcobrand,Salcobrand,"Avenida Irarrazaval 2563,",Ñuñoa,Metropolitana,-33.45443,-70.60427,Privada,,Semanal Lunes - Sábado: 08:30 a 21:00 hrs. Domingo: 09:00 a 20:00 hrs. Festivos: 09:00 a 20:00 hrs.
+h12417,Salcobrand,Salcobrand,"Avenida Andres Bello 1839,",Providencia,Metropolitana,-33.423005,-70.617145,Privada,,Semanal Lunes - Domingo: 09:00 a 21:00 hrs.
+h1302,SALCOBRAND,Salcobrand,"Campo De Deporte 180,",Ñuñoa,Metropolitana,-33.455182,-70.60912,Privada,,Semanal Lunes - Domingo: 09:00 a 22:00 hrs. Festivos: 09:00 a 22:00 hrs.
+h1504,SALCOBRAND,Salcobrand,"Ricardo Lyon 1848,",Providencia,Metropolitana,-33.437814,-70.603777,Privada,,Semanal Lunes - Viernes: 08:30 a 23:00 hrs. Sábado - Domingo: 09:00 a 22:00 hrs. Festivos: 09:00 a 23:00 hrs.
+h1303,SALCOBRAND,Salcobrand,"Chile -españa 597,",Ñuñoa,Metropolitana,-33.44947,-70.597876,Privada,,Semanal Lunes - Sábado: 08:00 a 22:30 hrs. Domingo: 09:00 a 22:00 hrs. Festivos: 09:00 a 22:00 hrs.
+h1505,SALCOBRAND,Salcobrand,"Salvador 115,",Providencia,Metropolitana,-33.434878,-70.626136,Privada,,Semanal Lunes - Viernes: 08:30 a 20:00 hrs. Sábado: 09:00 a 14:00 hrs. Domingo: Cerrado
+h11697,Salcobrand,Salcobrand,"Avenida Providencia 2629,",Providencia,Metropolitana,-33.418778,-70.602275,Privada,,Semanal Lunes - Sábado: 09:00 a 21:00 hrs. Domingo: Cerrado
+h1305,SALCOBRAND,Salcobrand,"Irarrazaval 2305. Megasalud ñuñoa,",Ñuñoa,Metropolitana,-33.453928,-70.60721,Privada,,Semanal Lunes - Viernes: 09:00 a 19:00 hrs. Sábado: 09:00 a 12:30 hrs. Domingo: Cerrado
+h9456,Salcobrand,Salcobrand,"Avenida Ricardo Lyon 111, Locales 6 Y 203, Interior Centro Comercial Vivo Panorámico,",Providencia,Metropolitana,-33.423094,-70.609613,Privada,,Semanal Lunes - Sábado: 10:00 a 20:00 hrs. Domingo: 11:00 a 17:00 hrs. Festivos: 11:00 a 17:00 hrs.
+h11895,Salcobrand,Salcobrand,"Avenida Pedro De Valdivia 1833,",Providencia,Metropolitana,-33.439677,-70.607446,Privada,,Semanal Lunes - Domingo: 08:00 a 21:00 hrs. Festivos: 08:00 a 21:00 hrs.
+h1308,SALCOBRAND,Salcobrand,"Irarrazaval 4123,",Ñuñoa,Metropolitana,-33.45545,-70.586954,Privada,,Semanal Lunes - Domingo: 08:30 a 21:30 hrs. Festivos: 08:30 a 21:30 hrs.
+h6704,SALCOBRAND,Salcobrand,"Avenida Providencia 2128, Local 3 Y 2132, Local 2,",Providencia,Metropolitana,-33.422199,-70.611115,Privada,,Semanal Lunes - Viernes: 08:30 a 21:00 hrs. Sábado: 10:00 a 19:00 hrs. Domingo: Cerrado
+h4273,SALCOBRAND,Salcobrand,"Providencia 2315,",Providencia,Metropolitana,-33.420587,-70.607811,Privada,,Semanal Lunes - Viernes: 08:30 a 21:00 hrs. Sábado: 09:00 a 15:00 hrs. Domingo: Cerrado
+h1309,SALCOBRAND,Salcobrand,"Jose Domingo Cañas 1701,",Ñuñoa,Metropolitana,-33.456274,-70.613905,Privada,,Semanal Lunes - Sábado: 09:00 a 22:00 hrs. Domingo: 10:30 a 22:00 hrs. Festivos: 10:30 a 22:00 hrs.
+h1355,SALCOBRAND,Salcobrand,"Matta Oriente 301,",Ñuñoa,Metropolitana,-33.45477,-70.62753,Privada,,Semanal Lunes - Sábado: 09:00 a 22:30 hrs. Domingo: 09:00 a 22:00 hrs. Festivos: 09:00 a 22:00 hrs.
+h11766,SALCOBRAND,Salcobrand,"Avenida Jose Pedro Alessandri 1166,",Ñuñoa,Metropolitana,-33.465385,-70.598219,Privada,,Semanal Lunes - Domingo: 09:00 a 21:00 hrs. Festivos: 09:00 a 21:00 hrs.
+h6603,SALVADOR,Independiente,"Avenida Providencia 727, Local 711,",Providencia,Metropolitana,-33.432765,-70.625428,Privada,,Semanal Lunes - Viernes: 09:00 a 20:00 hrs. Sábado y Domingo: Cerrado Festivos: 09:00 a 20:00 hrs.
+h1356,SANTA GEMITA,Independiente,"Irarrazaval 2993,",Ñuñoa,Metropolitana,-33.454716,-70.599893,Privada,,Semanal Lunes - Sábado: 09:00 a 20:30 hrs. Domingo: Cerrado
+h1357,SANTA GEMITA,Independiente,"Irarrazaval 3006,",Ñuñoa,Metropolitana,-33.454752,-70.599871,Privada,,Semanal Lunes - Viernes: 09:30 a 20:30 hrs. Sábado: 10:00 a 15:00 hrs. Domingo: 09:30 a 20:30 hrs. Festivos: 09:30 a 20:30 hrs.
+h10946,SERMECOOP,Independiente,"Avenida Pedro De Valdivia 195,",Providencia,Metropolitana,-33.425405,-70.611802,Privada,,Semanal Lunes - Jueves: 09:00 a 18:00 hrs. Viernes: 09:00 a 17:00 hrs. Sábado y Domingo: Cerrado
+h6723,Skol,Independiente,"Avenida Irarrazaval 635,",Ñuñoa,Metropolitana,-33.45289,-70.624054,Privada,,Semanal Lunes - Sábado: 10:00 a 20:00 hrs. Domingo: Cerrado
+h6839,SOLUFAR,Independiente,"Huelen 15,",Providencia,Metropolitana,-33.431046,-70.623432,Privada,,Semanal Lunes - Viernes: 09:00 a 18:00 hrs. Sábado: 10:00 a 15:00 hrs. Domingo: Cerrado
+h8104,SUPERFARMA,Independiente,"Avda. Los Libertadores 1614, L. A,",Ñuñoa,Metropolitana,-33.668102,-71.03735,Privada,,Semanal Sábado y Domingo: Cerrado
+h1494,TAJAMAR,Independiente,"Avenida Manuel Montt N° 018, Local 9,",Providencia,Metropolitana,-33.429022,-70.62002,Privada,,Semanal Lunes - Viernes: 10:30 a 20:00 hrs. Sábado y Domingo: Cerrado
+h11702,TOTAL PHARMA,Independiente,"Avenida Antonio Varas 1323,",Providencia,Metropolitana,-33.439354,-70.61384,Privada,,Semanal Lunes - Viernes: 10:00 a 15:00 y 16:00 a 21:00 hrs. Sábado: 10:00 a 15:00 hrs. Domingo: Cerrado
+h5565,TU FARMACIAONLINE,Independiente,"Calle San Eugenio 1543,",Ñuñoa,Metropolitana,-33.466173,-70.624226,Privada,,Semanal Lunes - Viernes: 09:30 a 21:00 hrs. Sábado: 10:00 a 21:00 hrs. Domingo: 11:00 a 20:00 hrs.
+h9243,Tu Salud,Independiente,"Avenida Pedro De Valdivia 4170,",Ñuñoa,Metropolitana,-33.461268,-70.605686,Privada,,Semanal Lunes - Viernes: 10:00 a 19:00 hrs. Sábado: 09:00 a 14:00 hrs. Domingo: Cerrado
+h7433,TUDECISION,Independiente,"Calle Roman Diaz 445,",Providencia,Metropolitana,-33.434305,-70.6209,Privada,,Semanal Lunes - Viernes: 09:00 a 18:00 hrs. Sábado y Domingo: Cerrado Festivos: 09:00 a 18:00 hrs.
+h6504,ULTRA SOLIDARIA,Independiente,"Irarrázaval N° 3694,",Ñuñoa,Metropolitana,-33.455235,-70.592168,Privada,,Semanal Lunes - Viernes: 10:00 a 14:00 y 15:00 a 19:00 hrs. Sábado: 10:00 a 15:00 hrs. Domingo: Cerrado
+h5785,URGENCIA - AHUMADA,Ahumada,"Avenida Irarrázaval 4221,",Ñuñoa,Metropolitana,-33.455665,-70.585645,Privada,,Semanal Lunes - Domingo: 00:00 a 23:59 hrs. Festivos: 00:00 a 23:59 hrs.
+h1443,URGENCIA - AHUMADA,Ahumada,"Los Leones 1160,",Providencia,Metropolitana,-33.429953,-70.602725,Privada,,Semanal Lunes - Domingo: 00:00 a 23:59 hrs. Festivos: 00:00 a 23:59 hrs.
+h1463,URGENCIA - CRUZ VERDE,Cruz Verde,"Avenida Eliodoro Yañez 1281,",Providencia,Metropolitana,-33.433517,-70.617574,Privada,,Semanal Lunes - Domingo: 00:00 a 23:59 hrs. Festivos: 00:00 a 23:59 hrs.
+h1436,URGENCIA - SALCOBRAND,Salcobrand,"Avenida Manuel Montt 1140,",Providencia,Metropolitana,-33.438334,-70.615686,Privada,,Semanal Lunes - Domingo: 00:00 a 23:59 hrs. Festivos: 00:00 a 23:59 hrs.
+h10970,Urrutia,Independiente,"Avenida General Bustamante 1007,",Ñuñoa,Metropolitana,-33.454143,-70.628796,Privada,,Semanal Lunes - Sábado: 10:00 a 19:00 hrs. Domingo: Cerrado
+h1495,VALDANI D,Independiente,"Pedro De Valdivia 925 L-6,",Providencia,Metropolitana,-33.431619,-70.609442,Privada,,Semanal Lunes - Viernes: 10:00 a 14:00 y 16:00 a 20:00 hrs. Sábado y Domingo: Cerrado
+h4555,VALDIVIA,Independiente,"Irarrázaval 070,",Ñuñoa,Metropolitana,-33.452138,-70.629848,Privada,,Semanal Lunes - Viernes: 10:00 a 19:00 hrs. Sábado y Domingo: Cerrado Festivos: 10:00 a 19:00 hrs.
+h1602,VALHFARM,Independiente,"Avenida Pedro De Valdivia 2547,",Ñuñoa,Metropolitana,-33.44589,-70.606352,Privada,,Semanal Lunes - Viernes: 09:00 a 14:00 y 15:00 a 21:00 hrs. Sábado: 10:00 a 14:00 y 15:00 a 21:00 hrs. Domingo: Cerrado
+h7130,VITALFARMA,Independiente,"Seminario 768, Local 2,",Ñuñoa,Metropolitana,-33.451243,-70.627144,Privada,,Semanal Lunes - Viernes: 09:00 a 15:00 y 17:00 a 21:00 hrs. Sábado: 11:00 a 19:00 hrs. Domingo: Cerrado
+h12235,Viventi,Independiente,"Avenida Irarrazaval 4560,",Ñuñoa,Metropolitana,-33.454519,-70.582512,Privada,,Semanal Lunes - Viernes: 10:00 a 20:00 hrs. Sábado: 11:00 a 15:00 hrs. Domingo: Cerrado
+h4989,WELEDA,Independiente,"Simon Bolivar 4188, ñuñoa,",Ñuñoa,Metropolitana,-33.448378,-70.588864,Privada,,Semanal Sábado y Domingo: Cerrado
+h7137,ZAMARIN,Independiente,"Avenida Nueva Providencia 2186,",Providencia,Metropolitana,-33.422073,-70.609828,Privada,,Semanal Lunes - Viernes: 09:00 a 19:00 hrs. Sábado: 10:00 a 15:00 hrs. Domingo: Cerrado
+h6479,BOTICA AMAPOLAS,Independiente,"Amapolas N° 4891,",Ñuñoa,Metropolitana,-33.440053,-70.580645,Privada,,Semanal Lunes - Jueves: 09:00 a 18:00 hrs. Viernes: 09:00 a 17:00 hrs. Sábado y Domingo: Cerrado
+h7919,BOTICA GRISELDA HINOJOSA,Independiente,"Manuel De Salas 65,",Ñuñoa,Metropolitana,-33.454752,-70.592984,Privada,,Semanal Lunes - Jueves: 08:30 a 17:30 hrs. Viernes: 08:30 a 16:30 hrs. Sábado: 09:00 a 14:00 hrs. Domingo: Cerrado
+h6435,BOTICA VILLA OLIMPICA,Independiente,"Salvador 1350,",Ñuñoa,Metropolitana,-33.464061,-70.620921,Privada,,Semanal Lunes - Jueves: 08:30 a 17:30 hrs. Viernes: 08:30 a 16:30 hrs. Sábado: 09:00 a 14:00 hrs. Domingo: Cerrado
+h11264,FARMACIA ÑUÑOA SEDE JUAN MOYA,Independiente,"Calle Juan Moya 1310,",Ñuñoa,Metropolitana,-33.46603,-70.588027,Privada,,Semanal Lunes - Jueves: 08:30 a 17:00 hrs. Viernes: 08:30 a 16:00 hrs. Sábado y Domingo: Cerrado
+h7134,POPULAR ACHIFARP,Independiente,"Los Leones 2713,",Providencia,Metropolitana,-33.443741,-70.599657,Privada,,Semanal Lunes - Viernes: 09:00 a 19:00 hrs. Sábado: 09:00 a 14:00 hrs. Domingo: Cerrado
+h11734,Provisalud Los Leones,Independiente,"Avenida Los Leones 1770,",Providencia,Metropolitana,-33.435343,-70.601009,Privada,,Semanal Lunes - Jueves: 09:00 a 17:30 hrs. Viernes: 09:00 a 16:30 hrs. Sábado y Domingo: Cerrado
+h4919,SOLIDARIA DE PROVIDENCIA,Independiente,"Avenida Salvador 1029,",Providencia,Metropolitana,-33.443096,-70.623861,Privada,,Semanal Lunes - Viernes: 08:00 a 13:00 hrs. Sábado y Domingo: Cerrado
