@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Papa from "papaparse";
-import { Farmacia, CadenaFarmaceutica } from "../types";
+import { Farmacia, CadenaFarmaceutica, FormatoLocal, SegmentoLocal } from "../types";
 import farmaciasRaw from "../data/farmacias.csv?raw";
 
 interface UseFarmaciasResult {
@@ -32,10 +32,15 @@ export function useFarmacias(): UseFarmaciasResult {
           region: row.region?.trim() ?? "",
           lat: parseFloat(row.lat),
           lon: parseFloat(row.lon),
-          tipo: row.tipo?.trim() ?? "",
+          // El maestro garantiza que `tipo` viene siempre; el fallback existe
+          // solo por si alguien carga un CSV viejo sin la columna.
+          tipo: (row.tipo?.trim() as SegmentoLocal) || "independiente",
+          formato: (row.formato?.trim() as FormatoLocal) || "farmacia",
+          cod_comuna: row.cod_comuna ? Number(row.cod_comuna) : undefined,
+          modalidad: row.modalidad?.trim() || undefined,
           telefono: row.telefono?.trim() || undefined,
           horario: row.horario?.trim() || undefined,
-          fecha_registro: row.fecha_registro?.trim() || undefined,
+          fecha_corte: row.fecha_corte?.trim() || undefined,
         }));
 
       setFarmacias(parsed);

@@ -1,0 +1,14 @@
+id,movimiento,mes_deteccion,cadena,tipo,formato,nombre,direccion,comuna,region,lat,lon
+h5541,apertura,2026-08,Cruz Verde,cadena,farmacia,CRUZ VERDE,"Calle Suecia 55,",Providencia,Metropolitana,-33.421268,-70.607897
+h5799,apertura,2026-08,Cruz Verde,cadena,farmacia,CRUZ VERDE,"Avenida Luis Thayer Ojeda 150,",Providencia,Metropolitana,-33.418026,-70.604292
+h13163,apertura,2026-08,Dr. Simi,cadena,farmacia,Del Dr. Simi,"Avenida Providencia 1478,",Providencia,Metropolitana,-33.427589,-70.617746
+h13224,apertura,2026-08,Dr. Simi,cadena,farmacia,Del Dr. Simi,"Avenida Vicuña Mackenna 1300,",Ñuñoa,Metropolitana,-33.458422,-70.628882
+h12999,apertura,2026-08,Independiente,independiente,farmacia,FALP Santa Isabel,"Avenida Santa Isabel 1001,",Providencia,Metropolitana,-33.445263,-70.617853
+h13241,apertura,2026-08,Independiente,independiente,farmacia,Farmanorte,"Calle Condell 480,",Providencia,Metropolitana,-33.43948,-70.627209
+h5798,apertura,2026-08,Independiente,independiente,farmacia,FARMAPRECIO,"Avenida Pedro De Valdivia 56 Y 92 ,",Providencia,Metropolitana,-33.424026,-70.611952
+h13217,apertura,2026-08,Independiente,independiente,farmacia,GCU,"Avenida Grecia 3348,",Ñuñoa,Metropolitana,-33.464383,-70.595001
+h5525,apertura,2026-08,Independiente,independiente,farmacia,SANTA GEMITA,"Avenida Jose Pedro Alessandri 80 Y 84 ,",Ñuñoa,Metropolitana,-33.455611,-70.59764
+h5550,apertura,2026-08,Salcobrand,cadena,farmacia,SALCOBRAND,"Avenida Luis Thayer Ojeda 0146, Local 2 ,",Providencia,Metropolitana,-33.418868,-70.60279
+h5800,apertura,2026-08,Salcobrand,cadena,farmacia,SALCOBRAND,"Avenida Providencia 2006, Local 3 ,",Providencia,Metropolitana,-33.423381,-70.612489
+h1478,cierre,2026-08,Dr. Simi,cadena,farmacia,DEL DR. SIMI,"Providencia 1470,",Providencia,Metropolitana,-33.427661,-70.617617
+h7696,cierre,2026-08,Maicao,cadena,perfumeria,MAICAO,"Avenida Manuel Antonio Matta N° 60, Local 12,",Ñuñoa,Metropolitana,-33.45502,-70.628603

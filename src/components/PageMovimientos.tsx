@@ -1,8 +1,7 @@
 import { useMemo, useState } from "react";
-import { COLORES_CADENA, MESES_CORTO, MOCK_MOVIMIENTOS } from "../constants";
-import { CadenaFarmaceutica } from "../types";
-
-const CADENAS_MOV = ["Cruz Verde", "Salcobrand", "Ahumada"] as const;
+import { COLORES_CADENA, MESES_CORTO } from "../constants";
+import { CadenaFarmaceutica, MovimientoFarmacia } from "../types";
+import { useMovimientos } from "../hooks/useMovimientos";
 
 // Tokens de marca REALI + semánticos data viz (diseño/paleta.md)
 const C = {
@@ -13,19 +12,58 @@ const C = {
 
 const netoColor = (n: number) => n > 0 ? C.green : n < 0 ? C.red : C.text3;
 
+// Marcas sin cadena al final: su volumen tapa a las cadenas, que es lo que se compara.
+const AL_FINAL = new Set<string>(["Independiente", "Otra"]);
+
+export interface ItemMovimiento { n: string; c: string; }
+// `medido`: el mes tiene corte. Sin corte, "0" y "no se midió" no son lo mismo.
+export interface MesMovimiento { mes: number; medido: boolean; ap: ItemMovimiento[]; ci: ItemMovimiento[]; }
+
+const item = (m: MovimientoFarmacia): ItemMovimiento =>
+  ({ n: `${m.nombre} · ${m.direccion}`, c: m.comuna });
+
 export default function PageMovimientos() {
-  const [anio, setAnio] = useState(2026);
+  const movimientos = useMovimientos();
+
+  // El diff solo existe desde el primer par de cortes: lo que queda fuera de
+  // [primer, último] mes detectado no se midió.
+  const { anios, primero, ultimo } = useMemo(() => {
+    const meses = [...new Set(movimientos.map((m) => m.mes_deteccion))].sort();
+    return {
+      anios: [...new Set(meses.map((m) => Number(m.slice(0, 4))))],
+      primero: meses[0] ?? "",
+      ultimo: meses[meses.length - 1] ?? "",
+    };
+  }, [movimientos]);
+
+  const [anio, setAnio] = useState(() => anios[anios.length - 1] ?? new Date().getFullYear());
   const [exp, setExp] = useState<Record<string, boolean>>({});
 
   const toggle = (k: string) => setExp((e) => ({ ...e, [k]: !e[k] }));
 
-  const datos = useMemo(() => CADENAS_MOV.map((cadena) => {
-    const ms = MOCK_MOVIMIENTOS[cadena]?.[anio] ??
-      Array(12).fill(null).map((_, i) => ({ mes: i, ap: [], ci: [] }));
-    const totAp = ms.reduce((s, m) => s + (m.ap?.length ?? 0), 0);
-    const totCi = ms.reduce((s, m) => s + (m.ci?.length ?? 0), 0);
-    return { cadena, ms, totAp, totCi, neto: totAp - totCi };
-  }), [anio]);
+  const datos = useMemo(() => {
+    const delAnio = movimientos.filter((m) => m.mes_deteccion.startsWith(`${anio}-`));
+    const cadenas = [...new Set(delAnio.map((m) => m.cadena))];
+    const total = (c: string) => delAnio.filter((m) => m.cadena === c).length;
+    cadenas.sort((a, b) =>
+      Number(AL_FINAL.has(a)) - Number(AL_FINAL.has(b)) || total(b) - total(a) || a.localeCompare(b));
+
+    return cadenas.map((cadena) => {
+      const ms: MesMovimiento[] = MESES_CORTO.map((_, i) => {
+        const clave = `${anio}-${String(i + 1).padStart(2, "0")}`;
+        const delMes = delAnio.filter((m) => m.cadena === cadena && m.mes_deteccion === clave);
+        return {
+          mes: i,
+          medido: clave >= primero && clave <= ultimo,
+          ap: delMes.filter((m) => m.movimiento === "apertura").map(item),
+          ci: delMes.filter((m) => m.movimiento === "cierre").map(item),
+        };
+      });
+      const totAp = ms.reduce((s, m) => s + m.ap.length, 0);
+      const totCi = ms.reduce((s, m) => s + m.ci.length, 0);
+      return { cadena, ms, totAp, totCi, neto: totAp - totCi };
+    });
+  }, [movimientos, anio, primero, ultimo]);
 
   const thSt: React.CSSProperties = {
     padding: "9px 10px", fontSize: 9.5, fontWeight: 700, letterSpacing: "0.07em",
@@ -38,7 +76,7 @@ export default function PageMovimientos() {
       {/* Toolbar */}
       <div style={{ padding: "10px 18px", borderBottom: `1px solid ${C.border}`, display: "flex", alignItems: "center", gap: 8, flexShrink: 0, background: C.bgCard }}>
         <span style={{ fontSize: 11, color: C.text3, marginRight: 2 }}>Año:</span>
-        {[2024, 2025, 2026].map((a) => (
+        {anios.map((a) => (
           <button
             key={a}
             onClick={() => setAnio(a)}
@@ -48,8 +86,12 @@ export default function PageMovimientos() {
             {a}
           </button>
         ))}
+        <span style={{ fontSize: 10.5, color: C.text3, marginLeft: 8 }}>
+          Mes de <b>detección</b> en el registro MINSAL, no de inauguración
+          {ultimo && <> · último corte {MESES_CORTO[Number(ultimo.slice(5)) - 1]} {ultimo.slice(0, 4)}</>}
+        </span>
         <div style={{ flex: 1 }} />
-        {datos.map((d) => (
+        {datos.slice(0, 4).map((d) => (
           <div key={d.cadena} style={{ display: "flex", alignItems: "center", gap: 5, padding: "4px 12px", background: C.bg, border: `1px solid ${C.border}`, borderRadius: 6 }}>
             <span style={{ width: 7, height: 7, borderRadius: "50%", background: COLORES_CADENA[d.cadena as CadenaFarmaceutica], display: "inline-block" }} />
             <span style={{ fontSize: 11, color: C.text2 }}>{d.cadena}</span>
@@ -72,6 +114,13 @@ export default function PageMovimientos() {
             </tr>
           </thead>
           <tbody>
+            {datos.length === 0 && (
+              <tr>
+                <td colSpan={MESES_CORTO.length + 3} style={{ padding: 40, textAlign: "center", color: C.text3, fontSize: 12 }}>
+                  Sin movimientos detectados en {anio}.
+                </td>
+              </tr>
+            )}
             {datos.map(({ cadena, ms, totAp, totCi, neto }) => (
               <MovimientoRows
                 key={cadena}
@@ -91,11 +140,17 @@ export default function PageMovimientos() {
   );
 }
 
+const SIN_CORTE_BG = "repeating-linear-gradient(135deg, transparent 0 4px, rgba(203,197,181,0.25) 4px 5px)";
+
+function SinCorte() {
+  return <span title="Mes sin corte medido: el diff del registro empieza después" style={{ color: C.border2, fontSize: 12 }}>·</span>;
+}
+
 function MovimientoRows({
   cadena, ms, totAp, totCi, neto, exp, toggle,
 }: {
   cadena: string;
-  ms: { mes: number; ap: { n: string; c: string }[]; ci: { n: string; c: string }[] }[];
+  ms: MesMovimiento[];
   totAp: number; totCi: number; neto: number;
   exp: Record<string, boolean>;
   toggle: (k: string) => void;
@@ -123,7 +178,7 @@ function MovimientoRows({
           const items = m.ap ?? [];
           const key = `${cadena}-${i}-ap`;
           return (
-            <td key={i} style={{ padding: "6px 4px", textAlign: "center", borderRight: `1px solid ${C.bg2}`, verticalAlign: "top" }}>
+            <td key={i} style={{ padding: "6px 4px", textAlign: "center", borderRight: `1px solid ${C.bg2}`, verticalAlign: "top", background: m.medido ? undefined : SIN_CORTE_BG }}>
               {items.length > 0 ? (
                 <div>
                   <button onClick={() => toggle(key)} className="badge-ap">{items.length}</button>
@@ -138,7 +193,7 @@ function MovimientoRows({
                     </div>
                   )}
                 </div>
-              ) : <span style={{ color: C.border2, fontSize: 12 }}>—</span>}
+              ) : m.medido ? <span style={{ color: C.border2, fontSize: 12 }}>—</span> : <SinCorte />}
             </td>
           );
         })}
@@ -152,7 +207,7 @@ function MovimientoRows({
           const items = m.ci ?? [];
           const key = `${cadena}-${i}-ci`;
           return (
-            <td key={i} style={{ padding: "6px 4px", textAlign: "center", borderRight: `1px solid ${C.bg2}`, verticalAlign: "top" }}>
+            <td key={i} style={{ padding: "6px 4px", textAlign: "center", borderRight: `1px solid ${C.bg2}`, verticalAlign: "top", background: m.medido ? undefined : SIN_CORTE_BG }}>
               {items.length > 0 ? (
                 <div>
                   <button onClick={() => toggle(key)} className="badge-ci">{items.length}</button>
@@ -167,7 +222,7 @@ function MovimientoRows({
                     </div>
                   )}
                 </div>
-              ) : <span style={{ color: C.border2, fontSize: 12 }}>—</span>}
+              ) : m.medido ? <span style={{ color: C.border2, fontSize: 12 }}>—</span> : <SinCorte />}
             </td>
           );
         })}
@@ -181,7 +236,7 @@ function MovimientoRows({
           const n = (m.ap?.length ?? 0) - (m.ci?.length ?? 0);
           return (
             <td key={i} className="num" style={{ padding: "5px 4px", textAlign: "center", fontWeight: 700, fontSize: 11.5, borderRight: `1px solid ${C.bg2}`, color: netoColor(n) }}>
-              {n > 0 ? `+${n}` : n === 0 ? "—" : n}
+              {!m.medido ? <SinCorte /> : n > 0 ? `+${n}` : n === 0 ? "—" : n}
             </td>
           );
         })}

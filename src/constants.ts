@@ -1,15 +1,39 @@
-import { CadenaFarmaceutica } from "./types";
+import { CadenaFarmaceutica, FormatoLocal, SegmentoLocal } from "./types";
 
+// Las 13 marcas del maestro, en orden de tamaño de red. Tiene que coincidir con
+// CLASIFICACION en SCRAPER/MINSAL_scraper/maestro_farmacias.py: si el maestro
+// emite una marca que no está acá, el filtro la pierde.
 export const CADENAS: CadenaFarmaceutica[] = [
   "Cruz Verde",
   "Salcobrand",
   "Ahumada",
   "Dr. Simi",
   "Maicao",
+  "Preunic",
+  "Liquimax",
   "Knop",
   "Redfarma",
+  "Ecofarmacia",
+  "La Rebaja",
   "Independiente",
   "Otra",
+];
+
+export const SEGMENTOS: { valor: SegmentoLocal; label: string }[] = [
+  { valor: "cadena",        label: "Cadena" },
+  { valor: "independiente", label: "Independiente" },
+  { valor: "otra",          label: "Institucional / otra" },
+];
+
+export const ETIQUETA_SEGMENTO: Record<SegmentoLocal, string> =
+  Object.fromEntries(SEGMENTOS.map((s) => [s.valor, s.label])) as Record<SegmentoLocal, string>;
+
+// Maicao, Preunic y Liquimax son perfumerías: venden farma dentro de una tienda
+// de belleza. Comparten flujo con una farmacia pero no son sustituto directo —
+// contarlas como competencia plena infla el entorno de un sitio.
+export const FORMATOS: { valor: FormatoLocal; label: string }[] = [
+  { valor: "farmacia",   label: "Farmacia" },
+  { valor: "perfumeria", label: "Perfumería" },
 ];
 
 // Logos en public/logos/ (undefined → se renderiza círculo de color de fallback)
@@ -31,6 +55,10 @@ export const COLORES_CADENA: Record<CadenaFarmaceutica, string> = {
   "Maicao": "#7c3aed",
   "Knop": "#1C7521",
   "Redfarma": "#7605E5",
+  "Preunic": "#D6006F",
+  "Liquimax": "#0EA5E9",
+  "Ecofarmacia": "#65A30D",
+  "La Rebaja": "#EA580C",
   "Independiente": "#92400e",
   "Otra": "#64748b",
 };
@@ -77,73 +105,3 @@ export const MAP_ZOOM = 11;
 export const EMAIL_REPORTES = "soporte@realidata.cl";
 
 export const MESES_CORTO = ["ENE","FEB","MAR","ABR","MAY","JUN","JUL","AGO","SEP","OCT","NOV","DIC"];
-
-// ── Mock data for Movimientos page ──────────────────────────────────────────
-
-interface ItemMovimiento { n: string; c: string; }
-interface MesMovimiento { mes: number; ap: ItemMovimiento[]; ci: ItemMovimiento[]; }
-
-// ⚠️ DATOS FICTICIOS — NO SON REGISTROS REALES.
-// Aperturas y cierres INVENTADOS con fines de demostración de la UI. Los
-// nombres de local no corresponden a establecimientos existentes y no deben
-// citarse como información sobre Cruz Verde, Salcobrand ni ninguna otra
-// cadena. Se reemplazan por la salida real de diff_aperturas.py en cuanto
-// existan dos snapshots MINSAL consecutivos.
-export const MOCK_MOVIMIENTOS: Record<string, Record<number, MesMovimiento[]>> = {
-  "Cruz Verde": { 2026: [
-    { mes:0, ap:[{n:"Cruz Verde Mall Alto Las Condes",c:"Las Condes"},{n:"Cruz Verde Huertos Familiares",c:"Maipú"}], ci:[{n:"Cruz Verde Viejo Alerce",c:"Puerto Montt"}] },
-    { mes:1, ap:[{n:"Cruz Verde Barrio Lastarria",c:"Santiago"}], ci:[] },
-    { mes:2, ap:[], ci:[{n:"Cruz Verde Los Domínicos",c:"Las Condes"}] },
-    { mes:3, ap:[], ci:[{n:"Cruz Verde San Bernardo Norte",c:"San Bernardo"},{n:"Cruz Verde Estación Central",c:"Estación Central"}] },
-    ...Array(8).fill(null).map((_,i) => ({ mes:i+4, ap:[], ci:[] })),
-  ]},
-  "Salcobrand": { 2026: [
-    { mes:0, ap:[{n:"Salcobrand Costanera Center",c:"Providencia"},{n:"Salcobrand Portal La Dehesa",c:"Lo Barnechea"}], ci:[{n:"Salcobrand Mapocho",c:"Santiago"}] },
-    { mes:1, ap:[{n:"Salcobrand Mall Plaza Egaña",c:"Ñuñoa"}], ci:[{n:"Salcobrand Parque O'Higgins",c:"Santiago"}] },
-    { mes:2, ap:[{n:"Salcobrand La Reina",c:"La Reina"}], ci:[] },
-    { mes:3, ap:[], ci:[] },
-    ...Array(8).fill(null).map((_,i) => ({ mes:i+4, ap:[], ci:[] })),
-  ]},
-  "Ahumada": { 2026: [
-    { mes:0, ap:[{n:"Ahumada Mall Vivo Maipú",c:"Maipú"}], ci:[] },
-    { mes:1, ap:[], ci:[{n:"Ahumada San Pablo",c:"Santiago"}] },
-    { mes:2, ap:[{n:"Ahumada Portal Bicentenario",c:"Quilicura"}], ci:[] },
-    { mes:3, ap:[{n:"Ahumada La Reina",c:"La Reina"}], ci:[{n:"Ahumada Santa Anita",c:"Lo Espejo"}] },
-    ...Array(8).fill(null).map((_,i) => ({ mes:i+4, ap:[], ci:[] })),
-  ]},
-};
-
-// ── Mock data for Cadenas page ───────────────────────────────────────────────
-
-interface ItemZona { n: string; c: string; f: string; }
-
-export const MOCK_ZONAS: Record<string, Record<string, ItemZona[]>> = {
-  "Norte": {
-    "Ahumada": [{n:"Ahumada Iquique Mall",c:"Iquique",f:"ENE 2026"},{n:"Ahumada Antofagasta 2",c:"Antofagasta",f:"FEB 2026"}],
-    "Salcobrand": [{n:"Salcobrand Arica",c:"Arica",f:"ENE 2026"}],
-    "Cruz Verde": [{n:"Cruz Verde Calama",c:"Calama",f:"MAR 2026"}],
-  },
-  "V Región": {
-    "Ahumada": [{n:"Ahumada Viña del Mar 2",c:"Viña del Mar",f:"ENE 2026"},{n:"Ahumada Valparaíso Centro",c:"Valparaíso",f:"FEB 2026"}],
-    "Salcobrand": [{n:"Salcobrand Quilpué",c:"Quilpué",f:"FEB 2026"}],
-    "Cruz Verde": [],
-  },
-  "RM": {
-    "Ahumada": [{n:"Ahumada Mall Vivo Maipú",c:"Maipú",f:"ENE 2026"}],
-    "Salcobrand": [
-      {n:"Salcobrand Costanera Center",c:"Providencia",f:"ENE 2026"},
-      {n:"Salcobrand Portal La Dehesa",c:"Lo Barnechea",f:"ENE 2026"},
-      {n:"Salcobrand Mall Plaza Egaña",c:"Ñuñoa",f:"FEB 2026"},
-      {n:"Salcobrand La Reina",c:"La Reina",f:"MAR 2026"},
-    ],
-    "Cruz Verde": [
-      {n:"Cruz Verde Mall Alto Las Condes",c:"Las Condes",f:"ENE 2026"},
-      {n:"Cruz Verde Huertos Familiares",c:"Maipú",f:"ENE 2026"},
-    ],
-  },
-  "Sur": {
-    "Ahumada": [{n:"Ahumada Portal Bicentenario",c:"Quilicura",f:"MAR 2026"},{n:"Ahumada La Reina",c:"La Reina",f:"ABR 2026"}],
-    "Salcobrand": [{n:"Salcobrand Concepción 2",c:"Concepción",f:"ENE 2026"}],
-    "Cruz Verde": [{n:"Cruz Verde Temuco 2",c:"Temuco",f:"FEB 2026"},{n:"Cruz Verde Puerto Montt",c:"Puerto Montt",f:"MAR 2026"}],
-  },
-};

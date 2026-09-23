@@ -1,9 +1,13 @@
-import { useState } from "react";
-import { COLORES_CADENA, MESES_CORTO, MOCK_ZONAS } from "../constants";
+import { useMemo, useState } from "react";
+import { COLORES_CADENA, MESES_CORTO } from "../constants";
 import { CadenaFarmaceutica } from "../types";
+import { useMovimientos } from "../hooks/useMovimientos";
 
-const ZONAS = ["Norte", "V Región", "RM", "Sur"];
-const CADENAS = ["Ahumada", "Salcobrand", "Cruz Verde"] as const;
+const ZONAS = ["Norte", "V Región", "RM", "Sur"] as const;
+type Zona = typeof ZONAS[number];
+
+// Las 4 cadenas con más movimiento en el registro (corte 2026-08).
+const CADENAS = ["Cruz Verde", "Salcobrand", "Ahumada", "Dr. Simi"] as const;
 
 // Tokens de marca REALI (diseño/paleta.md)
 const C = {
@@ -12,21 +16,82 @@ const C = {
   accent: "#F5A524", accentText: "#9A6206",
 };
 
-const CADENA_RGB: Record<string, string> = {
-  "Ahumada":    "227,25,55",
-  "Salcobrand": "0,85,165",
-  "Cruz Verde": "0,166,81",
+// "#00A651" → "0,166,81", para los fondos translúcidos por cadena.
+const rgbDe = (hex: string) =>
+  [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16)).join(",");
+
+// "2026-08" → "AGO 2026"
+const etiquetaMes = (aaaamm: string) =>
+  `${MESES_CORTO[Number(aaaamm.slice(5, 7)) - 1]} ${aaaamm.slice(0, 4)}`;
+
+/**
+ * Región corta (REGIONES_CHILE) → macrozona de la tabla. Todo lo que queda al
+ * norte de la RM es Norte y todo lo que queda al sur es Sur; Valparaíso y la RM
+ * van aparte. Se clasifica por región y no por la latitud de cada punto: un
+ * geocode malo no debe cambiar de zona una apertura.
+ * Las 16 regiones van explícitas: una grafía nueva devuelve null, no cae en
+ * una zona por defecto.
+ */
+const ZONA_POR_REGION: Record<string, Zona> = {
+  "Arica y Parinacota": "Norte",
+  "Tarapacá":           "Norte",
+  "Antofagasta":        "Norte",
+  "Atacama":            "Norte",
+  "Coquimbo":           "Norte",
+  "Valparaíso":         "V Región",
+  "Metropolitana":      "RM",
+  "O'Higgins":          "Sur",
+  "Maule":              "Sur",
+  "Ñuble":              "Sur",
+  "Biobío":             "Sur",
+  "La Araucanía":       "Sur",
+  "Los Ríos":           "Sur",
+  "Los Lagos":          "Sur",
+  "Aysén":              "Sur",
+  "Magallanes":         "Sur",
 };
 
-export default function PageCadenas() {
-  const [anio, setAnio] = useState(2026);
+function zonaDeRegion(region: string): Zona | null {
+  return ZONA_POR_REGION[region] ?? null;
+}
 
-  const HOY = new Date();
-  const MES_ACTUAL = `${MESES_CORTO[HOY.getMonth()]} ${HOY.getFullYear()}`;
+interface ItemZona { n: string; c: string; f: string; }
+
+export default function PageCadenas() {
+  const movimientos = useMovimientos();
+
+  const anios = useMemo(
+    () => [...new Set(movimientos.map((m) => Number(m.mes_deteccion.slice(0, 4))))].sort(),
+    [movimientos],
+  );
+  const [anio, setAnio] = useState(() => anios[anios.length - 1] ?? new Date().getFullYear());
+
+  // "Nuevo" = detectado en el último corte. No el mes calendario: el registro
+  // publica con rezago y el mes en curso casi nunca tiene corte todavía.
+  const ULTIMO_CORTE = useMemo(() => {
+    const u = movimientos.reduce((max, m) => (m.mes_deteccion > max ? m.mes_deteccion : max), "");
+    return u ? etiquetaMes(u) : "";
+  }, [movimientos]);
+
+  const porZona = useMemo(() => {
+    const out = {} as Record<Zona, Record<string, ItemZona[]>>;
+    for (const z of ZONAS) out[z] = {};
+    for (const m of movimientos) {
+      if (m.movimiento !== "apertura" || !m.mes_deteccion.startsWith(`${anio}-`)) continue;
+      const zona = zonaDeRegion(m.region);
+      if (!zona) continue;
+      (out[zona][m.cadena] ??= []).push({
+        n: m.direccion || m.nombre,
+        c: m.comuna,
+        f: etiquetaMes(m.mes_deteccion),
+      });
+    }
+    return out;
+  }, [movimientos, anio]);
 
   const totales = CADENAS.map((c) => ({
     cadena: c,
-    total: ZONAS.reduce((s, z) => s + (MOCK_ZONAS[z]?.[c]?.length ?? 0), 0),
+    total: ZONAS.reduce((s, z) => s + (porZona[z][c]?.length ?? 0), 0),
   }));
 
   const thSt: React.CSSProperties = {
@@ -40,7 +105,7 @@ export default function PageCadenas() {
       {/* Toolbar */}
       <div style={{ padding: "10px 18px", borderBottom: `1px solid ${C.border}`, display: "flex", alignItems: "center", gap: 8, flexShrink: 0, background: C.bgCard }}>
         <span style={{ fontSize: 11, color: C.text3, marginRight: 2 }}>Año:</span>
-        {[2024, 2025, 2026].map((a) => (
+        {anios.map((a) => (
           <button
             key={a}
             onClick={() => setAnio(a)}
@@ -86,7 +151,7 @@ export default function PageCadenas() {
           </thead>
           <tbody>
             {ZONAS.map((zona) => {
-              const maxRows = Math.max(...CADENAS.map((c) => MOCK_ZONAS[zona]?.[c]?.length ?? 0), 1);
+              const maxRows = Math.max(...CADENAS.map((c) => porZona[zona][c]?.length ?? 0), 1);
               return Array.from({ length: maxRows }).map((_, ri) => (
                 <tr key={`${zona}-${ri}`} style={{ background: ri % 2 === 0 ? C.bgCard : C.bg }}>
                   {ri === 0 && (
@@ -98,12 +163,12 @@ export default function PageCadenas() {
                     </td>
                   )}
                   {CADENAS.map((c) => {
-                    const items = MOCK_ZONAS[zona]?.[c] ?? [];
+                    const items = porZona[zona][c] ?? [];
                     const item = items[ri];
                     const isLast = ri === maxRows - 1;
                     const col = COLORES_CADENA[c as CadenaFarmaceutica];
-                    const rgb = CADENA_RGB[c] ?? "100,116,139";
-                    const esMesActual = item?.f === MES_ACTUAL;
+                    const rgb = rgbDe(col);
+                    const esMesActual = item?.f === ULTIMO_CORTE;
                     return (
                       <>
                         <td
@@ -156,7 +221,7 @@ export default function PageCadenas() {
             <tr style={{ background: C.bg2 }}>
               <td style={{ padding: "11px 14px", fontWeight: 700, fontSize: 10, color: C.text3, textTransform: "uppercase", letterSpacing: "0.07em", borderTop: `1px solid ${C.border2}` }}>TOTAL</td>
               {CADENAS.map((c) => {
-                const t = ZONAS.reduce((s, z) => s + (MOCK_ZONAS[z]?.[c]?.length ?? 0), 0);
+                const t = ZONAS.reduce((s, z) => s + (porZona[z][c]?.length ?? 0), 0);
                 return (
                   <td key={c} colSpan={2} style={{ padding: "11px 14px", textAlign: "center", fontWeight: 700, fontSize: 19, fontFamily: "var(--font-mono)", color: COLORES_CADENA[c as CadenaFarmaceutica], borderLeft: `1px solid ${C.border}`, borderTop: `1px solid ${C.border2}` }}>
                     {t}

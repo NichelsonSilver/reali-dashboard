@@ -3,7 +3,7 @@ import { MapContainer, TileLayer, GeoJSON, useMap } from "react-leaflet";
 import type { Feature } from "geojson";
 import L from "leaflet";
 import { Farmacia } from "../types";
-import { COLORES_CADENA, LOGO_CADENA, EMAIL_REPORTES } from "../constants";
+import { COLORES_CADENA, ETIQUETA_SEGMENTO, LOGO_CADENA, EMAIL_REPORTES } from "../constants";
 import { useManzanasRM, type ManzanaProps } from "../hooks/useGeoCapas";
 import {
   colorParaValor, CORTES, PALETA, ETIQUETA_VARIABLE, type VariableCoropleta,
@@ -46,7 +46,9 @@ function popupHTML(f: Farmacia, col: string): string {
       ${row("Cadena", f.cadena, col)}
       ${row("Comuna", f.comuna)}
       ${row("Región", f.region)}
-      ${row("Tipo", f.tipo)}
+      ${row("Segmento", ETIQUETA_SEGMENTO[f.tipo] ?? f.tipo)}
+      ${f.formato === "perfumeria" ? row("Formato", "Perfumería") : ""}
+      ${f.modalidad ? row("Modalidad", f.modalidad) : ""}
       ${f.horario ? row("Horario", f.horario) : ""}
       ${f.telefono ? row("Teléfono", f.telefono) : ""}
     </div>
