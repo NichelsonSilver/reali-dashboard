@@ -101,6 +101,18 @@ export const NSE_COLORES: Record<string, string> = {
 export const MAP_CENTER: [number, number] = [-33.4489, -70.6693];
 export const MAP_ZOOM = 11;
 
+// Mapas base. CARTO (light_all / dark_all) exige API key desde 2026 y sin ella
+// sirve el tile con marca de agua "API KEY REQUIRED" — no falla, así que no se
+// nota en consola. Los lienzos Esri Canvas no piden key; su detalle nativo llega
+// a z16, por eso maxNativeZoom: Leaflet reescala de ahí en adelante.
+export const TILES = {
+  claro:    { url: "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}", attr: "© Esri", maxNativeZoom: 16 },
+  oscuro:   { url: "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}",  attr: "© Esri", maxNativeZoom: 16 },
+  satelite: { url: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",                attr: "© Esri", maxNativeZoom: 19 },
+  osm:      { url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",                                                           attr: "© OpenStreetMap", maxNativeZoom: 19 },
+};
+export type TileKey = keyof typeof TILES;
+
 // Destinatario de reportes de pines mal ubicados. Ajustar según cliente.
 export const EMAIL_REPORTES = "soporte@realidata.cl";
 

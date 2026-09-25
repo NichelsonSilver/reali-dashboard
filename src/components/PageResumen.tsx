@@ -4,7 +4,7 @@ import { DemografiaCenso } from "../hooks/useDemografia";
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 import { MapContainer, TileLayer, CircleMarker, useMap } from "react-leaflet";
 import L from "leaflet";
-import { COLORES_CADENA } from "../constants";
+import { COLORES_CADENA, TILES } from "../constants";
 
 // Tokens de marca REALI + semánticos data viz (diseño/paleta.md)
 const C = {
@@ -369,7 +369,7 @@ export default function PageResumen({ farmacias, demografia }: Props) {
               zoomControl={false}
               attributionControl={false}
             >
-              <TileLayer url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png" />
+              <TileLayer url={TILES.claro.url} maxNativeZoom={TILES.claro.maxNativeZoom} />
               <MapAutoZoom farmacias={fFiltradasComuna} comunaFiltro={comunaFiltro} />
               {fFiltradasPharma.slice(0, 500).map((f) => (
                 <CircleMarker 

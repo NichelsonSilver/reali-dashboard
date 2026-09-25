@@ -3,7 +3,7 @@ import { MapContainer, TileLayer, GeoJSON, useMap } from "react-leaflet";
 import type { Feature } from "geojson";
 import L from "leaflet";
 import { Farmacia } from "../types";
-import { COLORES_CADENA, ETIQUETA_SEGMENTO, LOGO_CADENA, EMAIL_REPORTES } from "../constants";
+import { COLORES_CADENA, ETIQUETA_SEGMENTO, LOGO_CADENA, EMAIL_REPORTES, TILES, type TileKey } from "../constants";
 import { useManzanasRM, type ManzanaProps } from "../hooks/useGeoCapas";
 import {
   colorParaValor, CORTES, PALETA, ETIQUETA_VARIABLE, type VariableCoropleta,
@@ -152,15 +152,6 @@ interface Props {
   onComunaClick?: (c: string) => void;
 }
 
-const TILES = {
-  claro:    { url: "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",    attr: "© CARTO · OSM" },
-  oscuro:   { url: "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",     attr: "© CARTO · OSM" },
-  satelite: { url: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}", attr: "© Esri" },
-  osm:      { url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",                attr: "© OpenStreetMap" },
-};
-
-type TileKey = keyof typeof TILES;
-
 const LEGEND_CADENAS = ["Cruz Verde","Salcobrand","Ahumada","Dr. Simi","Maicao","Knop"] as const;
 
 // Tokens de marca REALI (diseño/paleta.md)
@@ -172,7 +163,7 @@ const C = {
 const CTRL_BG = "rgba(253,252,250,0.95)";
 
 export default function MapaFarmacias({ farmacias, onComunaClick }: Props) {
-  const [tile, setTile] = useState<TileKey>("claro");
+  const [tile, setTile] = useState<TileKey>("osm");
   const [manzanasOn, setManzanasOn] = useState(false);
   const [comunasOn, setComunasOn] = useState(false);
   const [logosOn, setLogosOn] = useState(false);
@@ -245,7 +236,7 @@ export default function MapaFarmacias({ farmacias, onComunaClick }: Props) {
         preferCanvas
         zoomControl={false}
       >
-        <TileLayer key={tile} url={TILES[tile].url} attribution={TILES[tile].attr} maxZoom={19} />
+        <TileLayer key={tile} url={TILES[tile].url} attribution={TILES[tile].attr} maxZoom={19} maxNativeZoom={TILES[tile].maxNativeZoom} />
 
         {/* Auto-centra el mapa al filtrar */}
         <FitBounds farmacias={farmacias} />

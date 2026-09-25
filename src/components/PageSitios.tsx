@@ -6,7 +6,7 @@
 import { useEffect, useRef, useState } from "react";
 import { MapContainer, TileLayer, Circle, CircleMarker, Tooltip } from "react-leaflet";
 import { Farmacia } from "../types";
-import { COLORES_CADENA } from "../constants";
+import { COLORES_CADENA, TILES } from "../constants";
 import { geocodificar, ResultadoGeocode } from "../utils/geocodificar";
 import {
   GRUPOS_NSE, GrupoNSE, Punto, VectorSitio, calcularVectorSitio, RADIOS_M,
@@ -304,7 +304,7 @@ export default function PageSitios({ farmacias }: { farmacias: Farmacia[] }) {
                   zoomControl={false}
                   attributionControl={false}
                 >
-                  <TileLayer url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png" />
+                  <TileLayer url={TILES.claro.url} maxNativeZoom={TILES.claro.maxNativeZoom} />
                   {RADIOS_M.map((r) => (
                     <Circle key={r} center={[ev.vector.centro.lat, ev.vector.centro.lon]} radius={r} pathOptions={{ color: "#0B1A2E", weight: 1, fillOpacity: 0.02, dashArray: "4 4" }} />
                   ))}
