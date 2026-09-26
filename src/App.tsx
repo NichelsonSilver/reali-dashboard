@@ -4,12 +4,14 @@ import { useDemografia, DemografiaCenso } from "./hooks/useDemografia";
 import { Farmacia } from "./types";
 import PanelIzquierdo from "./components/PanelIzquierdo";
 import UploadModal from "./components/UploadModal";
-import PageMovimientos from "./components/PageMovimientos";
-import PageCadenas from "./components/PageCadenas";
-import PageDemografia from "./components/PageDemografia";
-import PageResumen from "./components/PageResumen";
-
+// Cada página en su propio chunk: solo se descarga la que se abre. Resumen es la
+// de inicio, pero igual va aparte para que recharts y leaflet no viajen en el
+// chunk principal.
 const MapaFarmacias = lazy(() => import("./components/MapaFarmacias"));
+const PageMovimientos = lazy(() => import("./components/PageMovimientos"));
+const PageCadenas = lazy(() => import("./components/PageCadenas"));
+const PageDemografia = lazy(() => import("./components/PageDemografia"));
+const PageResumen = lazy(() => import("./components/PageResumen"));
 const PageSitios = lazy(() => import("./components/PageSitios"));
 
 type Page = "mapa" | "movimientos" | "cadenas" | "demografia" | "resumen" | "sitios";
@@ -366,15 +368,13 @@ export default function App() {
               onCountChange={setCount}
             />
           )}
-          {page === "movimientos" && <PageMovimientos />}
-          {page === "cadenas" && <PageCadenas />}
-          {page === "demografia" && <PageDemografia farmacias={farmacias} demografia={demografia} />}
-          {page === "resumen" && <PageResumen farmacias={farmacias} demografia={demografia} />}
-          {page === "sitios" && (
-            <Suspense fallback={<div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center" }}><div className="rl-spinner" /></div>}>
-              <PageSitios farmacias={farmacias} />
-            </Suspense>
-          )}
+          <Suspense fallback={<div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center" }}><div className="rl-spinner" /></div>}>
+            {page === "movimientos" && <PageMovimientos />}
+            {page === "cadenas" && <PageCadenas />}
+            {page === "demografia" && <PageDemografia farmacias={farmacias} demografia={demografia} />}
+            {page === "resumen" && <PageResumen farmacias={farmacias} demografia={demografia} />}
+            {page === "sitios" && <PageSitios farmacias={farmacias} />}
+          </Suspense>
         </div>
       </div>
     </div>

@@ -37,7 +37,7 @@ function IIconMap() { return <svg width="18" height="18" viewBox="0 0 24 24" fil
 const RADIAN = Math.PI / 180;
 const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, name }: any) => {
   if (percent < 0.04) return null; // rebanadas mínimas: la etiqueta se monta sobre la vecina
-  const radius = innerRadius + (outerRadius - innerRadius) * 1.6;
+  const radius = innerRadius + (outerRadius - innerRadius) * 1.35; // más afuera se corta en tarjetas angostas
   const x = cx + radius * Math.cos(-midAngle * RADIAN);
   const y = cy + radius * Math.sin(-midAngle * RADIAN);
   return (
@@ -97,7 +97,7 @@ function MultiSelectCadenas({ opciones, selected, onChange }: {
   return (
     <div style={{ position: "relative" }} ref={containerRef}>
       <button onClick={() => setOpen(!open)} style={{ fontSize: 10, border: `1px solid ${C.border}`, borderRadius: 4, padding: "4px 8px", background: C.bgCard, cursor: "pointer", display: "flex", alignItems: "center", gap: 4, color: C.text2, fontWeight: 500 }}>
-        Marcas ({selected.length}/{opciones.length}) <span style={{ fontSize: 8 }}>▼</span>
+        Marcas ({opciones.filter(o => selected.includes(o)).length}/{opciones.length}) <span style={{ fontSize: 8 }}>▼</span>
       </button>
       {open && (
         <div style={{ position: "absolute", top: "100%", right: 0, marginTop: 4, background: C.bgCard, border: `1px solid ${C.border}`, borderRadius: 6, boxShadow: "0 4px 12px rgba(0,0,0,0.1)", zIndex: 500, width: 160, padding: 6, display: "flex", flexDirection: "column", gap: 4 }}>

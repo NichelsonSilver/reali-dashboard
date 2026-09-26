@@ -29,4 +29,19 @@ export default defineConfig({
     },
   ],
   assetsInclude: ['**/*.csv'],
+  build: {
+    rollupOptions: {
+      output: {
+        // Librerías en chunks propios, agrupadas por familia. El chunk de la app
+        // cambia cada corte mensual (los CSV van dentro); estos solo cambian al
+        // actualizar dependencias, así que el navegador los reusa entre deploys.
+        manualChunks(id) {
+          if (!id.includes('node_modules')) return
+          if (/[\\/]node_modules[\\/](recharts|d3-[^\\/]+|victory-vendor|internmap|decimal\.js-light|eventemitter3|lodash|react-smooth|recharts-scale|tiny-invariant)[\\/]/.test(id)) return 'vendor-charts'
+          if (/[\\/]node_modules[\\/](leaflet|react-leaflet|@react-leaflet|leaflet\.markercluster)[\\/]/.test(id)) return 'vendor-mapa'
+          if (/[\\/]node_modules[\\/](react|react-dom|scheduler)[\\/]/.test(id)) return 'vendor-react'
+        },
+      },
+    },
+  },
 })
