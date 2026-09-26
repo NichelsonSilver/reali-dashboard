@@ -85,6 +85,15 @@ const selSt: React.CSSProperties = {
   backgroundRepeat: "no-repeat", backgroundPosition: "right 8px center", backgroundSize: "11px",
 };
 
+// 18,5M para el país, 385k para dos comunas, 8.412 para una comuna chica:
+// "0.4M" no se lee en una tarjeta de 70 px. `ref` fija la escala, para que
+// población, hombres y mujeres se lean en la misma unidad.
+function cifraCorta(n: number, ref = n): string {
+  if (ref >= 1_000_000) return (n / 1_000_000).toLocaleString("es-CL", { maximumFractionDigits: 1 }) + "M";
+  if (ref >= 100_000) return Math.round(n / 1_000).toLocaleString("es-CL") + "k";
+  return n.toLocaleString("es-CL");
+}
+
 export default function PanelIzquierdo({
   farmacias, farmaciasSinCadena, demografia, comunasDisponibles, regionesDisponibles,
   filtros, onChange, uploadedFiles, onRemoveFile,
@@ -104,18 +113,24 @@ export default function PanelIzquierdo({
       .sort((a, b) => b.cantidad - a.cantidad);
   }, [farmaciasSinCadena]);
 
+  // El censo es nacional; la base de farmacias puede ser una muestra y además
+  // estar filtrada por región o comuna. El universo demográfico son las
+  // comunas (por CUT) de las farmacias que pasan esos filtros. No depende del
+  // filtro de cadena: la población de una zona no cambia según la marca.
   const resumenDemo = useMemo(() => {
-    if (!demografia.length) return null;
+    const cuts = new Set(farmaciasSinCadena.map((f) => f.cod_comuna).filter((c): c is number => c != null));
+    const universo = demografia.filter((d) => cuts.has(Number(d.cod_comuna)));
+    if (!universo.length) return null;
     let poblacion = 0, hombres = 0, mujeres = 0;
     let e0_14 = 0, e15_29 = 0, e30_44 = 0, e45_59 = 0, e60 = 0;
-    for (const d of demografia) {
+    for (const d of universo) {
       poblacion += d.poblacion; hombres += d.hombres; mujeres += d.mujeres;
       e0_14 += d.edad_0_14; e15_29 += d.edad_15_29;
       e30_44 += d.edad_30_44; e45_59 += d.edad_45_59; e60 += d.edad_60_mas;
     }
     const total = e0_14 + e15_29 + e30_44 + e45_59 + e60 || 1;
     return {
-      poblacion, hombres, mujeres,
+      poblacion, hombres, mujeres, comunas: universo.length,
       etaria: [
         { r: "0-14",  pct: Math.round((e0_14  / total) * 100), color: "#22c55e" },
         { r: "15-29", pct: Math.round((e15_29 / total) * 100), color: "#3b82f6" },
@@ -124,7 +139,7 @@ export default function PanelIzquierdo({
         { r: "60+",   pct: Math.round((e60    / total) * 100), color: "#ef4444" },
       ],
     };
-  }, [demografia]);
+  }, [demografia, farmaciasSinCadena]);
 
   const kpis = useMemo(() => ({
     farmacias: farmacias.length,
@@ -273,14 +288,17 @@ export default function PanelIzquierdo({
 
       {/* Demografía */}
       <section style={{ padding: "12px 14px 16px" }}>
-        <div style={{ ...secTitle, marginBottom: 8 }}>Demografía — Censo 2024</div>
+        <div style={{ ...secTitle, marginBottom: 8 }}>
+          Demografía — Censo 2024
+          {resumenDemo && <span style={{ fontWeight: 500, textTransform: "none", letterSpacing: 0 }}> · {resumenDemo.comunas} {resumenDemo.comunas === 1 ? "comuna" : "comunas"}</span>}
+        </div>
         {resumenDemo ? (
           <>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 5, marginBottom: 10 }}>
               {[
-                { l: "Población", v: (resumenDemo.poblacion / 1_000_000).toFixed(1) + "M" },
-                { l: "Hombres",   v: (resumenDemo.hombres   / 1_000_000).toFixed(1) + "M" },
-                { l: "Mujeres",   v: (resumenDemo.mujeres   / 1_000_000).toFixed(1) + "M" },
+                { l: "Población", v: cifraCorta(resumenDemo.poblacion) },
+                { l: "Hombres",   v: cifraCorta(resumenDemo.hombres, resumenDemo.poblacion) },
+                { l: "Mujeres",   v: cifraCorta(resumenDemo.mujeres, resumenDemo.poblacion) },
               ].map(({ l, v }) => (
                 <div key={l} style={{ background: C.bgCard, border: `1px solid ${C.border}`, borderRadius: 8, padding: "7px 5px", textAlign: "center", boxShadow: "0 1px 3px rgba(0,0,0,0.04)" }}>
                   <div className="num" style={{ fontSize: 12, fontWeight: 700, color: C.text }}>{v}</div>
