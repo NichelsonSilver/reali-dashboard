@@ -1,4 +1,5 @@
 import { CadenaFarmaceutica, FormatoLocal, SegmentoLocal } from "./types";
+import type { GrupoNSE } from "./utils/territorio";
 
 // Las 13 marcas del maestro, en orden de tamaño de red. Tiene que coincidir con
 // CLASIFICACION en SCRAPER/MINSAL_scraper/maestro_farmacias.py: si el maestro
@@ -98,7 +99,14 @@ export const NSE_COLORES: Record<string, string> = {
   e: "#6b7280",
 };
 
-export const MAP_CENTER: [number, number] = [-33.4489, -70.6693];
+// Grupos NSE de la capa por unidad vecinal (AIM Chile). Compartido por Resumen y
+// Evaluar Sitio para que un mismo grupo tenga el mismo color en todo el dashboard.
+export const COLOR_NSE: Record<GrupoNSE, string> = {
+  AB: "#1d4ed8", C1a: "#2563eb", C1b: "#60a5fa",
+  C2: "#7c3aed", C3: "#f59e0b", D: "#ef4444", E: "#6b7280",
+};
+
+export const MAP_CENTER:[number, number] = [-33.4489, -70.6693];
 export const MAP_ZOOM = 11;
 
 // Mapas base. CARTO (light_all / dark_all) exige API key desde 2026 y sin ella

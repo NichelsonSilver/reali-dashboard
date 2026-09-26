@@ -6,7 +6,7 @@
 import { useEffect, useRef, useState } from "react";
 import { MapContainer, TileLayer, Circle, CircleMarker, Tooltip } from "react-leaflet";
 import { Farmacia } from "../types";
-import { COLORES_CADENA, TILES } from "../constants";
+import { COLORES_CADENA, COLOR_NSE, TILES } from "../constants";
 import { geocodificar, ResultadoGeocode } from "../utils/geocodificar";
 import {
   GRUPOS_NSE, GrupoNSE, Punto, VectorSitio, calcularVectorSitio, RADIOS_M,
@@ -20,11 +20,6 @@ import { ScoreSitio, calcularScore } from "../utils/scoring";
 import { useCapaNSE, useManzanasRM, Manzanas } from "../hooks/useGeoCapas";
 
 const CADENA_CLIENTE = "Cruz Verde" as const;
-
-const COLOR_NSE: Record<GrupoNSE, string> = {
-  AB: "#1d4ed8", C1a: "#2563eb", C1b: "#60a5fa",
-  C2: "#7c3aed", C3: "#f59e0b", D: "#ef4444", E: "#6b7280",
-};
 
 // Pool de tiendas con venta simulada — costoso de calcular, se cachea por sesión.
 let poolCache: TiendaConVenta[] | null = null;

@@ -1,45 +1,47 @@
 import { useState, useMemo, useEffect, useRef } from "react";
-import { Farmacia } from "../types";
+import { Farmacia, CadenaFarmaceutica, MovimientoFarmacia } from "../types";
 import { DemografiaCenso } from "../hooks/useDemografia";
+import { useMovimientos } from "../hooks/useMovimientos";
+import { useCapaNSE } from "../hooks/useGeoCapas";
+import { GRUPOS_NSE, GrupoNSE } from "../utils/territorio";
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 import { MapContainer, TileLayer, CircleMarker, useMap } from "react-leaflet";
 import L from "leaflet";
-import { COLORES_CADENA, TILES } from "../constants";
+import { CADENAS, COLORES_CADENA, COLOR_NSE, TILES } from "../constants";
 
 // Tokens de marca REALI + semánticos data viz (diseño/paleta.md)
 const C = {
   bg: "#F4F1EA", bgCard: "#FDFCFA", border: "#E3DFD3",
   text: "#0B1A2E", text2: "#3E4A61", text3: "#5D6880",
   accent: "#F5A524", accentStrong: "#C98410", accentText: "#9A6206",
-  green: "#2D8A6B", red: "#C13B3B", purple: "#3E4A61", orange: "#D4A017"
+  green: "#2D8A6B", red: "#C13B3B",
 };
 
-const GSE_COLORS = ["#2563eb", "#3b82f6", "#60a5fa", "#93c5fd", "#bfdbfe"];
-const GENDER_COLORS = ["#ec4899", "#3b82f6"]; // pink, blue
+const GENDER_COLORS = ["#ec4899", "#3b82f6"];
+
+const tarjeta: React.CSSProperties = {
+  background: C.bgCard, borderRadius: 12, border: `1px solid ${C.border}`, boxShadow: "0 2px 8px rgba(0,0,0,0.03)",
+};
+const etiquetaKPI: React.CSSProperties = { fontSize: 11, color: C.text3, fontWeight: 600, textTransform: "uppercase" };
+const nota: React.CSSProperties = { fontSize: 10, color: C.text3, marginTop: 8, lineHeight: 1.4 };
 
 interface Props {
   farmacias: Farmacia[];
   demografia: DemografiaCenso[];
 }
 
-// Icons
 function IIconPop() { return <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>; }
 function IIconPharma() { return <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2v-2a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2z"/><path d="M3 19a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2z"/><path d="M12 3v13"/></svg>; }
 function IIconMap() { return <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>; }
 
-// POI Icons
-function IBuilding() { return <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01"/><path d="M16 6h.01"/><path d="M12 6h.01"/><path d="M12 10h.01"/><path d="M12 14h.01"/><path d="M16 10h.01"/><path d="M16 14h.01"/><path d="M8 10h.01"/><path d="M8 14h.01"/></svg>; }
-function IHospital() { return <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3v18"/><path d="M3 12h18"/></svg>; }
-function IDollar() { return <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>; }
-function IPet() { return <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 11c0-2-1.5-3.5-3.5-3.5a3.5 3.5 0 0 0 0 7c2 0 3.5-1.5 3.5-3.5z"/><path d="M12 11c0-2 1.5-3.5 3.5-3.5a3.5 3.5 0 0 1 0 7c-2 0-3.5-1.5-3.5-3.5z"/><path d="M12 11c-2 0-3.5 1.5-3.5 3.5a3.5 3.5 0 0 0 7 0c0-2-1.5-3.5-3.5-3.5z"/><path d="M5 8c0-1.5-1-3-2.5-3A2.5 2.5 0 0 0 0 7.5C0 9 1.5 10 3 10c1.5 0 2-1.5 2-2z"/><path d="M19 8c0-1.5 1-3 2.5-3A2.5 2.5 0 0 1 24 7.5C24 9 22.5 10 21 10c-1.5 0-2-1.5-2-2z"/></svg>; }
-
 const RADIAN = Math.PI / 180;
 const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, name }: any) => {
+  if (percent < 0.04) return null; // rebanadas mínimas: la etiqueta se monta sobre la vecina
   const radius = innerRadius + (outerRadius - innerRadius) * 1.6;
   const x = cx + radius * Math.cos(-midAngle * RADIAN);
   const y = cy + radius * Math.sin(-midAngle * RADIAN);
   return (
-    <text x={x} y={y} fill={C.text2} textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central" fontSize={10} fontWeight={600}>
+    <text x={x} y={y} fill={C.text2} textAnchor={x > cx ? "start" : "end"} dominantBaseline="central" fontSize={10} fontWeight={600}>
       {`${name} ${(percent * 100).toFixed(0)}%`}
     </text>
   );
@@ -63,21 +65,19 @@ const CustomBarLabel = ({ x, y, width, height, value, payload, insideColor = "#f
   );
 };
 
-function MapAutoZoom({ farmacias, comunaFiltro }: { farmacias: Farmacia[]; comunaFiltro: string }) {
+function MapAutoZoom({ farmacias }: { farmacias: Farmacia[] }) {
   const map = useMap();
   useEffect(() => {
     if (farmacias.length === 0) return;
     const bounds = L.latLngBounds(farmacias.map(f => [f.lat, f.lon] as [number, number]));
-    if (bounds.isValid()) {
-      map.flyToBounds(bounds, { padding: [20, 20], maxZoom: 14, duration: 1.5 });
-    }
-  }, [farmacias, comunaFiltro, map]);
+    if (bounds.isValid()) map.flyToBounds(bounds, { padding: [20, 20], maxZoom: 14, duration: 1.5 });
+  }, [farmacias, map]);
   return null;
 }
 
-const OPCIONES_CADENAS = ["Cruz Verde", "Salcobrand", "Ahumada", "Dr. Simi", "Independientes", "Otros"];
-
-function MultiSelectCadenas({ selected, onChange }: { selected: string[], onChange: (s: string[]) => void }) {
+function MultiSelectCadenas({ opciones, selected, onChange }: {
+  opciones: CadenaFarmaceutica[]; selected: CadenaFarmaceutica[]; onChange: (s: CadenaFarmaceutica[]) => void;
+}) {
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -89,7 +89,7 @@ function MultiSelectCadenas({ selected, onChange }: { selected: string[], onChan
     return () => document.removeEventListener("mousedown", handleClick);
   }, []);
 
-  const toggle = (val: string) => {
+  const toggle = (val: CadenaFarmaceutica) => {
     if (selected.includes(val)) onChange(selected.filter(x => x !== val));
     else onChange([...selected, val]);
   };
@@ -97,13 +97,14 @@ function MultiSelectCadenas({ selected, onChange }: { selected: string[], onChan
   return (
     <div style={{ position: "relative" }} ref={containerRef}>
       <button onClick={() => setOpen(!open)} style={{ fontSize: 10, border: `1px solid ${C.border}`, borderRadius: 4, padding: "4px 8px", background: C.bgCard, cursor: "pointer", display: "flex", alignItems: "center", gap: 4, color: C.text2, fontWeight: 500 }}>
-        Cadenas ({selected.length}) <span style={{ fontSize: 8 }}>▼</span>
+        Marcas ({selected.length}/{opciones.length}) <span style={{ fontSize: 8 }}>▼</span>
       </button>
       {open && (
-        <div style={{ position: "absolute", top: "100%", right: 0, marginTop: 4, background: C.bgCard, border: `1px solid ${C.border}`, borderRadius: 6, boxShadow: "0 4px 12px rgba(0,0,0,0.1)", zIndex: 500, width: 140, padding: 6, display: "flex", flexDirection: "column", gap: 4 }}>
-          {OPCIONES_CADENAS.map(c => (
+        <div style={{ position: "absolute", top: "100%", right: 0, marginTop: 4, background: C.bgCard, border: `1px solid ${C.border}`, borderRadius: 6, boxShadow: "0 4px 12px rgba(0,0,0,0.1)", zIndex: 500, width: 160, padding: 6, display: "flex", flexDirection: "column", gap: 4 }}>
+          {opciones.map(c => (
             <label key={c} style={{ fontSize: 10, display: "flex", alignItems: "center", gap: 6, cursor: "pointer", padding: "4px", borderRadius: 4, background: selected.includes(c) ? "rgba(245,165,36,0.10)" : "transparent" }}>
               <input type="checkbox" checked={selected.includes(c)} onChange={() => toggle(c)} style={{ cursor: "pointer" }} />
+              <span style={{ width: 8, height: 8, borderRadius: 2, background: COLORES_CADENA[c] }} />
               <span style={{ color: C.text2, fontWeight: selected.includes(c) ? 600 : 400 }}>{c}</span>
             </label>
           ))}
@@ -113,81 +114,155 @@ function MultiSelectCadenas({ selected, onChange }: { selected: string[], onChan
   );
 }
 
+const pct = (n: number, d: number) => (d > 0 ? (n / d) * 100 : 0);
+
+export interface FilaNeto {
+  cadena: CadenaFarmaceutica;
+  aperturas: number;
+  cierres: number;
+  neto: number;
+}
+
+// No son una marca comparable con una cadena: van relegadas, igual que en PageMovimientos.
+const RELEGADAS = new Set<CadenaFarmaceutica>(["Independiente", "Otra"]);
+const MIN_FILAS = 4;
+
+/**
+ * Resume los movimientos de UN corte en una fila por marca, ordenada por
+ * actividad (aperturas + cierres): una marca con +5/−5 neta 0, pero es la que
+ * más rota y tiene que verse arriba. Desempate: neto, luego nombre.
+ * Recibe los movimientos ya filtrados por comuna, marca y mes.
+ */
+export function netoPorCadena(movs: MovimientoFarmacia[]): FilaNeto[] {
+  const porCadena = new Map<CadenaFarmaceutica, FilaNeto>();
+  for (const m of movs) {
+    const fila = porCadena.get(m.cadena) ?? { cadena: m.cadena, aperturas: 0, cierres: 0, neto: 0 };
+    if (m.movimiento === "apertura") fila.aperturas++;
+    else fila.cierres++;
+    fila.neto = fila.aperturas - fila.cierres;
+    porCadena.set(m.cadena, fila);
+  }
+  const actividad = (f: FilaNeto) => f.aperturas + f.cierres;
+  return [...porCadena.values()].sort((a, b) =>
+    Number(RELEGADAS.has(a.cadena)) - Number(RELEGADAS.has(b.cadena)) ||
+    actividad(b) - actividad(a) ||
+    b.neto - a.neto ||
+    a.cadena.localeCompare(b.cadena, "es"));
+}
+
+/**
+ * Qué filas se listan: todas las marcas con movimiento; las relegadas solo
+ * entran a rellenar hasta MIN_FILAS cuando las marcas no alcanzan.
+ */
+export function filasVisibles(filas: FilaNeto[]): FilaNeto[] {
+  const marcas = filas.filter(f => !RELEGADAS.has(f.cadena));
+  const relleno = filas.filter(f => RELEGADAS.has(f.cadena)).slice(0, Math.max(0, MIN_FILAS - marcas.length));
+  return [...marcas, ...relleno];
+}
+
 export default function PageResumen({ farmacias, demografia }: Props) {
-  const [comunaFiltro, setComunaFiltro] = useState<string>("");
-  const [cadenasFiltro, setCadenasFiltro] = useState<string[]>(OPCIONES_CADENAS);
+  const movimientos = useMovimientos();
+  const { data: capaNSE } = useCapaNSE(true);
 
-  const comunas = useMemo(() => [...new Set(farmacias.map(f => f.comuna))].sort(), [farmacias]);
+  // Comunas del dataset cargado, con su CUT. El censo es nacional pero la base de
+  // farmacias puede ser una muestra: el universo lo define lo que hay en farmacias.
+  const comunas = useMemo(() => {
+    const m = new Map<number, string>();
+    for (const f of farmacias) if (f.cod_comuna) m.set(f.cod_comuna, f.comuna);
+    return [...m.entries()].map(([cut, nombre]) => ({ cut, nombre })).sort((a, b) => a.nombre.localeCompare(b.nombre, "es"));
+  }, [farmacias]);
 
-  const fFiltradasComuna = useMemo(() => {
-    if (!comunaFiltro) return farmacias;
-    return farmacias.filter(f => f.comuna === comunaFiltro);
-  }, [farmacias, comunaFiltro]);
+  const [cutFiltro, setCutFiltro] = useState<number | null>(null);
+  const marcasPresentes = useMemo(() => {
+    const s = new Set(farmacias.map(f => f.cadena));
+    return CADENAS.filter(c => s.has(c));
+  }, [farmacias]);
+  const [cadenasFiltro, setCadenasFiltro] = useState<CadenaFarmaceutica[]>(CADENAS);
 
-  const dFiltrada = useMemo(() => {
-    if (!comunaFiltro) return demografia;
-    return demografia.filter(d => d.nombre_comuna === comunaFiltro);
-  }, [demografia, comunaFiltro]);
+  const cutsActivos = useMemo(
+    () => new Set(cutFiltro != null ? [cutFiltro] : comunas.map(c => c.cut)),
+    [cutFiltro, comunas],
+  );
+  const nombresActivos = useMemo(
+    () => new Set(comunas.filter(c => cutsActivos.has(c.cut)).map(c => c.nombre)),
+    [comunas, cutsActivos],
+  );
 
-  // Farmacia filt by column 2 specifically
-  const fFiltradasPharma = useMemo(() => {
-    return fFiltradasComuna.filter(f => {
-      // Map logic for "Independientes" and "Otros" could be adjusted based on actual data
-      const isMain = ["Cruz Verde", "Salcobrand", "Ahumada", "Dr. Simi"].includes(f.cadena);
-      if (isMain) return cadenasFiltro.includes(f.cadena);
-      if (f.cadena.toLowerCase().includes("independiente")) return cadenasFiltro.includes("Independientes");
-      return cadenasFiltro.includes("Otros"); // fallback for anything else if "Otros" is checked
-    });
-  }, [fFiltradasComuna, cadenasFiltro]);
+  const fComuna = useMemo(
+    () => farmacias.filter(f => f.cod_comuna != null && cutsActivos.has(f.cod_comuna)),
+    [farmacias, cutsActivos],
+  );
+  const fMarca = useMemo(() => fComuna.filter(f => cadenasFiltro.includes(f.cadena)), [fComuna, cadenasFiltro]);
+  const dComuna = useMemo(() => demografia.filter(d => cutsActivos.has(Number(d.cod_comuna))), [demografia, cutsActivos]);
 
-  // --- DEMOGRAFICO ---
-  const pobTotal = useMemo(() => dFiltrada.reduce((acc, curr) => acc + (curr.poblacion || 0), 0), [dFiltrada]);
-  const cantFarmaciasComuna = fFiltradasComuna.length;
-  const farmPorHab = pobTotal > 0 && cantFarmaciasComuna > 0 ? (pobTotal / cantFarmaciasComuna).toFixed(0) : "0";
-  
-  const gseData = [{ name: "ABC1", value: 15 }, { name: "C2", value: 20 }, { name: "C3", value: 25 }, { name: "D", value: 30 }, { name: "E", value: 10 }];
-  const genderData = [{ name: "Mujeres", value: 52 }, { name: "Hombres", value: 48 }];
-  const ageData = [{ age: "0-14", pop: 20 }, { age: "15-29", pop: 25 }, { age: "30-44", pop: 22 }, { age: "45-59", pop: 18 }, { age: "60+", pop: 15 }];
-  
-  const adultosMayores = "15.4%";
-  const escolaridad = "11.8 años";
+  // --- DEMOGRÁFICO (Censo 2024, INE) ---
+  const demo = useMemo(() => {
+    const s = (k: keyof DemografiaCenso) => dComuna.reduce((a, d) => a + (d[k] as number), 0);
+    const pob = s("poblacion");
+    // Escolaridad es un promedio comunal: se pondera por población, no se promedia plano.
+    const escolaridad = pob > 0 ? dComuna.reduce((a, d) => a + d.escolaridad_promedio * d.poblacion, 0) / pob : 0;
+    const tramos = [
+      { edad: "0-14", n: s("edad_0_14") }, { edad: "15-29", n: s("edad_15_29") }, { edad: "30-44", n: s("edad_30_44") },
+      { edad: "45-59", n: s("edad_45_59") }, { edad: "60+", n: s("edad_60_mas") },
+    ];
+    return {
+      pob,
+      escolaridad,
+      pct60: pct(s("edad_60_mas"), pob),
+      genero: [{ name: "Mujeres", value: s("mujeres") }, { name: "Hombres", value: s("hombres") }],
+      etaria: tramos.map(t => ({ edad: t.edad, pct: +pct(t.n, pob).toFixed(1) })),
+    };
+  }, [dComuna]);
 
-  // --- FARMACEUTICO ---
-  const rawMarketShare = [
-    { name: "Cruz Verde", value: fFiltradasComuna.filter(f=>f.cadena==="Cruz Verde").length || 30, fill: COLORES_CADENA["Cruz Verde"] || "#00833e" },
-    { name: "Salcobrand", value: fFiltradasComuna.filter(f=>f.cadena==="Salcobrand").length || 25, fill: COLORES_CADENA["Salcobrand"] || "#e20613" },
-    { name: "Ahumada", value: fFiltradasComuna.filter(f=>f.cadena==="Ahumada").length || 20, fill: COLORES_CADENA["Ahumada"] || "#003b7a" },
-    { name: "Dr. Simi", value: fFiltradasComuna.filter(f=>f.cadena==="Dr. Simi").length || 15, fill: COLORES_CADENA["Dr. Simi"] || "#27a5d3" }
-  ].filter(d => cadenasFiltro.includes(d.name));
-  
-  const totalMS = rawMarketShare.reduce((a, b) => a + b.value, 0) || 1;
-  const marketShareData = rawMarketShare.map(d => ({ ...d, percent: Math.round((d.value / totalMS) * 100) })).sort((a,b)=>b.value-a.value);
+  const habPorFarmacia = fComuna.length > 0 && demo.pob > 0 ? Math.round(demo.pob / fComuna.length) : null;
 
-  // Group locations based on filter for Locales chart
-  const locsPorCadenaRaw = OPCIONES_CADENAS.filter(c => cadenasFiltro.includes(c)).map(c => {
-    let count = 0;
-    if (["Cruz Verde", "Salcobrand", "Ahumada", "Dr. Simi"].includes(c)) count = fFiltradasComuna.filter(f=>f.cadena===c).length;
-    else if (c === "Independientes") count = fFiltradasComuna.filter(f=>f.cadena.toLowerCase().includes("independiente")).length || 5; // mock if 0
-    else count = fFiltradasComuna.filter(f=>!["Cruz Verde", "Salcobrand", "Ahumada", "Dr. Simi"].includes(f.cadena) && !f.cadena.toLowerCase().includes("independiente")).length || 8; // mock if 0
-    return { name: c, value: count, fill: COLORES_CADENA[c as keyof typeof COLORES_CADENA] || "#94a3b8" };
-  });
-  const totalLocs = locsPorCadenaRaw.reduce((a,b) => a + b.value, 0) || 1;
-  const locsPorCadena = locsPorCadenaRaw.map(d => ({ ...d, percent: Math.round((d.value / totalLocs) * 100) })).sort((a,b)=>b.value-a.value).slice(0, 5);
+  // --- NSE: hogares por grupo, agregados desde las unidades vecinales ---
+  const nse = useMemo(() => {
+    if (!capaNSE) return null;
+    const hog = Object.fromEntries(GRUPOS_NSE.map(g => [g, 0])) as Record<GrupoNSE, number>;
+    for (const f of capaNSE.features) {
+      if (cutsActivos.has(Number(f.properties.cut)) && f.properties.nse in hog) hog[f.properties.nse] += f.properties.hog || 0;
+    }
+    const total = GRUPOS_NSE.reduce((a, g) => a + hog[g], 0);
+    return { total, data: GRUPOS_NSE.filter(g => hog[g] > 0).map(g => ({ name: g, value: hog[g] })) };
+  }, [capaNSE, cutsActivos]);
 
-  const aperturasData = [
-    { name: "Cruz Verde", net: 5 },
-    { name: "Salcobrand", net: 3 },
-    { name: "Ahumada", net: -1 },
-    { name: "Dr. Simi", net: 8 },
-    { name: "TOTAL", net: 15 }
-  ];
+  // --- FARMACÉUTICO ---
+  const locsPorMarca = useMemo(() => {
+    const cuenta = new Map<CadenaFarmaceutica, number>();
+    for (const f of fMarca) cuenta.set(f.cadena, (cuenta.get(f.cadena) ?? 0) + 1);
+    return [...cuenta.entries()]
+      .map(([name, value]) => ({ name, value, percent: Math.round(pct(value, fMarca.length)), fill: COLORES_CADENA[name] }))
+      .sort((a, b) => b.value - a.value);
+  }, [fMarca]);
 
-  // --- ENTORNO ---
-  const malls = Math.floor(Math.random() * 5) + 1;
-  const clinicas = Math.floor(Math.random() * 10) + 2;
-  const bancos = Math.floor(Math.random() * 15) + 3;
-  const petshops = Math.floor(Math.random() * 8) + 1;
-  const score = (Math.random() * 2 + 7).toFixed(1); // 7.0 to 9.0
+  const segmentos = useMemo(() => ({
+    cadena: fMarca.filter(f => f.tipo === "cadena").length,
+    independiente: fMarca.filter(f => f.tipo === "independiente").length,
+    perfumeria: fMarca.filter(f => f.formato === "perfumeria").length,
+  }), [fMarca]);
+
+  const corte = farmacias[0]?.fecha_corte ?? "";
+
+  // Movimientos: se muestra el último corte con diff. movimientos.csv no trae CUT,
+  // así que se cruza por nombre de comuna tomado del maestro.
+  const ultimoMes = useMemo(() => movimientos.reduce((m, x) => (x.mes_deteccion > m ? x.mes_deteccion : m), ""), [movimientos]);
+  const movsFiltrados = useMemo(
+    () => movimientos.filter(m => m.mes_deteccion === ultimoMes && nombresActivos.has(m.comuna) && cadenasFiltro.includes(m.cadena)),
+    [movimientos, ultimoMes, nombresActivos, cadenasFiltro],
+  );
+  const filasNeto = useMemo(() => netoPorCadena(movsFiltrados), [movsFiltrados]);
+  const filasTabla = useMemo(() => filasVisibles(filasNeto), [filasNeto]);
+  const ocultas = filasNeto.length - filasTabla.length;
+  // El total cuenta todo el corte, también las relegadas que no se listan.
+  const totalNeto = filasNeto.reduce(
+    (a, r) => ({ aperturas: a.aperturas + r.aperturas, cierres: a.cierres + r.cierres, neto: a.neto + r.neto }),
+    { aperturas: 0, cierres: 0, neto: 0 },
+  );
+
+  const fmt = (n: number, dec = 0) => n.toLocaleString("es-CL", { minimumFractionDigits: dec, maximumFractionDigits: dec });
+  const signo = (n: number) => (n > 0 ? `+${n}` : `${n}`);
+  const colorNeto = (n: number) => (n > 0 ? C.green : n < 0 ? C.red : C.text3);
 
   return (
     <div style={{ flex: 1, padding: 24, overflowY: "auto", display: "flex", flexDirection: "column", gap: 20 }}>
@@ -195,219 +270,210 @@ export default function PageResumen({ farmacias, demografia }: Props) {
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <div>
           <h2 style={{ fontSize: 22, fontWeight: 700, color: C.text, margin: 0, letterSpacing: "-0.02em" }}>Resumen de Mercado</h2>
-          <p style={{ fontSize: 13, color: C.text2, margin: "4px 0 0 0" }}>Indicadores integrados de demografía, farmacias y entorno territorial.</p>
+          <p style={{ fontSize: 13, color: C.text2, margin: "4px 0 0 0" }}>
+            Demografía y oferta farmacéutica de las comunas cargadas{corte && ` · corte ${corte}`}.
+          </p>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 10, background: C.bgCard, padding: "6px 12px", borderRadius: 8, border: `1px solid ${C.border}`, boxShadow: "0 1px 3px rgba(0,0,0,0.04)" }}>
-          <span style={{ fontSize: 12, fontWeight: 600, color: C.text2 }}>Zona Global (Comuna):</span>
-          <select 
-            value={comunaFiltro} 
-            onChange={(e) => setComunaFiltro(e.target.value)}
+          <span style={{ fontSize: 12, fontWeight: 600, color: C.text2 }}>Comuna:</span>
+          <select
+            value={cutFiltro ?? ""}
+            onChange={(e) => setCutFiltro(e.target.value ? Number(e.target.value) : null)}
             style={{ fontSize: 12, border: "none", outline: "none", color: C.text, background: "transparent", cursor: "pointer", fontWeight: 500 }}
           >
-            <option value="">Todas las comunas</option>
-            {comunas.map(c => <option key={c} value={c}>{c}</option>)}
+            <option value="">Todas ({comunas.length})</option>
+            {comunas.map(c => <option key={c.cut} value={c.cut}>{c.nombre}</option>)}
           </select>
         </div>
       </div>
 
-      {/* Grid 3 columnas */}
       <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 24, flex: 1, minHeight: 0 }}>
-        
-        {/* Columna 1: Demografico */}
+
+        {/* Columna 1: Demográfico */}
         <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 16, fontWeight: 800, color: C.text, textTransform: "uppercase", letterSpacing: "0.05em", borderBottom: `3px solid ${C.accent}`, paddingBottom: 8 }}>
             <IIconPop /> Demográfico
           </div>
-          
+
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
-            <div style={{ background: C.bgCard, padding: 16, borderRadius: 12, border: `1px solid ${C.border}`, boxShadow: "0 2px 8px rgba(0,0,0,0.03)" }}>
-              <div style={{ fontSize: 11, color: C.text3, fontWeight: 600, textTransform: "uppercase" }}>Población Total</div>
-              <div className="num" style={{ fontSize: 22, fontWeight: 700, color: C.text, marginTop: 4 }}>{pobTotal.toLocaleString("es-CL")}</div>
+            <div style={{ ...tarjeta, padding: 16 }}>
+              <div style={etiquetaKPI}>Población</div>
+              <div className="num" style={{ fontSize: 22, fontWeight: 700, color: C.text, marginTop: 4 }}>{fmt(demo.pob)}</div>
             </div>
-            <div style={{ background: C.bgCard, padding: 16, borderRadius: 12, border: `1px solid ${C.border}`, boxShadow: "0 2px 8px rgba(0,0,0,0.03)" }}>
-              <div style={{ fontSize: 11, color: C.text3, fontWeight: 600, textTransform: "uppercase" }}>Farm. / Habitantes</div>
+            <div style={{ ...tarjeta, padding: 16 }}>
+              <div style={etiquetaKPI}>Habitantes / farmacia</div>
               <div className="num" style={{ fontSize: 22, fontWeight: 700, color: C.accentStrong, marginTop: 4 }}>
-                1<span style={{ fontSize: 14, color: C.text3, fontWeight: 500 }}> / {Number(farmPorHab).toLocaleString("es-CL")}</span>
+                {habPorFarmacia != null ? fmt(habPorFarmacia) : "s/d"}
               </div>
             </div>
           </div>
 
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
-            <div style={{ background: C.bgCard, padding: 12, borderRadius: 12, border: `1px solid ${C.border}`, boxShadow: "0 2px 8px rgba(0,0,0,0.03)" }}>
-              <div style={{ fontSize: 11, color: C.text3, fontWeight: 600, textTransform: "uppercase" }}>Adultos Mayores</div>
-              <div className="num" style={{ fontSize: 17, fontWeight: 700, color: C.text, marginTop: 4 }}>{adultosMayores}</div>
+            <div style={{ ...tarjeta, padding: 12 }}>
+              <div style={etiquetaKPI}>Adultos mayores (60+)</div>
+              <div className="num" style={{ fontSize: 17, fontWeight: 700, color: C.text, marginTop: 4 }}>{fmt(demo.pct60, 1)}%</div>
             </div>
-            <div style={{ background: C.bgCard, padding: 12, borderRadius: 12, border: `1px solid ${C.border}`, boxShadow: "0 2px 8px rgba(0,0,0,0.03)" }}>
-              <div style={{ fontSize: 11, color: C.text3, fontWeight: 600, textTransform: "uppercase" }}>Escolaridad Prom.</div>
-              <div className="num" style={{ fontSize: 17, fontWeight: 700, color: C.text, marginTop: 4 }}>{escolaridad}</div>
+            <div style={{ ...tarjeta, padding: 12 }}>
+              <div style={etiquetaKPI}>Escolaridad prom.</div>
+              <div className="num" style={{ fontSize: 17, fontWeight: 700, color: C.text, marginTop: 4 }}>
+                {demo.escolaridad > 0 ? `${fmt(demo.escolaridad, 1)} años` : "s/d"}
+              </div>
             </div>
           </div>
 
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, flexShrink: 0 }}>
-            {/* GSE */}
-            <div style={{ background: C.bgCard, padding: "12px 4px", borderRadius: 12, border: `1px solid ${C.border}`, boxShadow: "0 2px 8px rgba(0,0,0,0.03)", display: "flex", flexDirection: "column" }}>
-              <div style={{ fontSize: 11, fontWeight: 600, color: C.text, textAlign: "center" }}>GSE</div>
+            <div style={{ ...tarjeta, padding: "12px 4px", display: "flex", flexDirection: "column" }}>
+              <div style={{ fontSize: 11, fontWeight: 600, color: C.text, textAlign: "center" }}>NSE (hogares)</div>
+              <div style={{ height: 120, width: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                {nse && nse.total > 0 ? (
+                  <ResponsiveContainer>
+                    <PieChart>
+                      <Pie data={nse.data} innerRadius={25} outerRadius={40} dataKey="value" stroke="none" label={renderCustomizedLabel} labelLine={false} isAnimationActive={false}>
+                        {nse.data.map(d => <Cell key={d.name} fill={COLOR_NSE[d.name]} />)}
+                      </Pie>
+                      <Tooltip formatter={(v: number) => [`${fmt(v)} hogares`, "NSE"]} contentStyle={{ borderRadius: 8, fontSize: 11 }} />
+                    </PieChart>
+                  </ResponsiveContainer>
+                ) : (
+                  <span style={{ fontSize: 11, color: C.text3 }}>{nse ? "Sin datos NSE" : "Cargando…"}</span>
+                )}
+              </div>
+            </div>
+            <div style={{ ...tarjeta, padding: "12px 4px", display: "flex", flexDirection: "column" }}>
+              <div style={{ fontSize: 11, fontWeight: 600, color: C.text, textAlign: "center" }}>GÉNERO</div>
               <div style={{ height: 120, width: "100%" }}>
                 <ResponsiveContainer>
                   <PieChart>
-                    <Pie data={gseData} innerRadius={25} outerRadius={40} dataKey="value" stroke="none" label={renderCustomizedLabel} labelLine={false} isAnimationActive={false}>
-                      {gseData.map((_, i) => <Cell key={`c-${i}`} fill={GSE_COLORS[i % GSE_COLORS.length]} />)}
+                    <Pie data={demo.genero} innerRadius={25} outerRadius={40} dataKey="value" stroke="none" label={renderCustomizedLabel} labelLine={false} isAnimationActive={false}>
+                      {demo.genero.map((_, i) => <Cell key={i} fill={GENDER_COLORS[i]} />)}
                     </Pie>
-                  </PieChart>
-                </ResponsiveContainer>
-              </div>
-            </div>
-            {/* Genero */}
-            <div style={{ background: C.bgCard, padding: "12px 4px", borderRadius: 12, border: `1px solid ${C.border}`, boxShadow: "0 2px 8px rgba(0,0,0,0.03)", display: "flex", flexDirection: "column" }}>
-              <div style={{ fontSize: 11, fontWeight: 600, color: C.text, textAlign: "center" }}>GÉNERO</div>
-              <div style={{ height: 120, width: "100%", position: "relative" }}>
-                <ResponsiveContainer>
-                  <PieChart>
-                    <Pie data={genderData} innerRadius={25} outerRadius={40} dataKey="value" stroke="none" label={renderCustomizedLabel} labelLine={false} isAnimationActive={false}>
-                      {genderData.map((_, i) => <Cell key={`c-${i}`} fill={GENDER_COLORS[i % GENDER_COLORS.length]} />)}
-                    </Pie>
+                    <Tooltip formatter={(v: number) => fmt(v)} contentStyle={{ borderRadius: 8, fontSize: 11 }} />
                   </PieChart>
                 </ResponsiveContainer>
               </div>
             </div>
           </div>
 
-          {/* Etario */}
-          <div style={{ background: C.bgCard, padding: 16, borderRadius: 12, border: `1px solid ${C.border}`, boxShadow: "0 2px 8px rgba(0,0,0,0.03)", flex: 1, minHeight: 160, display: "flex", flexDirection: "column" }}>
-            <div style={{ fontSize: 13, fontWeight: 600, color: C.text, marginBottom: 8 }}>Distribución Etaria (%)</div>
+          <div style={{ ...tarjeta, padding: 16, flex: 1, minHeight: 160, display: "flex", flexDirection: "column" }}>
+            <div style={{ fontSize: 13, fontWeight: 600, color: C.text, marginBottom: 8 }}>Distribución etaria (%)</div>
             <div style={{ flex: 1 }}>
               <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={ageData} margin={{ top: 10, right: 10, left: -25, bottom: 0 }}>
-                  <XAxis dataKey="age" tick={{ fontSize: 10, fill: C.text3 }} axisLine={false} tickLine={false} />
+                <BarChart data={demo.etaria} margin={{ top: 10, right: 10, left: -25, bottom: 0 }}>
+                  <XAxis dataKey="edad" tick={{ fontSize: 10, fill: C.text3 }} axisLine={false} tickLine={false} />
                   <YAxis tick={{ fontSize: 10, fill: C.text3 }} axisLine={false} tickLine={false} />
-                  <Tooltip cursor={{ fill: "rgba(11,26,46,0.04)" }} contentStyle={{ borderRadius: 8, fontSize: 12 }} />
-                  <Bar dataKey="pop" fill={C.accent} radius={[4, 4, 0, 0]} />
+                  <Tooltip formatter={(v: number) => [`${v}%`, "Población"]} cursor={{ fill: "rgba(11,26,46,0.04)" }} contentStyle={{ borderRadius: 8, fontSize: 12 }} />
+                  <Bar dataKey="pct" fill={C.accent} radius={[4, 4, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             </div>
+            <div style={nota}>Fuente: Censo 2024 (INE). NSE: hogares por unidad vecinal, metodología AIM Chile.</div>
           </div>
         </div>
 
-        {/* Columna 2: Farmaceutico */}
+        {/* Columna 2: Farmacéutico */}
         <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", borderBottom: `3px solid ${C.green}`, paddingBottom: 8 }}>
             <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 16, fontWeight: 800, color: C.text, textTransform: "uppercase", letterSpacing: "0.05em" }}>
               <IIconPharma /> Farmacéutico
             </div>
-            <MultiSelectCadenas selected={cadenasFiltro} onChange={setCadenasFiltro} />
+            <MultiSelectCadenas opciones={marcasPresentes} selected={cadenasFiltro} onChange={setCadenasFiltro} />
           </div>
 
-          {/* Market Share Horizontal */}
-          <div style={{ background: C.bgCard, padding: 16, borderRadius: 12, border: `1px solid ${C.border}`, boxShadow: "0 2px 8px rgba(0,0,0,0.03)", height: 210, display: "flex", flexDirection: "column" }}>
-            <div style={{ fontSize: 13, fontWeight: 600, color: C.text, marginBottom: 8 }}>Market Share Estimado</div>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 12 }}>
+            <div style={{ ...tarjeta, padding: 12 }}>
+              <div style={etiquetaKPI}>Locales</div>
+              <div className="num" style={{ fontSize: 20, fontWeight: 700, color: C.text, marginTop: 4 }}>{fmt(fMarca.length)}</div>
+            </div>
+            <div style={{ ...tarjeta, padding: 12 }}>
+              <div style={etiquetaKPI}>De cadena</div>
+              <div className="num" style={{ fontSize: 20, fontWeight: 700, color: C.text, marginTop: 4 }}>{fmt(pct(segmentos.cadena, fMarca.length))}%</div>
+            </div>
+            <div style={{ ...tarjeta, padding: 12 }} title="Maicao, Preunic y Liquimax: venden farma pero no son sustituto directo">
+              <div style={etiquetaKPI}>Perfumerías</div>
+              <div className="num" style={{ fontSize: 20, fontWeight: 700, color: C.text, marginTop: 4 }}>{fmt(segmentos.perfumeria)}</div>
+            </div>
+          </div>
+
+          <div style={{ ...tarjeta, padding: 16, height: Math.max(180, 40 + locsPorMarca.length * 24), display: "flex", flexDirection: "column" }}>
+            <div style={{ fontSize: 13, fontWeight: 600, color: C.text, marginBottom: 8 }}>Participación en locales, por marca</div>
             <div style={{ flex: 1 }}>
               <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={marketShareData} layout="vertical" margin={{ top: 0, right: 40, left: -10, bottom: 0 }}>
+                <BarChart data={locsPorMarca} layout="vertical" margin={{ top: 0, right: 40, left: -10, bottom: 0 }}>
                   <XAxis type="number" hide />
-                  <YAxis dataKey="name" type="category" tick={{ fontSize: 10, fill: C.text2 }} axisLine={false} tickLine={false} width={80} />
+                  <YAxis dataKey="name" type="category" tick={{ fontSize: 10, fill: C.text2 }} axisLine={false} tickLine={false} width={90} />
                   <Tooltip cursor={{ fill: "rgba(11,26,46,0.04)" }} contentStyle={{ borderRadius: 8, fontSize: 12 }} />
-                  <Bar dataKey="value" radius={[0, 4, 4, 0]} label={<CustomBarLabel />}>
-                    {marketShareData.map((entry, index) => <Cell key={`cell-${index}`} fill={entry.fill} />)}
+                  <Bar dataKey="value" name="Locales" radius={[0, 4, 4, 0]} label={<CustomBarLabel />}>
+                    {locsPorMarca.map(e => <Cell key={e.name} fill={e.fill} />)}
                   </Bar>
                 </BarChart>
               </ResponsiveContainer>
             </div>
           </div>
 
-          {/* Locales por Cadena */}
-          <div style={{ background: C.bgCard, padding: 16, borderRadius: 12, border: `1px solid ${C.border}`, boxShadow: "0 2px 8px rgba(0,0,0,0.03)", height: 210, display: "flex", flexDirection: "column" }}>
-            <div style={{ fontSize: 13, fontWeight: 600, color: C.text, marginBottom: 8 }}>Locales Totales por Cadena</div>
-            <div style={{ flex: 1 }}>
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={locsPorCadena} layout="vertical" margin={{ top: 0, right: 40, left: -10, bottom: 0 }}>
-                  <XAxis type="number" hide />
-                  <YAxis dataKey="name" type="category" tick={{ fontSize: 10, fill: C.text2 }} axisLine={false} tickLine={false} width={80} />
-                  <Tooltip cursor={{ fill: "rgba(11,26,46,0.04)" }} contentStyle={{ borderRadius: 8, fontSize: 12 }} />
-                  <Bar dataKey="value" radius={[0, 4, 4, 0]} label={<CustomBarLabel />}>
-                    {locsPorCadena.map((entry, index) => <Cell key={`cell-${index}`} fill={entry.fill} />)}
-                  </Bar>
-                </BarChart>
-              </ResponsiveContainer>
+          <div style={{ ...tarjeta, padding: 16, flex: 1 }}>
+            <div style={{ fontSize: 13, fontWeight: 600, color: C.text, marginBottom: 12 }}>
+              Aperturas y cierres{ultimoMes && ` · detectados en ${ultimoMes}`}
             </div>
-          </div>
-
-          {/* Tabla aperturas */}
-          <div style={{ background: C.bgCard, padding: 16, borderRadius: 12, border: `1px solid ${C.border}`, boxShadow: "0 2px 8px rgba(0,0,0,0.03)", flex: 1 }}>
-            <div style={{ fontSize: 13, fontWeight: 600, color: C.text, marginBottom: 12 }}>Nuevas Aperturas (Neto, mes)</div>
-            <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 12 }}>
-              <tbody>
-                {aperturasData.map((row, i) => (
-                  <tr key={i} style={{ borderBottom: i === aperturasData.length - 1 ? "none" : `1px solid ${C.border}`, fontWeight: row.name === "TOTAL" ? 700 : 500, color: row.name === "TOTAL" ? C.text : C.text2 }}>
-                    <td style={{ padding: "6px 0" }}>{row.name}</td>
-                    <td style={{ padding: "6px 0", textAlign: "right", color: row.net > 0 ? C.green : (row.net < 0 ? C.red : "inherit") }}>{row.net > 0 ? `+${row.net}` : row.net}</td>
+            {filasNeto.length === 0 ? (
+              <div style={{ fontSize: 12, color: C.text3 }}>
+                {ultimoMes ? "Sin movimientos en la selección." : "Sin corte con diff todavía."}
+              </div>
+            ) : (
+              <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 12 }}>
+                <thead>
+                  <tr style={{ color: C.text3, fontSize: 10, textTransform: "uppercase" }}>
+                    <th style={{ textAlign: "left", fontWeight: 600, paddingBottom: 4 }}>Marca</th>
+                    <th style={{ textAlign: "right", fontWeight: 600 }}>Aper.</th>
+                    <th style={{ textAlign: "right", fontWeight: 600 }}>Cierres</th>
+                    <th style={{ textAlign: "right", fontWeight: 600 }}>Neto</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {[...filasTabla, { cadena: "TOTAL" as const, ...totalNeto }].map(r => {
+                    const total = r.cadena === "TOTAL";
+                    return (
+                      <tr key={r.cadena} style={{ borderTop: `1px solid ${C.border}`, fontWeight: total ? 700 : 500, color: total ? C.text : C.text2 }}>
+                        <td style={{ padding: "6px 0" }}>{r.cadena}</td>
+                        <td className="num" style={{ textAlign: "right" }}>{r.aperturas}</td>
+                        <td className="num" style={{ textAlign: "right" }}>{r.cierres}</td>
+                        <td className="num" style={{ textAlign: "right", color: colorNeto(r.neto) }}>{signo(r.neto)}</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            )}
+            <div style={nota}>
+              {ocultas > 0 && "El total incluye independientes y otras, que no se listan. "}
+              Detección en el registro, no fecha de inauguración: el registro publica altas y bajas con rezago.
+            </div>
           </div>
         </div>
 
-        {/* Columna 3: Mapa y Entorno */}
+        {/* Columna 3: Mapa */}
         <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 16, fontWeight: 800, color: C.text, textTransform: "uppercase", letterSpacing: "0.05em", borderBottom: `3px solid ${C.text}`, paddingBottom: 8 }}>
-            <IIconMap /> Mapa y Entorno
-          </div>
-          
-          <div style={{ background: "linear-gradient(135deg, #0B1A2E, #1C2433)", padding: "16px 20px", borderRadius: 12, color: "#fff", display: "flex", alignItems: "center", justifyContent: "space-between", boxShadow: "0 4px 12px rgba(11,26,46,0.25)" }}>
-            <div>
-              <div style={{ fontSize: 12, fontWeight: 600, opacity: 0.8, textTransform: "uppercase", letterSpacing: "0.05em" }}>Score de Entorno</div>
-              <div style={{ fontSize: 11, opacity: 0.7, marginTop: 2 }}>Basado en densidad de POIs</div>
-            </div>
-            <div className="num" style={{ fontSize: 34, fontWeight: 700, color: "#F5A524" }}>{score}</div>
+            <IIconMap /> Mapa
           </div>
 
-          <div style={{ height: "40%", background: C.bgCard, borderRadius: 12, border: `1px solid ${C.border}`, boxShadow: "0 2px 8px rgba(0,0,0,0.03)", overflow: "hidden", position: "relative" }}>
-            <MapContainer 
-              center={[-33.4489, -70.6693]} 
-              zoom={11} 
-              style={{ width: "100%", height: "100%" }}
-              zoomControl={false}
-              attributionControl={false}
-            >
+          <div style={{ ...tarjeta, flex: 1, minHeight: 420, overflow: "hidden", position: "relative" }}>
+            <MapContainer center={[-33.4489, -70.6693]} zoom={11} style={{ width: "100%", height: "100%" }} zoomControl={false} attributionControl={false}>
               <TileLayer url={TILES.claro.url} maxNativeZoom={TILES.claro.maxNativeZoom} />
-              <MapAutoZoom farmacias={fFiltradasComuna} comunaFiltro={comunaFiltro} />
-              {fFiltradasPharma.slice(0, 500).map((f) => (
-                <CircleMarker 
-                  key={f.id} 
-                  center={[f.lat, f.lon]} 
-                  radius={4} 
+              <MapAutoZoom farmacias={fComuna} />
+              {fMarca.slice(0, 1500).map((f) => (
+                <CircleMarker
+                  key={f.id}
+                  center={[f.lat, f.lon]}
+                  radius={4}
                   color="rgba(255,255,255,0.5)"
                   weight={1}
-                  fillColor={COLORES_CADENA[f.cadena] || "#64748b"} 
+                  fillColor={COLORES_CADENA[f.cadena] || "#64748b"}
                   fillOpacity={0.8}
                 />
               ))}
             </MapContainer>
             <div style={{ position: "absolute", bottom: 8, left: 8, zIndex: 400, background: "rgba(253,252,250,0.92)", padding: "2px 6px", borderRadius: 4, fontSize: 9, fontWeight: 600, color: C.text2, border: `1px solid ${C.border}` }}>
-              {fFiltradasPharma.length > 500 ? "Mostrando 500 ptos." : `${fFiltradasPharma.length} ptos.`}
-            </div>
-          </div>
-
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
-            <div style={{ position: "relative", overflow: "hidden", background: C.bgCard, padding: "16px", borderRadius: 12, border: `1px solid ${C.border}`, display: "flex", flexDirection: "column" }}>
-              <div style={{ position: "absolute", right: -6, bottom: -12, color: C.accent, opacity: 0.12, transform: "scale(3.5)", pointerEvents: "none" }}><IBuilding /></div>
-              <span style={{ fontSize: 11, color: C.text3, fontWeight: 600, textTransform: "uppercase", zIndex: 1 }}>Malls</span>
-              <span className="num" style={{ fontSize: 22, fontWeight: 700, color: C.text, zIndex: 1, marginTop: 4 }}>{malls}</span>
-            </div>
-            <div style={{ position: "relative", overflow: "hidden", background: C.bgCard, padding: "16px", borderRadius: 12, border: `1px solid ${C.border}`, display: "flex", flexDirection: "column" }}>
-              <div style={{ position: "absolute", right: -4, bottom: -12, color: C.green, opacity: 0.12, transform: "scale(3.5)", pointerEvents: "none" }}><IHospital /></div>
-              <span style={{ fontSize: 11, color: C.text3, fontWeight: 600, textTransform: "uppercase", zIndex: 1 }}>Clínicas</span>
-              <span className="num" style={{ fontSize: 22, fontWeight: 700, color: C.text, zIndex: 1, marginTop: 4 }}>{clinicas}</span>
-            </div>
-            <div style={{ position: "relative", overflow: "hidden", background: C.bgCard, padding: "16px", borderRadius: 12, border: `1px solid ${C.border}`, display: "flex", flexDirection: "column" }}>
-              <div style={{ position: "absolute", right: -6, bottom: -12, color: C.purple, opacity: 0.12, transform: "scale(3.5)", pointerEvents: "none" }}><IDollar /></div>
-              <span style={{ fontSize: 11, color: C.text3, fontWeight: 600, textTransform: "uppercase", zIndex: 1 }}>Bancos</span>
-              <span className="num" style={{ fontSize: 22, fontWeight: 700, color: C.text, zIndex: 1, marginTop: 4 }}>{bancos}</span>
-            </div>
-            <div style={{ position: "relative", overflow: "hidden", background: C.bgCard, padding: "16px", borderRadius: 12, border: `1px solid ${C.border}`, display: "flex", flexDirection: "column" }}>
-              <div style={{ position: "absolute", right: -4, bottom: -12, color: C.orange, opacity: 0.12, transform: "scale(3.5)", pointerEvents: "none" }}><IPet /></div>
-              <span style={{ fontSize: 11, color: C.text3, fontWeight: 600, textTransform: "uppercase", zIndex: 1 }}>Petshops</span>
-              <span className="num" style={{ fontSize: 22, fontWeight: 700, color: C.text, zIndex: 1, marginTop: 4 }}>{petshops}</span>
+              {fMarca.length > 1500 ? `Mostrando 1.500 de ${fmt(fMarca.length)} locales` : `${fmt(fMarca.length)} locales`}
             </div>
           </div>
         </div>
