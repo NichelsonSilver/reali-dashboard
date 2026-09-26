@@ -8,6 +8,7 @@ import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveCo
 import { MapContainer, TileLayer, CircleMarker, useMap } from "react-leaflet";
 import L from "leaflet";
 import { CADENAS, COLORES_CADENA, COLOR_NSE, TILES } from "../constants";
+import { conCoordConfiable } from "../utils/coordenadas";
 
 // Tokens de marca REALI + semánticos data viz (diseño/paleta.md)
 const C = {
@@ -193,6 +194,9 @@ export default function PageResumen({ farmacias, demografia }: Props) {
     [farmacias, cutsActivos],
   );
   const fMarca = useMemo(() => fComuna.filter(f => cadenasFiltro.includes(f.cadena)), [fComuna, cadenasFiltro]);
+  // KPIs y tablas cuentan todo; el mapa (y su encuadre) solo lo de punto confiable.
+  const enMapa = useMemo(() => conCoordConfiable(fMarca), [fMarca]);
+  const encuadre = useMemo(() => conCoordConfiable(fComuna), [fComuna]);
   const dComuna = useMemo(() => demografia.filter(d => cutsActivos.has(Number(d.cod_comuna))), [demografia, cutsActivos]);
 
   // --- DEMOGRÁFICO (Censo 2024, INE) ---
@@ -235,6 +239,8 @@ export default function PageResumen({ farmacias, demografia }: Props) {
       .map(([name, value]) => ({ name, value, percent: Math.round(pct(value, fMarca.length)), fill: COLORES_CADENA[name] }))
       .sort((a, b) => b.value - a.value);
   }, [fMarca]);
+
+  const temporales = useMemo(() => fMarca.filter(f => f.estado === "cerrada_temporal").length, [fMarca]);
 
   const segmentos = useMemo(() => ({
     cadena: fMarca.filter(f => f.tipo === "cadena").length,
@@ -444,6 +450,7 @@ export default function PageResumen({ farmacias, demografia }: Props) {
               </table>
             )}
             <div style={nota}>
+              {temporales > 0 && `${fmt(temporales)} locales cerrados temporalmente en la selección: se cuentan como cierre si siguen así 3 meses. `}
               {ocultas > 0 && "El total incluye independientes y otras, que no se listan. "}
               Detección en el registro, no fecha de inauguración: el registro publica altas y bajas con rezago.
             </div>
@@ -459,8 +466,8 @@ export default function PageResumen({ farmacias, demografia }: Props) {
           <div style={{ ...tarjeta, flex: 1, minHeight: 420, overflow: "hidden", position: "relative" }}>
             <MapContainer center={[-33.4489, -70.6693]} zoom={11} style={{ width: "100%", height: "100%" }} zoomControl={false} attributionControl={false}>
               <TileLayer url={TILES.claro.url} maxNativeZoom={TILES.claro.maxNativeZoom} />
-              <MapAutoZoom farmacias={fComuna} />
-              {fMarca.slice(0, 1500).map((f) => (
+              <MapAutoZoom farmacias={encuadre} />
+              {enMapa.slice(0, 1500).map((f) => (
                 <CircleMarker
                   key={f.id}
                   center={[f.lat, f.lon]}
@@ -468,12 +475,14 @@ export default function PageResumen({ farmacias, demografia }: Props) {
                   color="rgba(255,255,255,0.5)"
                   weight={1}
                   fillColor={COLORES_CADENA[f.cadena] || "#64748b"}
-                  fillOpacity={0.8}
+                  fillOpacity={f.estado === "cerrada_temporal" ? 0.25 : 0.8}
+                  dashArray={f.estado === "cerrada_temporal" ? "2 3" : undefined}
                 />
               ))}
             </MapContainer>
             <div style={{ position: "absolute", bottom: 8, left: 8, zIndex: 400, background: "rgba(253,252,250,0.92)", padding: "2px 6px", borderRadius: 4, fontSize: 9, fontWeight: 600, color: C.text2, border: `1px solid ${C.border}` }}>
-              {fMarca.length > 1500 ? `Mostrando 1.500 de ${fmt(fMarca.length)} locales` : `${fmt(fMarca.length)} locales`}
+              {enMapa.length > 1500 ? `Mostrando 1.500 de ${fmt(enMapa.length)} locales` : `${fmt(enMapa.length)} locales`}
+              {fMarca.length > enMapa.length && ` · ${fMarca.length - enMapa.length} sin ubicación confiable`}
             </div>
           </div>
         </div>

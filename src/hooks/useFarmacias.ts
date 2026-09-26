@@ -40,6 +40,9 @@ export function useFarmacias(): UseFarmaciasResult {
           modalidad: row.modalidad?.trim() || undefined,
           telefono: row.telefono?.trim() || undefined,
           horario: row.horario?.trim() || undefined,
+          coord_dudosa: row.coord_dudosa?.trim() === "1",
+          estado: row.estado?.trim() === "cerrada_temporal" ? "cerrada_temporal" : "activa",
+          cerrada_desde: row.cerrada_desde?.trim() || undefined,
           fecha_corte: row.fecha_corte?.trim() || undefined,
         }));
 

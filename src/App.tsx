@@ -2,6 +2,7 @@ import { useMemo, useState, Suspense, lazy } from "react";
 import { useFarmacias } from "./hooks/useFarmacias";
 import { useDemografia, DemografiaCenso } from "./hooks/useDemografia";
 import { Farmacia } from "./types";
+import { conCoordConfiable } from "./utils/coordenadas";
 import PanelIzquierdo from "./components/PanelIzquierdo";
 import UploadModal from "./components/UploadModal";
 // Cada página en su propio chunk: solo se descarga la que se abre. Resumen es la
@@ -255,6 +256,9 @@ function PageMapa({
     return result;
   }, [farmaciasSinCadena, filtros.cadenas]);
 
+  // El panel cuenta todos los locales; el mapa dibuja solo los de punto confiable.
+  const mapeables = useMemo(() => conCoordConfiable(filtradas), [filtradas]);
+
   const comunas = useMemo(() => [...new Set(farmacias.map((f) => f.comuna))].sort(), [farmacias]);
   const regiones = useMemo(() => [...new Set(farmacias.map((f) => f.region))].sort(), [farmacias]);
 
@@ -320,7 +324,7 @@ function PageMapa({
             </div>
           }>
             <MapaFarmacias
-              farmacias={filtradas}
+              farmacias={mapeables}
               onComunaClick={(c) => setFiltros((prev) => ({ ...prev, comuna: c }))}
             />
           </Suspense>

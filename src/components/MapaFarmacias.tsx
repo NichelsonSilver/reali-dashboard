@@ -42,6 +42,9 @@ function popupHTML(f: Farmacia, col: string): string {
   return `<div class="fpopup">
     <h4>${escapeHtml(f.nombre)}</h4>
     <div class="addr">${escapeHtml(f.direccion)}</div>
+    ${f.estado === "cerrada_temporal"
+      ? `<div class="addr" style="color:#C13B3B;font-weight:600">Cerrada temporalmente${f.cerrada_desde ? ` desde ${escapeHtml(f.cerrada_desde)}` : ""} · se confirma como cierre a los 3 meses</div>`
+      : ""}
     <div class="grid2">
       ${row("Cadena", f.cadena, col)}
       ${row("Comuna", f.comuna)}
@@ -76,21 +79,24 @@ function FarmaciasLayer({ farmacias, logosOn }: { farmacias: Farmacia[]; logosOn
 
     for (const f of farmacias) {
       const col = COLORES_CADENA[f.cadena] ?? "#64748b";
+      // Cerrada temporal: se dibuja atenuada y punteada, no desaparece.
+      const temporal = f.estado === "cerrada_temporal";
       let layer: L.Layer;
 
       if (logosOn) {
         const logo = LOGO_CADENA[f.cadena];
         const html = logo
-          ? `<div class="farm-icon" style="border-color:${col}"><img src="${logo}" alt=""/></div>`
-          : `<div class="farm-icon" style="border-color:${col};background:${col}"><div class="farm-dot" style="background:${col};border-color:#fff"></div></div>`;
+          ? `<div class="farm-icon" style="border-color:${col}${temporal ? ";opacity:.4;border-style:dashed" : ""}"><img src="${logo}" alt=""/></div>`
+          : `<div class="farm-icon" style="border-color:${col};background:${col}${temporal ? ";opacity:.4" : ""}"><div class="farm-dot" style="background:${col};border-color:#fff"></div></div>`;
         const icon = L.divIcon({
           html, className: "", iconSize: [26, 26], iconAnchor: [13, 13], popupAnchor: [0, -13],
         });
         layer = L.marker([f.lat, f.lon], { icon });
       } else {
         layer = L.circleMarker([f.lat, f.lon], {
-          radius: 7, color: "rgba(255,255,255,0.8)", weight: 1.5,
-          fillColor: col, fillOpacity: 0.9,
+          radius: 7, color: temporal ? col : "rgba(255,255,255,0.8)", weight: 1.5,
+          fillColor: col, fillOpacity: temporal ? 0.25 : 0.9,
+          dashArray: temporal ? "2 3" : undefined,
         });
       }
 

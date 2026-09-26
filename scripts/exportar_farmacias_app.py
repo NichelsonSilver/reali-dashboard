@@ -47,7 +47,8 @@ SALIDA_DEFECTO = RAIZ / "datos_maestros" / "farmacias.csv"
 # src/types.ts en el mismo commit.
 ESQUEMA_APP = ["id", "nombre", "cadena", "tipo", "formato", "direccion",
                "comuna", "cod_comuna", "region", "lat", "lon", "modalidad",
-               "telefono", "horario", "fecha_corte"]
+               "telefono", "horario", "coord_dudosa", "estado", "cerrada_desde",
+               "fecha_corte"]
 
 # Nombre oficial (shapefile) → nombre corto (REGIONES_CHILE en src/constants.ts).
 # Las 16 regiones están mapeadas a propósito, sin fallback silencioso: si el
@@ -92,6 +93,13 @@ def traducir(maestro):
         "modalidad":   maestro["modalidad"],
         "telefono":    maestro["telefono"],
         "horario":     maestro["horario"],
+        # 1 = el punto no cae en la comuna declarada ni Google lo ubicó ahí: la
+        # app lo cuenta pero no lo dibuja. Un maestro anterior a 2026-09 no la trae.
+        "coord_dudosa": (maestro["coord_dudosa"].fillna(False).astype(bool).astype(int)
+                         if "coord_dudosa" in maestro else 0),
+        # activa | cerrada_temporal. Las `cerrada` no llegan acá (ver exportar).
+        "estado":      (maestro["estado"] if "estado" in maestro else "activa"),
+        "cerrada_desde": (maestro["cerrada_desde"] if "cerrada_desde" in maestro else ""),
         "fecha_corte": maestro["fecha_corte"],
     })
     # Excel no distingue "" de vacío: al releer el maestro los campos opcionales
@@ -101,7 +109,7 @@ def traducir(maestro):
     # como 15101.0 y se escribiría así en el CSV. Es un código, no una cantidad.
     df["cod_comuna"] = pd.to_numeric(df["cod_comuna"], errors="coerce").astype("Int64")
 
-    for col in ("modalidad", "telefono", "horario"):
+    for col in ("modalidad", "telefono", "horario", "cerrada_desde"):
         df[col] = df[col].fillna("").astype(str).str.strip()
         df[col] = df[col].replace({"nan": "", "None": ""})
 
@@ -160,6 +168,11 @@ def validar(df, maestro):
     if sin_cod:
         avisos.append(f"{sin_cod} locales sin cod_comuna: no joinean con el censo")
 
+    dudosas = int(df["coord_dudosa"].sum())
+    if dudosas:
+        avisos.append(f"{dudosas} locales con coord_dudosa: se cuentan pero no se "
+                      f"dibujan. Si sube de un corte a otro, revisar process_minsal.")
+
     return problemas, avisos
 
 
@@ -170,6 +183,14 @@ def exportar(maestro_path, salida, solo_verificar=False):
     if faltan:
         raise ValueError(f"{Path(maestro_path).name} no tiene {sorted(faltan)}: "
                          f"no es un maestro del esquema nuevo")
+
+    # Una `cerrada` (>= 3 meses sin operar) sigue en el maestro para registrar
+    # una reapertura, pero no es un local del mercado: no se publica.
+    if "estado" in maestro.columns:
+        cerradas = maestro["estado"] == "cerrada"
+        print(f"  → estado: {maestro['estado'].value_counts().to_dict()} "
+              f"({int(cerradas.sum())} cerradas no se publican)")
+        maestro = maestro[~cerradas]
 
     df = traducir(maestro)
     problemas, avisos = validar(df, maestro)

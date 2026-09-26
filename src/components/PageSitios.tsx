@@ -3,10 +3,11 @@
 // el dosier con mapa de entorno, imagen satelital (Esri) y foto de fachada
 // (Mapillary si hay token VITE_MAPILLARY_TOKEN, o subida manual).
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { MapContainer, TileLayer, Circle, CircleMarker, Tooltip } from "react-leaflet";
 import { Farmacia } from "../types";
 import { COLORES_CADENA, COLOR_NSE, TILES } from "../constants";
+import { conCoordConfiable } from "../utils/coordenadas";
 import { geocodificar, ResultadoGeocode } from "../utils/geocodificar";
 import {
   GRUPOS_NSE, GrupoNSE, Punto, VectorSitio, calcularVectorSitio, RADIOS_M,
@@ -106,7 +107,9 @@ const cabecera: React.CSSProperties = { ...celda, fontWeight: 700, color: "#0B1A
 
 // ── Página ───────────────────────────────────────────────────────────────────
 
-export default function PageSitios({ farmacias }: { farmacias: Farmacia[] }) {
+export default function PageSitios({ farmacias: todas }: { farmacias: Farmacia[] }) {
+  // El motor mide distancias: un local con coord_dudosa inventaría competencia.
+  const farmacias = useMemo(() => conCoordConfiable(todas), [todas]);
   const [direccion, setDireccion] = useState("");
   const [candidatos, setCandidatos] = useState<ResultadoGeocode[]>([]);
   const [estado, setEstado] = useState<"idle" | "geocodificando" | "calculando" | "listo" | "error">("idle");

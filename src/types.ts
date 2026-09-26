@@ -19,6 +19,19 @@ export interface Farmacia {
   modalidad?: string;
   telefono?: string;
   horario?: string;
+  /**
+   * El punto no cae en la comuna declarada y Google tampoco lo ubicó ahí. Se
+   * cuenta, pero no se dibuja ni entra al motor territorial (utils/coordenadas).
+   */
+  coord_dudosa?: boolean;
+  /**
+   * activa | cerrada_temporal. Temporal = #close de MINSAL, cerrada en el
+   * registro o ausente de la fuente hace < 3 meses: se dibuja y se cuenta,
+   * marcada. A los 3 meses pasa a cerrada y deja de publicarse.
+   */
+  estado?: EstadoLocal;
+  /** Corte 'AAAA-MM' desde el que está cerrada temporalmente. */
+  cerrada_desde?: string;
   /** Mes del corte al que pertenece el dato, en ISO 'AAAA-MM'. */
   fecha_corte?: string;
 }
@@ -31,6 +44,8 @@ export interface Farmacia {
 export type SegmentoLocal = "cadena" | "independiente" | "otra";
 
 export type FormatoLocal = "farmacia" | "perfumeria";
+
+export type EstadoLocal = "activa" | "cerrada_temporal";
 
 /**
  * Las 13 marcas del maestro. Ecofarmacia y La Rebaja tienen scraper propio pero

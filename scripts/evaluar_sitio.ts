@@ -23,7 +23,8 @@ function cargarFarmacias(): Farmacia[] {
   const raw = readFileSync(join(BASE, "src/data/farmacias.csv"), "utf-8");
   const res = Papa.parse<Record<string, string>>(raw, { header: true, skipEmptyLines: true });
   return res.data
-    .filter((r) => r.lat && r.lon)
+    // coord_dudosa: el local existe, pero su punto no sirve para medir distancias.
+    .filter((r) => r.lat && r.lon && r.coord_dudosa !== "1")
     .map((r) => ({
       id: r.id, nombre: r.nombre, cadena: (r.cadena as CadenaFarmaceutica) ?? "Otra",
       direccion: r.direccion, comuna: r.comuna, region: r.region,
