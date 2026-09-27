@@ -5,6 +5,9 @@ import {
 } from "recharts";
 import { Farmacia } from "../types";
 import { DemografiaCenso } from "../hooks/useDemografia";
+import { useCapaNSE } from "../hooks/useGeoCapas";
+import { hogaresNSEEnComunas } from "../utils/territorio";
+import { COLOR_NSE } from "../constants";
 
 interface Props {
   farmacias: Farmacia[];
@@ -20,27 +23,55 @@ const secTitle: React.CSSProperties = {
   fontSize: 11, fontWeight: 600, color: C.text, marginBottom: 12,
 };
 
+const TOP = 10;
+
+// "Top 10 comunas" con 2 comunas cargadas promete algo que no hay.
+const tituloRanking = (n: number, que: string) =>
+  n >= TOP ? `Top ${TOP} comunas — ${que}` : `Comunas cargadas (${n}) — ${que}`;
+
+function cifra(n: number): string {
+  if (n >= 1_000_000) return (n / 1_000_000).toLocaleString("es-CL", { maximumFractionDigits: 1 }) + "M";
+  if (n >= 100_000) return Math.round(n / 1_000).toLocaleString("es-CL") + "k";
+  return n.toLocaleString("es-CL");
+}
+
 export default function PageDemografia({ farmacias, demografia }: Props) {
+  const { data: capaNSE } = useCapaNSE(true);
+
+  // El censo es nacional; la base de farmacias puede ser una muestra. Todo en
+  // esta página se calcula sobre las comunas (por CUT) que tienen farmacias
+  // cargadas: si no, "farmacias / 100k hab" divide 321 locales por todo Chile.
+  const cuts = useMemo(
+    () => new Set(farmacias.map((f) => f.cod_comuna).filter((c): c is number => c != null)),
+    [farmacias],
+  );
+  const universo = useMemo(
+    () => demografia.filter((d) => cuts.has(Number(d.cod_comuna)) && d.poblacion > 0),
+    [demografia, cuts],
+  );
+
   const kpis = useMemo(() => {
-    if (!demografia.length) return null;
-    let poblacion = 0, e60 = 0, escolaridad = 0, count = 0;
-    for (const d of demografia) {
+    if (!universo.length) return null;
+    let poblacion = 0, e60 = 0, escPonderada = 0, pobConEsc = 0;
+    for (const d of universo) {
       poblacion += d.poblacion;
       e60 += d.edad_60_mas;
-      if (d.escolaridad_promedio > 0) { escolaridad += d.escolaridad_promedio; count++; }
+      // La escolaridad es un promedio comunal: se pondera por población.
+      if (d.escolaridad_promedio > 0) { escPonderada += d.escolaridad_promedio * d.poblacion; pobConEsc += d.poblacion; }
     }
     return {
-      poblacion: (poblacion / 1_000_000).toFixed(1) + "M",
-      farmPor100k: poblacion > 0 ? ((farmacias.length / poblacion) * 100_000).toFixed(1) : "–",
-      pct60: poblacion > 0 ? Math.round((e60 / poblacion) * 100) + "%" : "–",
-      escolaridad: count > 0 ? (escolaridad / count).toFixed(1) + " años" : "–",
+      comunas: universo.length,
+      poblacion: cifra(poblacion),
+      farmPor100k: ((farmacias.length / poblacion) * 100_000).toLocaleString("es-CL", { maximumFractionDigits: 1 }),
+      pct60: ((e60 / poblacion) * 100).toLocaleString("es-CL", { maximumFractionDigits: 1 }) + "%",
+      escolaridad: pobConEsc > 0 ? (escPonderada / pobConEsc).toLocaleString("es-CL", { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + " años" : "s/d",
     };
-  }, [farmacias, demografia]);
+  }, [farmacias, universo]);
 
   const etaria = useMemo(() => {
-    if (!demografia.length) return [];
+    if (!universo.length) return [];
     let e0_14 = 0, e15_29 = 0, e30_44 = 0, e45_59 = 0, e60 = 0;
-    for (const d of demografia) {
+    for (const d of universo) {
       e0_14 += d.edad_0_14; e15_29 += d.edad_15_29;
       e30_44 += d.edad_30_44; e45_59 += d.edad_45_59; e60 += d.edad_60_mas;
     }
@@ -52,27 +83,22 @@ export default function PageDemografia({ farmacias, demografia }: Props) {
       { rango: "45–59", pct: Math.round((e45_59 / total) * 100), color: "#f59e0b" },
       { rango: "60+",   pct: Math.round((e60    / total) * 100), color: "#ef4444" },
     ];
-  }, [demografia]);
+  }, [universo]);
 
   const genero = useMemo(() => {
-    if (!demografia.length) return [];
+    if (!universo.length) return [];
     let hombres = 0, mujeres = 0;
-    for (const d of demografia) { hombres += d.hombres; mujeres += d.mujeres; }
+    for (const d of universo) { hombres += d.hombres; mujeres += d.mujeres; }
     const total = hombres + mujeres || 1;
     return [
       { name: "Hombres", value: Math.round((hombres / total) * 100), color: "#3b82f6" },
       { name: "Mujeres", value: Math.round((mujeres / total) * 100), color: "#ec4899" },
     ];
-  }, [demografia]);
+  }, [universo]);
 
   const topComunas = useMemo(() => {
-    if (!farmacias.length || !demografia.length) return [];
-
-    const conteo: Record<string, number> = {};
-    for (const f of farmacias) conteo[f.comuna] = (conteo[f.comuna] ?? 0) + 1;
-
-    const pobPorComuna: Record<string, number> = {};
-    for (const d of demografia) pobPorComuna[d.nombre_comuna] = d.poblacion;
+    const conteo = new Map<number, number>();
+    for (const f of farmacias) if (f.cod_comuna != null) conteo.set(f.cod_comuna, (conteo.get(f.cod_comuna) ?? 0) + 1);
 
     // 10-stop blue scale: darkest = highest density
     const BLUES = [
@@ -80,51 +106,38 @@ export default function PageDemografia({ farmacias, demografia }: Props) {
       "#60a5fa", "#7cb9fb", "#93c5fd", "#a8d0fe", "#bfdbfe",
     ];
 
-    return Object.entries(conteo)
-      .filter(([comuna]) => (pobPorComuna[comuna] ?? 0) > 0)
-      .map(([comuna, count]) => ({
-        comuna,
-        density: (count / pobPorComuna[comuna]) * 100_000,
+    return universo
+      .map((d) => ({
+        comuna: d.nombre_comuna,
+        density: ((conteo.get(Number(d.cod_comuna)) ?? 0) / d.poblacion) * 100_000,
       }))
       .sort((a, b) => b.density - a.density)
-      .slice(0, 10)
+      .slice(0, TOP)
       .map((item, i) => ({ ...item, color: BLUES[i] }));
-  }, [farmacias, demografia]);
+  }, [farmacias, universo]);
 
   const topAdultosMayores = useMemo(() => {
-    if (!demografia.length) return [];
-    return [...demografia]
-      .filter((d) => d.poblacion > 0)
+    return universo
       .map((d) => ({
         comuna: d.nombre_comuna,
         pct: (d.edad_60_mas / d.poblacion) * 100,
         color: "#D4A017"
       }))
       .sort((a, b) => b.pct - a.pct)
-      .slice(0, 10);
-  }, [demografia]);
+      .slice(0, TOP);
+  }, [universo]);
 
-  const gseData = useMemo(() => {
-    if (!demografia.length) return [];
-    let abc1 = 0, c2 = 0, c3 = 0, dClass = 0, eClass = 0;
-    for (const d of demografia) {
-      if (d.poblacion <= 0) continue;
-      const esc = d.escolaridad_promedio;
-      if (esc >= 13.5) abc1 += d.poblacion;
-      else if (esc >= 12.5) c2 += d.poblacion;
-      else if (esc >= 11.0) c3 += d.poblacion;
-      else if (esc >= 9.5) dClass += d.poblacion;
-      else eClass += d.poblacion;
-    }
-    const total = abc1 + c2 + c3 + dClass + eClass || 1;
-    return [
-      { name: "ABC1 (Alto)", value: Math.round((abc1 / total) * 100), color: "#10b981" },
-      { name: "C2 (Medio Alto)", value: Math.round((c2 / total) * 100), color: "#3b82f6" },
-      { name: "C3 (Medio)", value: Math.round((c3 / total) * 100), color: "#f59e0b" },
-      { name: "D (Vulnerable)", value: Math.round((dClass / total) * 100), color: "#f97316" },
-      { name: "E (Pobreza)", value: Math.round((eClass / total) * 100), color: "#ef4444" },
-    ].filter(item => item.value > 0);
-  }, [demografia]);
+  // NSE real: hogares por grupo de las unidades vecinales de estas comunas
+  // (metodología AIM Chile). Reemplaza un "GSE" que se inventaba con umbrales
+  // de escolaridad elegidos a mano y rotulaba "E (Pobreza)" a comunas enteras.
+  const nse = useMemo(() => {
+    if (!capaNSE) return null;
+    const { total, data } = hogaresNSEEnComunas(capaNSE, cuts);
+    return {
+      total,
+      data: data.map((d) => ({ ...d, pct: Math.round((d.value / (total || 1)) * 100), color: COLOR_NSE[d.name] })),
+    };
+  }, [capaNSE, cuts]);
 
   const kpiItems = kpis ? [
     { label: "Población total",       val: kpis.poblacion,    color: "#C98410" },
@@ -135,6 +148,12 @@ export default function PageDemografia({ farmacias, demografia }: Props) {
 
   return (
     <div style={{ flex: 1, overflowY: "auto", background: C.bg, padding: "24px 28px" }}>
+
+      {kpis && (
+        <p style={{ fontSize: 12, color: C.text2, margin: "0 0 12px 0" }}>
+          Censo 2024 (INE) de las {kpis.comunas} {kpis.comunas === 1 ? "comuna" : "comunas"} con farmacias cargadas · {farmacias.length.toLocaleString("es-CL")} farmacias.
+        </p>
+      )}
 
       {/* KPIs */}
       <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 12, marginBottom: 24 }}>
@@ -181,7 +200,7 @@ export default function PageDemografia({ farmacias, demografia }: Props) {
               <Pie
                 data={genero} dataKey="value"
                 cx="50%" cy="50%"
-                innerRadius={55} outerRadius={80}
+                innerRadius={45} outerRadius={68}
                 paddingAngle={3}
                 label={({ name, value }) => `${name} ${value}%`}
                 labelLine={false}
@@ -197,34 +216,41 @@ export default function PageDemografia({ farmacias, demografia }: Props) {
         </div>
       </div>
 
-      {/* Charts row 2: GSE y Adultos Mayores */}
+      {/* Charts row 2: NSE y Adultos Mayores */}
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 16 }}>
-        {/* GSE */}
+        {/* NSE */}
         <div style={{ background: C.bgCard, border: `1px solid ${C.border}`, borderRadius: 10, padding: "16px 20px", boxShadow: "0 1px 3px rgba(0,0,0,0.05)" }}>
-          <div style={secTitle}>Estrato Socioeconómico Predominante (GSE)</div>
-          <ResponsiveContainer width="100%" height={240}>
-            <PieChart>
-              <Pie
-                data={gseData} dataKey="value"
-                cx="50%" cy="50%"
-                innerRadius={60} outerRadius={90}
-                paddingAngle={3}
-                label={({ name, value }) => `${name} ${value}%`}
-                labelLine={false}
-              >
-                {gseData.map((g) => <Cell key={g.name} fill={g.color} />)}
-              </Pie>
-              <Tooltip
-                formatter={(v) => [v + "%", "Población"]}
-                contentStyle={{ fontSize: 11, border: `1px solid ${C.border}`, borderRadius: 6 }}
-              />
-            </PieChart>
-          </ResponsiveContainer>
+          <div style={secTitle}>Nivel socioeconómico — % de hogares</div>
+          {nse && nse.total > 0 ? (
+            <ResponsiveContainer width="100%" height={240}>
+              <PieChart>
+                <Pie
+                  data={nse.data} dataKey="value"
+                  cx="50%" cy="50%"
+                  innerRadius={60} outerRadius={90}
+                  paddingAngle={2}
+                  label={({ name, pct }) => (pct >= 3 ? `${name} ${pct}%` : "")}
+                  labelLine={false}
+                >
+                  {nse.data.map((g) => <Cell key={g.name} fill={g.color} />)}
+                </Pie>
+                <Tooltip
+                  formatter={(v: number) => [`${v.toLocaleString("es-CL")} hogares`, "NSE"]}
+                  contentStyle={{ fontSize: 11, border: `1px solid ${C.border}`, borderRadius: 6 }}
+                />
+              </PieChart>
+            </ResponsiveContainer>
+          ) : (
+            <p style={{ fontSize: 12, color: C.text3, fontStyle: "italic" }}>{nse ? "Sin datos NSE para estas comunas" : "Cargando…"}</p>
+          )}
+          <div style={{ fontSize: 10, color: C.text3, marginTop: 4 }}>
+            Hogares por unidad vecinal, metodología AIM Chile (tramos de ingreso, bidat.gob.cl).
+          </div>
         </div>
 
         {/* Adultos mayores */}
         <div style={{ background: C.bgCard, border: `1px solid ${C.border}`, borderRadius: 10, padding: "16px 20px", boxShadow: "0 1px 3px rgba(0,0,0,0.05)" }}>
-          <div style={secTitle}>Top 10 comunas — % Adultos Mayores (60+)</div>
+          <div style={secTitle}>{tituloRanking(topAdultosMayores.length, "% adultos mayores (60+)")}</div>
           <ResponsiveContainer width="100%" height={240}>
             <BarChart data={topAdultosMayores} layout="vertical" margin={{ top: 0, right: 20, left: 80, bottom: 0 }}>
               <XAxis type="number" tick={{ fontSize: 10, fill: C.text3 }} axisLine={false} tickLine={false} />
@@ -233,7 +259,7 @@ export default function PageDemografia({ farmacias, demografia }: Props) {
                 formatter={(v: number) => [v.toFixed(1) + "%", "Adultos Mayores"]}
                 contentStyle={{ fontSize: 11, border: `1px solid ${C.border}`, borderRadius: 6 }}
               />
-              <Bar dataKey="pct" radius={[0, 4, 4, 0]}>
+              <Bar dataKey="pct" radius={[0, 4, 4, 0]} maxBarSize={36}>
                 {topAdultosMayores.map((d) => <Cell key={d.comuna} fill={d.color} />)}
               </Bar>
             </BarChart>
@@ -241,9 +267,9 @@ export default function PageDemografia({ farmacias, demografia }: Props) {
         </div>
       </div>
 
-      {/* Top 10 comunas — pendiente implementación */}
+      {/* Densidad farmacéutica */}
       <div style={{ background: C.bgCard, border: `1px solid ${C.border}`, borderRadius: 10, padding: "16px 20px", boxShadow: "0 1px 3px rgba(0,0,0,0.05)" }}>
-        <div style={secTitle}>Top 10 comunas — densidad farmacéutica (farmacias / 100k hab)</div>
+        <div style={secTitle}>{tituloRanking(topComunas.length, "densidad farmacéutica (farmacias / 100k hab)")}</div>
         {topComunas.length > 0 ? (
           <ResponsiveContainer width="100%" height={280}>
             <BarChart data={topComunas} layout="vertical" margin={{ top: 0, right: 20, left: 80, bottom: 0 }}>
@@ -253,13 +279,13 @@ export default function PageDemografia({ farmacias, demografia }: Props) {
                 formatter={(v) => [Number(v).toFixed(1), "Farm / 100k"]}
                 contentStyle={{ fontSize: 11, border: `1px solid ${C.border}`, borderRadius: 6 }}
               />
-              <Bar dataKey="density" radius={[0, 4, 4, 0]}>
+              <Bar dataKey="density" radius={[0, 4, 4, 0]} maxBarSize={36}>
                 {topComunas.map((d) => <Cell key={d.comuna} fill={d.color} />)}
               </Bar>
             </BarChart>
           </ResponsiveContainer>
         ) : (
-          <p style={{ fontSize: 12, color: C.text3, fontStyle: "italic" }}>Implementa la lógica en topComunas para ver el gráfico</p>
+          <p style={{ fontSize: 12, color: C.text3, fontStyle: "italic" }}>Sin datos de población para las comunas cargadas</p>
         )}
       </div>
     </div>

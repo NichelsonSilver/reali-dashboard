@@ -3,7 +3,7 @@ import { Farmacia, CadenaFarmaceutica, MovimientoFarmacia } from "../types";
 import { DemografiaCenso } from "../hooks/useDemografia";
 import { useMovimientos } from "../hooks/useMovimientos";
 import { useCapaNSE } from "../hooks/useGeoCapas";
-import { GRUPOS_NSE, GrupoNSE } from "../utils/territorio";
+import { hogaresNSEEnComunas } from "../utils/territorio";
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 import { MapContainer, TileLayer, CircleMarker, useMap } from "react-leaflet";
 import L from "leaflet";
@@ -221,15 +221,7 @@ export default function PageResumen({ farmacias, demografia }: Props) {
   const habPorFarmacia = fComuna.length > 0 && demo.pob > 0 ? Math.round(demo.pob / fComuna.length) : null;
 
   // --- NSE: hogares por grupo, agregados desde las unidades vecinales ---
-  const nse = useMemo(() => {
-    if (!capaNSE) return null;
-    const hog = Object.fromEntries(GRUPOS_NSE.map(g => [g, 0])) as Record<GrupoNSE, number>;
-    for (const f of capaNSE.features) {
-      if (cutsActivos.has(Number(f.properties.cut)) && f.properties.nse in hog) hog[f.properties.nse] += f.properties.hog || 0;
-    }
-    const total = GRUPOS_NSE.reduce((a, g) => a + hog[g], 0);
-    return { total, data: GRUPOS_NSE.filter(g => hog[g] > 0).map(g => ({ name: g, value: hog[g] })) };
-  }, [capaNSE, cutsActivos]);
+  const nse = useMemo(() => (capaNSE ? hogaresNSEEnComunas(capaNSE, cutsActivos) : null), [capaNSE, cutsActivos]);
 
   // --- FARMACÉUTICO ---
   const locsPorMarca = useMemo(() => {

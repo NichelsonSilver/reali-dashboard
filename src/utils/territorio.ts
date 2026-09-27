@@ -182,6 +182,19 @@ export interface MixNSE {
   hogares: number;               // hogares ponderados dentro del radio
 }
 
+/**
+ * Hogares por grupo NSE de las unidades vecinales de un conjunto de comunas
+ * (por CUT). Es el NSE de una zona: el que usan Resumen y Análisis Demográfico.
+ */
+export function hogaresNSEEnComunas(capa: CapaNSE, cuts: Set<number>): { total: number; data: { name: GrupoNSE; value: number }[] } {
+  const hog = Object.fromEntries(GRUPOS_NSE.map((g) => [g, 0])) as Record<GrupoNSE, number>;
+  for (const f of capa.features) {
+    if (cuts.has(Number(f.properties.cut)) && f.properties.nse in hog) hog[f.properties.nse] += f.properties.hog || 0;
+  }
+  const total = GRUPOS_NSE.reduce((a, g) => a + hog[g], 0);
+  return { total, data: GRUPOS_NSE.filter((g) => hog[g] > 0).map((g) => ({ name: g, value: hog[g] })) };
+}
+
 export function mixNSEEnRadio(capa: CapaNSE, centro: Punto, radioM: number): MixNSE {
   const hogaresPorGrupo = Object.fromEntries(GRUPOS_NSE.map((g) => [g, 0])) as Record<GrupoNSE, number>;
   let total = 0;
