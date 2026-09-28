@@ -5,8 +5,8 @@ import {
 } from "recharts";
 import { Farmacia } from "../types";
 import { DemografiaCenso } from "../hooks/useDemografia";
-import { useCapaNSE } from "../hooks/useGeoCapas";
-import { hogaresNSEEnComunas } from "../utils/territorio";
+import { useGseAim } from "../hooks/useGseAim";
+import { gseEnComunas } from "../utils/territorio";
 import { COLOR_NSE } from "../constants";
 
 interface Props {
@@ -36,7 +36,7 @@ function cifra(n: number): string {
 }
 
 export default function PageDemografia({ farmacias, demografia }: Props) {
-  const { data: capaNSE } = useCapaNSE(true);
+  const gseAim = useGseAim();
 
   // El censo es nacional; la base de farmacias puede ser una muestra. Todo en
   // esta página se calcula sobre las comunas (por CUT) que tienen farmacias
@@ -127,17 +127,18 @@ export default function PageDemografia({ farmacias, demografia }: Props) {
       .slice(0, TOP);
   }, [universo]);
 
-  // NSE real: hogares por grupo de las unidades vecinales de estas comunas
-  // (metodología AIM Chile). Reemplaza un "GSE" que se inventaba con umbrales
-  // de escolaridad elegidos a mano y rotulaba "E (Pobreza)" a comunas enteras.
+  // NSE: GSE publicado por AIM Chile para cada comuna, ponderado por los
+  // hogares del censo. Reemplaza un "GSE" que se inventaba con umbrales de
+  // escolaridad, y después un agregado de la capa por UV que borraba la
+  // mezcla de hogares dentro de cada unidad vecinal.
   const nse = useMemo(() => {
-    if (!capaNSE) return null;
-    const { total, data } = hogaresNSEEnComunas(capaNSE, cuts);
+    const hogaresPorCut = new Map(demografia.map((d) => [Number(d.cod_comuna), d.hogares]));
+    const zona = gseEnComunas(gseAim, hogaresPorCut, cuts);
     return {
-      total,
-      data: data.map((d) => ({ ...d, pct: Math.round((d.value / (total || 1)) * 100), color: COLOR_NSE[d.name] })),
+      ...zona,
+      data: zona.data.map((d) => ({ ...d, pct: Math.round(d.pct * 100), color: COLOR_NSE[d.name] })),
     };
-  }, [capaNSE, cuts]);
+  }, [gseAim, demografia, cuts]);
 
   const kpiItems = kpis ? [
     { label: "Población total",       val: kpis.poblacion,    color: "#C98410" },
@@ -221,7 +222,7 @@ export default function PageDemografia({ farmacias, demografia }: Props) {
         {/* NSE */}
         <div style={{ background: C.bgCard, border: `1px solid ${C.border}`, borderRadius: 10, padding: "16px 20px", boxShadow: "0 1px 3px rgba(0,0,0,0.05)" }}>
           <div style={secTitle}>Nivel socioeconómico — % de hogares</div>
-          {nse && nse.total > 0 ? (
+          {nse.hogaresConDato > 0 ? (
             <ResponsiveContainer width="100%" height={240}>
               <PieChart>
                 <Pie
@@ -235,16 +236,16 @@ export default function PageDemografia({ farmacias, demografia }: Props) {
                   {nse.data.map((g) => <Cell key={g.name} fill={g.color} />)}
                 </Pie>
                 <Tooltip
-                  formatter={(v: number) => [`${v.toLocaleString("es-CL")} hogares`, "NSE"]}
+                  formatter={(_v: number, _n: string, e: { payload?: { pct: number } }) => [`${e.payload?.pct ?? 0}% de hogares`, "GSE AIM"]}
                   contentStyle={{ fontSize: 11, border: `1px solid ${C.border}`, borderRadius: 6 }}
                 />
               </PieChart>
             </ResponsiveContainer>
           ) : (
-            <p style={{ fontSize: 12, color: C.text3, fontStyle: "italic" }}>{nse ? "Sin datos NSE para estas comunas" : "Cargando…"}</p>
+            <p style={{ fontSize: 12, color: C.text3, fontStyle: "italic" }}>Sin datos NSE para estas comunas</p>
           )}
           <div style={{ fontSize: 10, color: C.text3, marginTop: 4 }}>
-            Hogares por unidad vecinal, metodología AIM Chile (tramos de ingreso, bidat.gob.cl).
+            GSE AIM Chile 2023 por comuna (Casen 2017+2022), ponderado por hogares del Censo 2024.{nse.comunasSinDato > 0 && ` ${nse.comunasSinDato} comuna(s) sin dato AIM quedan fuera del %.`}
           </div>
         </div>
 

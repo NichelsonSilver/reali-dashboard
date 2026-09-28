@@ -6,7 +6,10 @@ Salida:  public/data/demografia_censo.csv (una fila por comuna)
 Columnas de salida:
   cod_comuna, nombre_comuna, region, poblacion, hombres, mujeres,
   edad_0_14, edad_15_29, edad_30_44, edad_45_59, edad_60_mas,
-  escolaridad_promedio
+  escolaridad_promedio, hogares
+
+`hogares` cuenta jefes de hogar (parentesco = 1): es el peso con que se
+promedia el GSE AIM entre comunas, que AIM publica como % de hogares.
 """
 
 import csv
@@ -60,6 +63,10 @@ COMUNAS_INE = {
     "13403": "Calera de Tango",
     "13404": "Paine",
     "13501": "Melipilla",
+    "13502": "Alhué",
+    "13503": "Curacaví",
+    "13504": "María Pinto",
+    "13505": "San Pedro",
     "13601": "Talagante",
     "13602": "El Monte",
     "13603": "Isla de Maipo",
@@ -71,8 +78,8 @@ COMUNAS_INE = {
     "5103": "Concón",
     "5104": "Juan Fernández",
     "5105": "Puchuncaví",
-    "5106": "Quintero",
-    "5107": "Viña del Mar",
+    "5107": "Quintero",
+    "5109": "Viña del Mar",
     "5201": "Isla de Pascua",
     "5301": "Los Andes",
     "5302": "Calle Larga",
@@ -87,7 +94,7 @@ COMUNAS_INE = {
     "5502": "Calera",
     "5503": "Hijuelas",
     "5504": "La Cruz",
-    "5505": "Nogales",
+    "5506": "Nogales",
     "5601": "San Antonio",
     "5602": "Algarrobo",
     "5603": "Cartagena",
@@ -118,6 +125,12 @@ COMUNAS_INE = {
     "8111": "Tomé",
     "8112": "Hualpén",
     "8201": "Lebu",
+    "8202": "Arauco",
+    "8203": "Cañete",
+    "8204": "Contulmo",
+    "8205": "Curanilahue",
+    "8206": "Los Álamos",
+    "8207": "Tirúa",
     "8301": "Los Ángeles",
     "8302": "Antuco",
     "8303": "Cabrero",
@@ -140,11 +153,11 @@ COMUNAS_INE = {
     # Tarapacá
     "1101": "Iquique",
     "1107": "Alto Hospicio",
-    "1201": "Pozo Almonte",
-    "1301": "Huara",
-    "1302": "Camiña",
-    "1303": "Colchane",
-    "1304": "Pica",
+    "1401": "Pozo Almonte",
+    "1402": "Camiña",
+    "1403": "Colchane",
+    "1404": "Huara",
+    "1405": "Pica",
     # Antofagasta
     "2101": "Antofagasta",
     "2102": "Mejillones",
@@ -200,7 +213,21 @@ COMUNAS_INE = {
     "6116": "Requínoa",
     "6117": "San Vicente",
     "6201": "Pichilemu",
+    "6202": "La Estrella",
+    "6203": "Litueche",
+    "6204": "Marchigüe",
+    "6205": "Navidad",
+    "6206": "Paredones",
     "6301": "San Fernando",
+    "6302": "Chépica",
+    "6303": "Chimbarongo",
+    "6304": "Lolol",
+    "6305": "Nancagua",
+    "6306": "Palmilla",
+    "6307": "Peralillo",
+    "6308": "Placilla",
+    "6309": "Pumanque",
+    "6310": "Santa Cruz",
     # Maule
     "7101": "Talca",
     "7102": "Constitución",
@@ -213,6 +240,8 @@ COMUNAS_INE = {
     "7109": "San Clemente",
     "7110": "San Rafael",
     "7201": "Cauquenes",
+    "7202": "Chanco",
+    "7203": "Pelluhue",
     "7301": "Curicó",
     "7302": "Hualañé",
     "7303": "Licantén",
@@ -223,6 +252,13 @@ COMUNAS_INE = {
     "7308": "Teno",
     "7309": "Vichuquén",
     "7401": "Linares",
+    "7402": "Colbún",
+    "7403": "Longaví",
+    "7404": "Parral",
+    "7405": "Retiro",
+    "7406": "San Javier",
+    "7407": "Villa Alegre",
+    "7408": "Yerbas Buenas",
     # Ñuble
     "16101": "Chillán",
     "16102": "Bulnes",
@@ -234,7 +270,17 @@ COMUNAS_INE = {
     "16108": "San Ignacio",
     "16109": "Yungay",
     "16201": "Quirihue",
+    "16202": "Cobquecura",
+    "16203": "Coelemu",
+    "16204": "Ninhue",
+    "16205": "Portezuelo",
+    "16206": "Ránquil",
+    "16207": "Treguaco",
     "16301": "San Carlos",
+    "16302": "Coihueco",
+    "16303": "Ñiquén",
+    "16304": "San Fabián",
+    "16305": "San Nicolás",
     # La Araucanía
     "9101": "Temuco",
     "9102": "Carahue",
@@ -302,6 +348,16 @@ COMUNAS_INE = {
     "10209": "Quemchi",
     "10210": "Quinchao",
     "10301": "Osorno",
+    "10302": "Puerto Octay",
+    "10303": "Purranque",
+    "10304": "Puyehue",
+    "10305": "Río Negro",
+    "10306": "San Juan de la Costa",
+    "10307": "San Pablo",
+    "10401": "Chaitén",
+    "10402": "Futaleufú",
+    "10403": "Hualaihué",
+    "10404": "Palena",
     # Aysén
     "11101": "Coyhaique",
     "11102": "Lago Verde",
@@ -319,6 +375,7 @@ COMUNAS_INE = {
     "12103": "Río Verde",
     "12104": "San Gregorio",
     "12201": "Cabo de Hornos",
+    "12202": "Antártica",
     "12301": "Porvenir",
     "12302": "Primavera",
     "12303": "Timaukel",
@@ -388,6 +445,7 @@ def main():
         "edad_60_mas": 0,
         "escolaridad_sum": 0,
         "escolaridad_count": 0,
+        "hogares": 0,
     })
 
     with open(input_path, "r", encoding="utf-8") as f:
@@ -414,6 +472,10 @@ def main():
             if key in c:
                 c[key] += 1
 
+            # Un jefe de hogar por hogar (parentesco 1)
+            if row.get("parentesco", "").strip() == "1":
+                c["hogares"] += 1
+
             # Escolaridad (años)
             esc = row.get("escolaridad", "").strip()
             try:
@@ -435,7 +497,7 @@ def main():
         "cod_comuna", "nombre_comuna", "region",
         "poblacion", "hombres", "mujeres",
         "edad_0_14", "edad_15_29", "edad_30_44", "edad_45_59", "edad_60_mas",
-        "escolaridad_promedio",
+        "escolaridad_promedio", "hogares",
     ]
 
     with open(output_path, "w", newline="", encoding="utf-8") as f:
@@ -470,9 +532,17 @@ def main():
                 "edad_45_59": data["edad_45_59"],
                 "edad_60_mas": data["edad_60_mas"],
                 "escolaridad_promedio": esc_prom,
+                "hogares": data["hogares"],
             })
 
     print(f"Archivo generado: {output_path}")
+
+    # Un código ausente de COMUNAS_INE sale como "Comuna XXXX": así estuvieron
+    # 60 comunas hasta 2026-09, varias por códigos mal tipeados (5505 por 5506,
+    # 1201/1301-1304 por 1401-1405, Quintero y Viña corridos).
+    sin_nombre = sorted(c for c in comunas if c not in COMUNAS_INE)
+    if sin_nombre:
+        print(f"AVISO: {len(sin_nombre)} comunas sin nombre en COMUNAS_INE: {sin_nombre}")
 
 
 if __name__ == "__main__":

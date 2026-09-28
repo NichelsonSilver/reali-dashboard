@@ -12,7 +12,9 @@ export type GrupoNSE = "AB" | "C1a" | "C1b" | "C2" | "C3" | "D" | "E";
 
 export const GRUPOS_NSE: GrupoNSE[] = ["AB", "C1a", "C1b", "C2", "C3", "D", "E"];
 
-// Propiedades de public/data/nse_uv.geojson. Soporta ambos esquemas:
+// Propiedades de public/data/nse_uv.geojson. El `nse` es ESTIMADO (tramo RSH
+// calibrado al GSE AIM de la comuna); para cifras por comuna, gseEnComunas.
+// Soporta ambos esquemas:
 // el viejo (pct_* por grupo) y el nuevo de generar_nse_uv.py (score/percentil).
 export interface PropsUV {
   id: string;
@@ -23,6 +25,7 @@ export interface PropsUV {
   hog: number;
   score?: number;
   percentil?: number;
+  calib?: "aim_comuna" | "nacional"; // cortes AIM de su comuna, o nacionales si AIM no la publica
   [key: string]: unknown;
 }
 
@@ -182,17 +185,44 @@ export interface MixNSE {
   hogares: number;               // hogares ponderados dentro del radio
 }
 
+// % de hogares por grupo de una comuna, tal como lo publica AIM (suma ~100)
+export type GseComuna = Record<GrupoNSE, number>;
+
+export interface GseZona {
+  hogares: number;        // hogares censales de las comunas de la zona
+  hogaresConDato: number; // de esos, los de comunas que AIM publica
+  comunasSinDato: number; // comunas de la zona sin fila en el Excel AIM
+  data: { name: GrupoNSE; value: number; pct: number }[]; // value = hogares
+}
+
 /**
- * Hogares por grupo NSE de las unidades vecinales de un conjunto de comunas
- * (por CUT). Es el NSE de una zona: el que usan Resumen y Análisis Demográfico.
+ * GSE de una zona (conjunto de comunas por CUT) con el dato oficial de AIM:
+ * el % de cada comuna se pondera por sus hogares del Censo 2024, porque AIM
+ * publica % de hogares y dos comunas no pesan lo mismo. Es el NSE que usan
+ * Resumen, Análisis Demográfico y el panel del Mapa.
+ *
+ * No usa la capa por UV a propósito: ahí cada unidad vecinal tiene un solo
+ * grupo, y sumarlas borra la mezcla de hogares que hay dentro de cada una.
  */
-export function hogaresNSEEnComunas(capa: CapaNSE, cuts: Set<number>): { total: number; data: { name: GrupoNSE; value: number }[] } {
+export function gseEnComunas(
+  gse: Map<number, GseComuna>,
+  hogaresPorCut: Map<number, number>,
+  cuts: Set<number>,
+): GseZona {
   const hog = Object.fromEntries(GRUPOS_NSE.map((g) => [g, 0])) as Record<GrupoNSE, number>;
-  for (const f of capa.features) {
-    if (cuts.has(Number(f.properties.cut)) && f.properties.nse in hog) hog[f.properties.nse] += f.properties.hog || 0;
+  let hogares = 0, hogaresConDato = 0, comunasSinDato = 0;
+  for (const cut of cuts) {
+    const h = hogaresPorCut.get(cut) ?? 0;
+    hogares += h;
+    const pct = gse.get(cut);
+    if (!pct) { comunasSinDato++; continue; }
+    hogaresConDato += h;
+    for (const g of GRUPOS_NSE) hog[g] += (h * pct[g]) / 100;
   }
-  const total = GRUPOS_NSE.reduce((a, g) => a + hog[g], 0);
-  return { total, data: GRUPOS_NSE.filter((g) => hog[g] > 0).map((g) => ({ name: g, value: hog[g] })) };
+  const data = GRUPOS_NSE
+    .filter((g) => hog[g] > 0)
+    .map((g) => ({ name: g, value: Math.round(hog[g]), pct: hogaresConDato ? hog[g] / hogaresConDato : 0 }));
+  return { hogares, hogaresConDato, comunasSinDato, data };
 }
 
 export function mixNSEEnRadio(capa: CapaNSE, centro: Punto, radioM: number): MixNSE {

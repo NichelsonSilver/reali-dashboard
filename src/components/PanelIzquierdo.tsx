@@ -1,7 +1,9 @@
 import { useMemo } from "react";
 import { Farmacia } from "../types";
 import { DemografiaCenso } from "../hooks/useDemografia";
-import { CADENAS, COLORES_CADENA } from "../constants";
+import { CADENAS, COLORES_CADENA, COLOR_NSE } from "../constants";
+import { useGseAim } from "../hooks/useGseAim";
+import { gseEnComunas } from "../utils/territorio";
 
 interface Filtros { cadenas: string[]; region: string; comuna: string; }
 
@@ -117,8 +119,13 @@ export default function PanelIzquierdo({
   // estar filtrada por región o comuna. El universo demográfico son las
   // comunas (por CUT) de las farmacias que pasan esos filtros. No depende del
   // filtro de cadena: la población de una zona no cambia según la marca.
+  const cutsZona = useMemo(
+    () => new Set(farmaciasSinCadena.map((f) => f.cod_comuna).filter((c): c is number => c != null)),
+    [farmaciasSinCadena],
+  );
+
   const resumenDemo = useMemo(() => {
-    const cuts = new Set(farmaciasSinCadena.map((f) => f.cod_comuna).filter((c): c is number => c != null));
+    const cuts = cutsZona;
     const universo = demografia.filter((d) => cuts.has(Number(d.cod_comuna)));
     if (!universo.length) return null;
     let poblacion = 0, hombres = 0, mujeres = 0;
@@ -139,7 +146,14 @@ export default function PanelIzquierdo({
         { r: "60+",   pct: Math.round((e60    / total) * 100), color: "#ef4444" },
       ],
     };
-  }, [demografia, farmaciasSinCadena]);
+  }, [demografia, cutsZona]);
+
+  // GSE AIM 2023 de la zona filtrada: mismo universo de comunas que el censo
+  const gseAim = useGseAim();
+  const nseZona = useMemo(() => {
+    const hogaresPorCut = new Map(demografia.map((d) => [Number(d.cod_comuna), d.hogares]));
+    return gseEnComunas(gseAim, hogaresPorCut, cutsZona);
+  }, [gseAim, demografia, cutsZona]);
 
   const kpis = useMemo(() => ({
     farmacias: farmacias.length,
@@ -319,6 +333,48 @@ export default function PanelIzquierdo({
           </>
         ) : (
           <p style={{ fontSize: 11, color: C.text3, fontStyle: "italic" }}>Sin datos demográficos</p>
+        )}
+      </section>
+
+      <div style={{ borderTop: `1px solid ${C.border}` }} />
+
+      {/* Nivel socioeconómico — GSE AIM por comuna, ponderado por hogares */}
+      <section style={{ padding: "12px 14px 16px" }}>
+        <div style={{ ...secTitle, marginBottom: 8 }}>
+          Nivel socioeconómico
+          <span style={{ fontWeight: 500, textTransform: "none", letterSpacing: 0 }}> · % de hogares</span>
+        </div>
+        {nseZona.hogaresConDato > 0 ? (
+          <>
+            <div style={{ display: "flex", height: 10, borderRadius: 5, overflow: "hidden", marginBottom: 9 }}>
+              {nseZona.data.map((g) => (
+                <div key={g.name} title={`${g.name}: ${(g.pct * 100).toLocaleString("es-CL", { maximumFractionDigits: 1 })}%`}
+                  style={{ width: `${g.pct * 100}%`, background: COLOR_NSE[g.name] }} />
+              ))}
+            </div>
+            {nseZona.data.map((g) => (
+              <div key={g.name} style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 5 }}>
+                <span style={{ width: 8, height: 8, borderRadius: 2, background: COLOR_NSE[g.name], flexShrink: 0 }} />
+                <span style={{ fontSize: 10, color: C.text2, width: 26, flexShrink: 0 }}>{g.name}</span>
+                <div style={{ flex: 1, height: 6, background: C.bg2, borderRadius: 3, overflow: "hidden" }}>
+                  <div style={{ width: `${g.pct * 100}%`, height: "100%", background: COLOR_NSE[g.name], borderRadius: 3 }} />
+                </div>
+                <span className="num" style={{ fontSize: 10, color: C.text3, width: 34, textAlign: "right" }}>
+                  {(g.pct * 100).toLocaleString("es-CL", { maximumFractionDigits: 1 })}%
+                </span>
+              </div>
+            ))}
+            {nseZona.comunasSinDato > 0 && (
+              <p style={{ fontSize: 9.5, color: C.text3, margin: "6px 0 0" }}>
+                {nseZona.comunasSinDato} {nseZona.comunasSinDato === 1 ? "comuna" : "comunas"} sin dato AIM, fuera del %.
+              </p>
+            )}
+            <p style={{ fontSize: 9.5, color: C.text3, margin: "6px 0 0", lineHeight: 1.35 }}>
+              GSE AIM Chile 2023 (Casen 2017+2022) por comuna, ponderado por hogares del Censo 2024.
+            </p>
+          </>
+        ) : (
+          <p style={{ fontSize: 11, color: C.text3, fontStyle: "italic" }}>Sin datos NSE</p>
         )}
       </section>
     </div>

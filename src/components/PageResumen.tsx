@@ -2,8 +2,8 @@ import { useState, useMemo, useEffect, useRef } from "react";
 import { Farmacia, CadenaFarmaceutica, MovimientoFarmacia } from "../types";
 import { DemografiaCenso } from "../hooks/useDemografia";
 import { useMovimientos } from "../hooks/useMovimientos";
-import { useCapaNSE } from "../hooks/useGeoCapas";
-import { hogaresNSEEnComunas } from "../utils/territorio";
+import { useGseAim } from "../hooks/useGseAim";
+import { gseEnComunas } from "../utils/territorio";
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 import { MapContainer, TileLayer, CircleMarker, useMap } from "react-leaflet";
 import L from "leaflet";
@@ -163,7 +163,7 @@ export function filasVisibles(filas: FilaNeto[]): FilaNeto[] {
 
 export default function PageResumen({ farmacias, demografia }: Props) {
   const movimientos = useMovimientos();
-  const { data: capaNSE } = useCapaNSE(true);
+  const gseAim = useGseAim();
 
   // Comunas del dataset cargado, con su CUT. El censo es nacional pero la base de
   // farmacias puede ser una muestra: el universo lo define lo que hay en farmacias.
@@ -220,8 +220,11 @@ export default function PageResumen({ farmacias, demografia }: Props) {
 
   const habPorFarmacia = fComuna.length > 0 && demo.pob > 0 ? Math.round(demo.pob / fComuna.length) : null;
 
-  // --- NSE: hogares por grupo, agregados desde las unidades vecinales ---
-  const nse = useMemo(() => (capaNSE ? hogaresNSEEnComunas(capaNSE, cutsActivos) : null), [capaNSE, cutsActivos]);
+  // --- NSE: GSE AIM 2023 por comuna, ponderado por hogares del censo ---
+  const nse = useMemo(() => {
+    const hogaresPorCut = new Map(demografia.map(d => [Number(d.cod_comuna), d.hogares]));
+    return gseEnComunas(gseAim, hogaresPorCut, cutsActivos);
+  }, [gseAim, demografia, cutsActivos]);
 
   // --- FARMACÉUTICO ---
   const locsPorMarca = useMemo(() => {
@@ -321,19 +324,19 @@ export default function PageResumen({ farmacias, demografia }: Props) {
 
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, flexShrink: 0 }}>
             <div style={{ ...tarjeta, padding: "12px 4px", display: "flex", flexDirection: "column" }}>
-              <div style={{ fontSize: 11, fontWeight: 600, color: C.text, textAlign: "center" }}>NSE (hogares)</div>
+              <div style={{ fontSize: 11, fontWeight: 600, color: C.text, textAlign: "center" }}>NSE (% hogares)</div>
               <div style={{ height: 120, width: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                {nse && nse.total > 0 ? (
+                {nse.hogaresConDato > 0 ? (
                   <ResponsiveContainer>
                     <PieChart>
                       <Pie data={nse.data} innerRadius={25} outerRadius={40} dataKey="value" stroke="none" label={renderCustomizedLabel} labelLine={false} isAnimationActive={false}>
                         {nse.data.map(d => <Cell key={d.name} fill={COLOR_NSE[d.name]} />)}
                       </Pie>
-                      <Tooltip formatter={(v: number) => [`${fmt(v)} hogares`, "NSE"]} contentStyle={{ borderRadius: 8, fontSize: 11 }} />
+                      <Tooltip formatter={(_v: number, _n: string, e: { payload?: { pct: number } }) => [`${fmt((e.payload?.pct ?? 0) * 100, 1)}% de hogares`, "GSE AIM"]} contentStyle={{ borderRadius: 8, fontSize: 11 }} />
                     </PieChart>
                   </ResponsiveContainer>
                 ) : (
-                  <span style={{ fontSize: 11, color: C.text3 }}>{nse ? "Sin datos NSE" : "Cargando…"}</span>
+                  <span style={{ fontSize: 11, color: C.text3 }}>Sin datos NSE</span>
                 )}
               </div>
             </div>
@@ -364,7 +367,7 @@ export default function PageResumen({ farmacias, demografia }: Props) {
                 </BarChart>
               </ResponsiveContainer>
             </div>
-            <div style={nota}>Fuente: Censo 2024 (INE). NSE: hogares por unidad vecinal, metodología AIM Chile.</div>
+            <div style={nota}>Fuente: Censo 2024 (INE). NSE: GSE AIM Chile 2023 por comuna (Casen 2017+2022), ponderado por hogares del censo.</div>
           </div>
         </div>
 

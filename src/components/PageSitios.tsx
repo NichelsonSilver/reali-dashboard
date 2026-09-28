@@ -378,7 +378,7 @@ export default function PageSitios({ farmacias: todas }: { farmacias: Farmacia[]
           {/* NSE */}
           <Seccion titulo="Perfil socioeconómico (radio 1 km)">
             <div style={{ fontSize: 11.5, color: "#3E4A61", marginBottom: 8 }}>
-              NSE de la unidad vecinal del sitio: <strong>{ev.vector.nseSitio ?? "s/d"}</strong> · {ev.rasgos.hogares1km.toLocaleString("es-CL")} hogares en el radio (metodología AIM Chile sobre tramos de ingreso, bidat.gob.cl)
+              NSE estimado de la unidad vecinal del sitio: <strong>{ev.vector.nseSitio ?? "s/d"}</strong> · {ev.rasgos.hogares1km.toLocaleString("es-CL")} hogares del Registro Social de Hogares en el radio (orden por tramo RSH, calibrado al GSE AIM 2023 de cada comuna)
             </div>
             <BarraMixNSE mix={ev.vector.mixNSE} />
           </Seccion>
@@ -479,7 +479,7 @@ export default function PageSitios({ farmacias: todas }: { farmacias: Farmacia[]
 
           {/* Pie */}
           <div style={{ marginTop: 24, paddingTop: 10, borderTop: "1px solid #E3DFD3", fontSize: 9.5, color: "#8A92A3", lineHeight: 1.5 }}>
-            Fuentes: registro nacional de farmacias MINSAL · Censo 2024 (INE) · tramos de ingreso por unidad vecinal (bidat.gob.cl, clasificación NSE metodología AIM Chile) · imagen satelital Esri World Imagery · geocodificación OpenStreetMap/Nominatim.
+            Fuentes: registro nacional de farmacias MINSAL · Censo 2024 (INE) · NSE estimado por unidad vecinal: tramos del Registro Social de Hogares (bidat.gob.cl) calibrados al GSE AIM Chile 2023 por comuna · imagen satelital Esri World Imagery · geocodificación OpenStreetMap/Nominatim.
             Documento generado por REALI (realidata.cl). Población y hogares por manzana disponibles solo en Región Metropolitana.
           </div>
         </div>

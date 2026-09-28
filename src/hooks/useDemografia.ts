@@ -16,6 +16,7 @@ export interface DemografiaCenso {
   edad_45_59: number;
   edad_60_mas: number;
   escolaridad_promedio: number;
+  hogares: number; // jefes de hogar del censo: pondera el GSE AIM entre comunas
 }
 
 interface UseDemografiaResult {
@@ -49,6 +50,7 @@ export function useDemografia(): UseDemografiaResult {
         edad_45_59: parseInt(row.edad_45_59) || 0,
         edad_60_mas: parseInt(row.edad_60_mas) || 0,
         escolaridad_promedio: parseFloat(row.escolaridad_promedio) || 0,
+        hogares: parseInt(row.hogares) || 0,
       }));
 
       setDatos(parsed);
