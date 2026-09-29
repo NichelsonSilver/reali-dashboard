@@ -19,6 +19,7 @@ Descarga con reanudacion (Range): si se corta, volver a correr y continua.
 import argparse
 import re
 import sys
+import urllib.parse
 import urllib.request
 from pathlib import Path
 
@@ -69,15 +70,53 @@ def coincide_periodo(url: str, anio: int, mes: int) -> bool:
       Etapas_Nov_2025.zip           -> Nov 2025
       Tabla-de-viajes-011025.zip    -> ddmmyy (01-10-25... publicado como abril 2025!)
     """
-    nombre = url.rsplit("/", 1)[-1]
-    # TODO(human): implementar el matching de periodo.
-    # Debe devolver True si `nombre` corresponde a (anio, mes), False si no.
-    # Considerar: anio con 4 digitos con separador . - _ contra el mes numerico
-    # (04) y contra el mes en texto español abreviado o completo (ABR/ABRIL),
-    # en cualquier capitalizacion. Ante ambiguedad (ej: solo aparece el anio),
-    # decidir si conviene ser permisivo (bajar de mas) o estricto (bajar de
-    # menos) — documentar la eleccion en un comentario.
-    return False
+    nombre = urllib.parse.unquote(url.rsplit("/", 1)[-1])
+    return periodo_de_nombre(nombre) == (anio, mes)
+
+
+# Nombres cuyo periodo no se puede leer del nombre: se anotan a mano mirando la
+# pagina de DTPM (van junto a la subida por paradero del mismo periodo).
+PERIODO_MANUAL = {
+    "Tabla-de-viajes-011025.zip": (2025, 4),
+    "Tabla-de-etapas-011025.zip": (2025, 4),
+}
+
+_MESES = {"ene": 1, "feb": 2, "mar": 3, "abr": 4, "may": 5, "jun": 6, "jul": 7,
+          "ago": 8, "sep": 9, "oct": 10, "nov": 11, "dic": 12}
+
+# Mes en texto al inicio de palabra (NOV, Nov, noviembre, octubre) seguido del
+# anio con 4 o 2 digitos: NOV_2025, Nov-24, Nov24, nov23, octubre_18.
+_RE_MES_TEXTO = re.compile(r"(?<![a-z])(" + "|".join(_MESES) + r")[a-z]*[\s_\-.]*(\d{4}|\d{2})(?!\d)")
+# Anio y mes separados: 2026-04, 2026.04_v3, 2025_04_v2.
+_RE_ANIO_MES = re.compile(r"(?<!\d)(20\d{2})[\-._](0[1-9]|1[0-2])(?!\d)")
+# Seis digitos pegados: 202404 (AAAAMM) o 112023 (MMAAAA).
+_RE_SEIS = re.compile(r"(?<!\d)(\d{6})(?!\d)")
+
+
+def periodo_de_nombre(nombre: str) -> tuple[int, int] | None:
+    """(anio, mes) que declara un nombre de archivo DTPM, o None si no se sabe.
+
+    ESTRICTO a proposito: ante ambiguedad (viajes_19.zip trae solo el anio,
+    tabla-viajes.rar nada, 011025 es ddmmyy y DTPM lo publico como abril 2025)
+    devuelve None en vez de adivinar. Bajar de menos se nota — el script avisa
+    que no encontro el periodo —; bajar el mes equivocado se mezcla en silencio
+    con el analisis de movilidad y nadie lo ve.
+    """
+    if nombre in PERIODO_MANUAL:
+        return PERIODO_MANUAL[nombre]
+    bajo = nombre.lower()
+    if m := _RE_ANIO_MES.search(bajo):
+        return int(m[1]), int(m[2])
+    if m := _RE_MES_TEXTO.search(bajo):
+        anio = int(m[2]) if len(m[2]) == 4 else 2000 + int(m[2])
+        return anio, _MESES[m[1]]
+    for m in _RE_SEIS.finditer(bajo):
+        d = m[1]
+        if d.startswith("20") and 1 <= int(d[4:]) <= 12:
+            return int(d[:4]), int(d[4:])
+        if d[2:4] == "20" and 1 <= int(d[:2]) <= 12:
+            return int(d[2:]), int(d[:2])
+    return None
 
 
 def descargar(url: str, destino: Path) -> None:

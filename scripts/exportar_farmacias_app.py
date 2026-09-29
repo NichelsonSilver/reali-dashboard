@@ -20,7 +20,7 @@ recorta la muestra publicable. Este script escribe el MAESTRO privado, nunca
 
 Uso:
     python scripts/exportar_farmacias_app.py \
-        --maestro SCRAPER/FARMACIAS/EXCEL_WS/MAESTRO_FARMACIAS_agosto.xlsx
+        --maestro SCRAPER/FARMACIAS/EXCEL_WS/MAESTRO_FARMACIAS_2026-08.xlsx
 
     # solo validar, sin escribir:
     python scripts/exportar_farmacias_app.py --maestro <ruta> --verificar
