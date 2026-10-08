@@ -4,7 +4,7 @@ import {
   PieChart, Pie, ResponsiveContainer,
 } from "recharts";
 import { Farmacia } from "../types";
-import { DemografiaCenso } from "../hooks/useDemografia";
+import { DemografiaCenso } from "../types";
 import { useGseAim } from "../hooks/useGseAim";
 import { gseEnComunas } from "../utils/territorio";
 import { COLOR_NSE } from "../constants";

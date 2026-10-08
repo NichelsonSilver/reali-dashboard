@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect, useRef } from "react";
 import { Farmacia, CadenaFarmaceutica, MovimientoFarmacia } from "../types";
-import { DemografiaCenso } from "../hooks/useDemografia";
+import { DemografiaCenso } from "../types";
 import { useMovimientos } from "../hooks/useMovimientos";
 import { useGseAim } from "../hooks/useGseAim";
 import { gseEnComunas } from "../utils/territorio";

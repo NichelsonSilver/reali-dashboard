@@ -1,23 +1,7 @@
 import { useState, useEffect } from "react";
 import Papa from "papaparse";
 import demografiaRaw from "../data/demografia_censo.csv?raw";
-
-// Demografía agregada por comuna (generada por scripts/agregar_censo.py)
-export interface DemografiaCenso {
-  cod_comuna: string;
-  nombre_comuna: string;
-  region: string;
-  poblacion: number;
-  hombres: number;
-  mujeres: number;
-  edad_0_14: number;
-  edad_15_29: number;
-  edad_30_44: number;
-  edad_45_59: number;
-  edad_60_mas: number;
-  escolaridad_promedio: number;
-  hogares: number; // jefes de hogar del censo: pondera el GSE AIM entre comunas
-}
+import { DemografiaCenso } from "../types";
 
 interface UseDemografiaResult {
   datos: DemografiaCenso[];

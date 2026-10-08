@@ -1,7 +1,7 @@
 import { useMemo, useState, Suspense, lazy } from "react";
 import { useFarmacias } from "./hooks/useFarmacias";
-import { useDemografia, DemografiaCenso } from "./hooks/useDemografia";
-import { Farmacia } from "./types";
+import { useDemografia } from "./hooks/useDemografia";
+import { DemografiaCenso, Farmacia } from "./types";
 import { conCoordConfiable } from "./utils/coordenadas";
 import PanelIzquierdo from "./components/PanelIzquierdo";
 import UploadModal from "./components/UploadModal";

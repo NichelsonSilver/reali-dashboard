@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { Farmacia } from "../types";
-import { DemografiaCenso } from "../hooks/useDemografia";
+import { DemografiaCenso } from "../types";
 import { CADENAS, COLORES_CADENA, COLOR_NSE } from "../constants";
 import { useGseAim } from "../hooks/useGseAim";
 import { gseEnComunas } from "../utils/territorio";

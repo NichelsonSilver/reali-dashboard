@@ -68,17 +68,25 @@ export type CadenaFarmaceutica =
 
 // === DEMOGRAFÍA ===
 
-export interface DatosDemograficos {
-  zona_censal: string;
-  manzana: string;
+/**
+ * Una fila de `demografia_censo.csv`: Censo 2024 agregado por comuna, nacional
+ * (scripts/agregar_censo.py). El NSE no vive acá: por comuna es el GSE AIM
+ * (`GseComuna`, useGseAim) y por unidad vecinal la capa estimada (`PropsUV`).
+ */
+export interface DemografiaCenso {
+  cod_comuna: string;
+  nombre_comuna: string;
+  region: string;
   poblacion: number;
-  hogares: number;
-  nse_abc1: number;
-  nse_c2: number;
-  nse_c3: number;
-  nse_d: number;
-  nse_e: number;
-  ingreso_promedio: number;
+  hombres: number;
+  mujeres: number;
+  edad_0_14: number;
+  edad_15_29: number;
+  edad_30_44: number;
+  edad_45_59: number;
+  edad_60_mas: number;
+  escolaridad_promedio: number;
+  hogares: number; // jefes de hogar del censo: pondera el GSE AIM entre comunas
 }
 
 // === APERTURAS / CIERRES ===
@@ -92,10 +100,10 @@ export interface MovimientoFarmacia {
   id: string;
   movimiento: "apertura" | "cierre";
   mes_deteccion: string; // AAAA-MM
-  nombre: string;
   cadena: CadenaFarmaceutica;
   tipo: SegmentoLocal;
   formato: FormatoLocal;
+  nombre: string;
   direccion: string;
   comuna: string;
   region: string;
