@@ -48,8 +48,8 @@ body{background:var(--midnight);color:var(--bone)}
 // solo su SHA-256. Suficiente mientras el panel no exponga datos sensibles;
 // al conectar datos reales de trading se reemplaza por auth de verdad.
 //
-// TODO(human): pegar aquí el hash SHA-256 (hex, 64 caracteres) de tu clave.
-// Genéralo en la consola del navegador (F12) con:
+// Hash SHA-256 (hex, 64 caracteres) de la clave. Para cambiarla, generar el
+// nuevo en la consola del navegador (F12) con:
 //   crypto.subtle.digest('SHA-256', new TextEncoder().encode('TU_CLAVE'))
 //     .then(b => console.log([...new Uint8Array(b)].map(x => x.toString(16).padStart(2,'0')).join('')))
 const HASH_CLAVE = 'cc1f9e8f7a35add5905a920e58d45fd598cc9fdd531d510d564147f153ba69cd';
