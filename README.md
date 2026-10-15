@@ -10,19 +10,39 @@ farmacéuticas en Chile. Desarrollado por [REALI SpA](https://realidata.cl).
 Responde la pregunta que se hace un área de expansión antes de firmar un
 arriendo: *¿cuánto vale este local y a quién le quito venta si abro acá?*
 
-- **Mapa nacional** de ~5.900 farmacias geocodificadas, filtrable por cadena,
-  región y comuna.
-- **Capa demográfica** por manzana censal y por unidad vecinal, con nivel
-  socioeconómico (ABC1/C2/C3/D/E, metodología AIM Chile).
-- **Evaluar Sitio** — dosier de sitio imprimible a partir de una dirección:
+- **Resumen** — locales por cadena, aperturas/cierres y perfil demográfico
+  y socioeconómico de las comunas cargadas.
+- **Mapa farmacéutico** — farmacias geocodificadas, filtrables por cadena,
+  región y comuna, con capas de manzanas censales y NSE por unidad vecinal.
+- **Aperturas / Cierres** — movimientos detectados por diff mensual del
+  registro de farmacias de MINSAL. Un cierre se cuenta después de 3 meses
+  cerrado o ausente; una apertura es *detección*, no inauguración.
+- **Cadenas** y **Análisis demográfico** (Censo 2024).
+- **Evaluar Sitio** — dosier imprimible a partir de una dirección:
   competencia por radios, mix NSE, población, tiendas análogas,
   canibalización de red propia y score 0-100.
-- **Movimientos** — aperturas y cierres detectados por diff entre snapshots
-  del registro MINSAL. ⚠️ **Esta vista corre hoy sobre datos ficticios**
-  (`MOCK_MOVIMIENTOS` en `src/constants.ts`): los movimientos que muestra son
-  inventados para demostrar la UI y no describen a ninguna cadena real. Se
-  reemplazan por la salida de `diff_aperturas.py` cuando haya dos snapshots
-  MINSAL consecutivos.
+
+## Datos de la demo
+
+La demo publica una **muestra**: Providencia y Ñuñoa (328 farmacias, corte
+2026-09). Dos comunas contiguas y densas, para que el motor territorial
+tenga vecinos reales; direcciones y coordenadas van exactas, sin teléfonos.
+La cobertura nacional es el producto comercial.
+
+| Archivo | Contenido |
+|---|---|
+| `src/data/farmacias.csv` | Farmacias de la muestra (registro MINSAL + cadenas que MINSAL no cubre) |
+| `src/data/movimientos.csv` | Aperturas y cierres de la muestra |
+| `src/data/demografia_censo.csv` | Censo 2024 por comuna (INE), nacional |
+| `src/data/gse_aim_comuna.csv` | GSE AIM 2023 por comuna (% de hogares) |
+| `public/data/manzanas_rm.geojson` | Manzanas censales de la muestra |
+| `public/data/nse_uv.geojson` | NSE **estimado** por unidad vecinal |
+
+**Sobre el NSE:** las cifras de una zona salen del GSE AIM publicado por
+comuna, ponderado por hogares del censo. La capa por unidad vecinal es una
+estimación (tramos del Registro Social de Hogares calibrados a la
+distribución AIM de su comuna) y se usa para el mapa y el radio de Evaluar
+Sitio, nunca para sumar una cifra de zona.
 
 ## Motor territorial
 
@@ -59,23 +79,19 @@ npm install
 npm run dev
 ```
 
-Las capas geográficas (`public/data/*.geojson`, ~35 MB) van versionadas, así
-que el repo corre tal cual después del clone. No requiere variables de
-entorno; `VITE_MAPILLARY_TOKEN` es opcional y solo habilita la foto de
-fachada automática en el dosier de sitio.
+Los datos de la muestra van versionados, así que el repo corre tal cual
+después del clone. No requiere variables de entorno; `VITE_MAPILLARY_TOKEN`
+es opcional y solo habilita la foto de fachada automática en el dosier.
 
-## Datos
+## Tests
 
-| Archivo | Fuente |
-|---|---|
-| `src/data/farmacias.csv` | Registro nacional MINSAL, procesado y geocodificado |
-| `src/data/demografia_censo.csv` | Censo 2024, agregado por comuna |
-| `public/data/manzanas_rm.geojson` | Manzanas censales de la Región Metropolitana |
-| `public/data/nse_uv.geojson` | NSE estimado por unidad vecinal |
+```bash
+npm test                          # scoring y modelo de Huff (vitest)
+python -m pytest scripts/tests    # contrato de datos CSV ↔ tipos de la app
+```
 
-Los preprocesadores que generan estos archivos están en `scripts/`. Esperan
-las fuentes crudas del censo y cartografía, que no se distribuyen en este
-repositorio por peso y licencia.
+Los preprocesadores de `scripts/` esperan las fuentes crudas del censo y la
+cartografía, que no se distribuyen en este repositorio por peso y licencia.
 
 ## Licencia
 
