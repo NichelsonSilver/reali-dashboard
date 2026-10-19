@@ -66,6 +66,73 @@ export type CadenaFarmaceutica =
   | "Independiente"
   | "Otra";
 
+// === CAPAS DE OTROS VERTICALES (bencineras, conveniencia) ===
+
+/**
+ * Una estación de servicio del maestro CNE (scripts/exportar_verticales_app.py).
+ * Es entorno del mapa, no competencia de una farmacia: no entra al motor territorial.
+ */
+export interface Bencinera {
+  id: string;
+  nombre: string;
+  /** Bandera: Copec, Shell, Aramco… */
+  cadena: string;
+  tipo: SegmentoBencinera;
+  /** Sale de lo que vende la estación, no de la bandera. */
+  formato: FormatoBencinera;
+  direccion: string;
+  comuna: string;
+  cod_comuna?: number;
+  region: string;
+  /** NaN si la CNE publica la estación sin punto: se cuenta, no se dibuja. */
+  lat: number;
+  lon: number;
+  /** Códigos de la CNE separados por '|': 93, 95, 97, DI, GLP, GNC, KE. */
+  combustibles?: string;
+  atencion?: string;
+  electrolinera?: boolean;
+  coord_dudosa?: boolean;
+  estado?: EstadoLocal;
+  cerrada_desde?: string;
+  fecha_corte?: string;
+}
+
+export type SegmentoBencinera = "mayorista" | "regional" | "independiente";
+
+export type FormatoBencinera = "combustible" | "gas_vehicular" | "sin_dato";
+
+/** Una tienda del maestro de conveniencia (buscador de cada marca). */
+export interface TiendaConveniencia {
+  id: string;
+  nombre: string;
+  cadena: MarcaConveniencia;
+  /** calle | bencinera: solo la tipología que declara la marca. */
+  formato: FormatoConveniencia;
+  tipologia?: string;
+  direccion: string;
+  comuna: string;
+  cod_comuna?: number;
+  region: string;
+  lat: number;
+  lon: number;
+  /** Estación CNE de la bandera del operador más cercana (tiendas de bencinera). */
+  id_estacion_cne?: string;
+  servicios?: string;
+  coord_dudosa?: boolean;
+  estado?: EstadoLocal;
+  cerrada_desde?: string;
+  /**
+   * Fecha del dato, 'AAAA-MM-DD'. Casi siempre la captura; una marca leída de
+   * un archivo (Spid, sitio caído) trae la fecha de la copia.
+   */
+  fecha_dato?: string;
+  fecha_corte?: string;
+}
+
+export type MarcaConveniencia = "OXXO" | "Pronto" | "Upa" | "aStop" | "Spid";
+
+export type FormatoConveniencia = "calle" | "bencinera";
+
 // === DEMOGRAFÍA ===
 
 /**

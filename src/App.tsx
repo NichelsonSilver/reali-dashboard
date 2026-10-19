@@ -325,6 +325,8 @@ function PageMapa({
           }>
             <MapaFarmacias
               farmacias={mapeables}
+              region={filtros.region}
+              comuna={filtros.comuna}
               onComunaClick={(c) => setFiltros((prev) => ({ ...prev, comuna: c }))}
             />
           </Suspense>

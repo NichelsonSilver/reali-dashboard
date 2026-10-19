@@ -1,0 +1,108 @@
+id,nombre,cadena,formato,tipologia,direccion,comuna,cod_comuna,region,lat,lon,id_estacion_cne,servicios,coord_dudosa,estado,cerrada_desde,fecha_dato,fecha_corte
+oxxo-427,OXXO San Eugenio,OXXO,calle,,San Eugenio 1547 - Ñuñoa,Ñuñoa,13120,Metropolitana,-33.46631932,-70.62417976,,alcohol|bip,0,activa,,2026-10-18,2026-09
+oxxo-300,OXXO Juan Moya,OXXO,calle,,"Av. Irarrázaval 4123 Local 2, Ñuñoa. - Ñuñoa",Ñuñoa,13120,Metropolitana,-33.45587782,-70.5866839,,alcohol|bip,0,activa,,2026-10-18,2026-09
+oxxo-292,OXXO Irarrazaval San Jorge,OXXO,calle,,Av. Irarrazaval 4971 - Ñuñoa,Ñuñoa,13120,Metropolitana,-33.45449021,-70.5778526,,alcohol|bip,0,activa,,2026-10-18,2026-09
+oxxo-360,OXXO Metro Plaza Egana,OXXO,calle,,"Av. Américo Vespucio N°30, Local 1 - Ñuñoa",Ñuñoa,13120,Metropolitana,-33.45366695,-70.57125398,,bip,0,activa,,2026-10-18,2026-09
+oxxo-401,OXXO Plaza Egana,OXXO,calle,,Av. Irarrazaval 5612 - Ñuñoa,Ñuñoa,13120,Metropolitana,-33.45328483,-70.57204752,,alcohol|bip,0,activa,,2026-10-18,2026-09
+oxxo-322,OXXO Los Talaveras,OXXO,calle,,"Av. Irarrázaval N°3751, Local 1A - Ñuñoa",Ñuñoa,13120,Metropolitana,-33.45550867,-70.5905822,,alcohol|bip,0,activa,,2026-10-18,2026-09
+oxxo-297,OXXO Jose Domingo Canas,OXXO,calle,,José Domingo Cañas 2151 - Ñuñoa,Ñuñoa,13120,Metropolitana,-33.4570175,-70.60895639,,alcohol|bip,0,activa,,2026-10-18,2026-09
+oxxo-499,OXXO Metro Chile Espana,OXXO,calle,,Avda. José Pedro Alessandri 30 - Ñuñoa,Ñuñoa,13120,Metropolitana,-33.4550171,-70.59719462,,bip,0,activa,,2026-10-18,2026-09
+oxxo-233,OXXO Brown Norte,OXXO,calle,,Av. Irarrazaval 3674 - Ñuñoa,Ñuñoa,13120,Metropolitana,-33.45510938,-70.59238978,,alcohol|bip,0,activa,,2026-10-18,2026-09
+oxxo-374,OXXO Nunoa,OXXO,calle,,"José Domingo Cañas 1701, Local 3 - Ñuñoa",Ñuñoa,13120,Metropolitana,-33.45658996,-70.6138461,,alcohol|bip,0,activa,,2026-10-18,2026-09
+oxxo-359,OXXO Metro Nunoa,OXXO,calle,,"Av. Pedro de Valdivia #3473, Local 2 - Ñuñoa",Ñuñoa,13120,Metropolitana,-33.45460665,-70.60532427,,bip,0,activa,,2026-10-18,2026-09
+oxxo-383,OXXO Patio Bellavista,OXXO,calle,,"Bellavista 052, local 92 - Providencia",Providencia,13123,Metropolitana,-33.43435417,-70.63505913,,bip,0,activa,,2026-10-18,2026-09
+oxxo-185,OXXO Plaza Italia,OXXO,calle,,AV. PROVIDENCIA 085,Providencia,13123,Metropolitana,-33.43729371,-70.63390582,,alcohol,0,activa,,2026-10-18,2026-09
+oxxo-290,OXXO Irarrazaval Bustamante,OXXO,calle,,Av. Irarrazaval 98 - Ñuñoa,Ñuñoa,13120,Metropolitana,-33.45212922,-70.62935053,,alcohol|bip,0,activa,,2026-10-18,2026-09
+oxxo-479,OXXO Seminario,OXXO,calle,,Seminario 768 - Ñuñoa,Ñuñoa,13120,Metropolitana,-33.4515591,-70.62720873,,alcohol|bip,0,activa,,2026-10-18,2026-09
+oxxo-187,OXXO Metro Irarrazaval,OXXO,calle,,IRARRÁZAVAL 351 LOCAL 2-3 (LÍNEA 5),Ñuñoa,13120,Metropolitana,-33.45242904,-70.62670691,,bip,0,activa,,2026-10-18,2026-09
+oxxo-348,OXXO Matte Perez,OXXO,calle,,"Condell N°476, Local 101 - Providencia",Providencia,13123,Metropolitana,-33.43929552,-70.62720828,,bip,0,activa,,2026-10-18,2026-09
+oxxo-486,OXXO Metro Monsenor Eyzaguirre,OXXO,calle,,"Irarrazaval 1675, Linea 3 (modulo 1) - Ñuñoa",Ñuñoa,13120,Metropolitana,-33.4530949,-70.61384509,,,0,activa,,2026-10-18,2026-09
+oxxo-440,OXXO Simon Bolivar Hamburgo,OXXO,calle,,Hamburgo 671 - Ñuñoa,Ñuñoa,13120,Metropolitana,-33.44814737,-70.57637725,,alcohol|bip,0,activa,,2026-10-18,2026-09
+oxxo-238,OXXO Capitan Orella,OXXO,calle,,Avda. Irarrazaval 2266 Loc 4 - Ñuñoa,Ñuñoa,13120,Metropolitana,-33.45371495,-70.60745638,,alcohol|bip,0,activa,,2026-10-18,2026-09
+oxxo-207,OXXO Antonio Varas,OXXO,calle,,Av. Antonio Varas #2284 - Ñuñoa,Ñuñoa,13120,Metropolitana,-33.44794285,-70.61051041,,alcohol|bip,0,activa,,2026-10-18,2026-09
+oxxo-438,OXXO Simon Bolivar,OXXO,calle,,"Simón Bolivar 3760, Local 3 - Ñuñoa",Ñuñoa,13120,Metropolitana,-33.44829189,-70.59102392,,alcohol|bip,0,activa,,2026-10-18,2026-09
+oxxo-296,OXXO Jorge Matte,OXXO,calle,,Av. Jorge Matte #2645 - Providencia,Providencia,13123,Metropolitana,-33.43896781,-70.58736739,,alcohol,0,activa,,2026-10-18,2026-09
+oxxo-328,OXXO Lyon 2,OXXO,calle,,Av.Ricardo Lyon 2779 - Providencia,Providencia,13123,Metropolitana,-33.44642343,-70.60277546,,alcohol|bip,0,activa,,2026-10-18,2026-09
+oxxo-386,OXXO Pedro De Valdivia 2,OXXO,calle,,Pedro de Valdivia 2810 - Ñuñoa,Ñuñoa,13120,Metropolitana,-33.44825611,-70.60541149,,alcohol|bip,0,activa,,2026-10-18,2026-09
+oxxo-512,OXXO Eliecer Parada,OXXO,calle,,Tobalaba 4507 Local 6 - Ñuñoa,Ñuñoa,13120,Metropolitana,-33.43418036,-70.58221489,,alcohol|bip,0,activa,,2026-10-18,2026-09
+oxxo-240,OXXO Carlos Wilson,OXXO,calle,,Av. Antonio Varas #1683 - Providencia,Providencia,13123,Metropolitana,-33.44235675,-70.61274239,,bip,0,activa,,2026-10-18,2026-09
+oxxo-475,OXXO Pedro De Valdivia 9,OXXO,calle,,Pedro de Valdivia #2076 - Providencia,Providencia,13123,Metropolitana,-33.44128224,-70.60638566,,alcohol|bip,0,activa,,2026-10-18,2026-09
+oxxo-329,OXXO Lyon 3,OXXO,calle,,Ricardo Lyon 1848 - Providencia,Providencia,13123,Metropolitana,-33.43773922,-70.60351699,,alcohol|bip,0,activa,,2026-10-18,2026-09
+oxxo-184,OXXO Providencia - Condell,OXXO,calle,,AV. PROVIDENCIA 381,Providencia,13123,Metropolitana,-33.43537713,-70.62863512,,bip,0,activa,,2026-10-18,2026-09
+oxxo-268,OXXO Eliodoro Yanez 2,OXXO,calle,,Av. Providencia 753-759-763 - Providencia,Providencia,13123,Metropolitana,-33.43269408,-70.62523697,,bip,0,activa,,2026-10-18,2026-09
+oxxo-287,OXXO Infante,OXXO,calle,,Infante N°344 - Providencia,Providencia,13123,Metropolitana,-33.43445777,-70.62269389,,bip,0,activa,,2026-10-18,2026-09
+oxxo-232,OXXO Bilbao Montt,OXXO,calle,,"Av.Manuel Montt 1221,Local 104-105 - Providencia",Providencia,13123,Metropolitana,-33.42796951,-70.62114746,,bip,0,activa,,2026-10-18,2026-09
+oxxo-341,OXXO Manuel Montt 1,OXXO,calle,,"Manuel Montt Nº740 ,Local 1 - Providencia",Providencia,13123,Metropolitana,-33.43898987,-70.61594577,,bip,0,activa,,2026-10-18,2026-09
+oxxo-342,OXXO Manuel Montt 2,OXXO,calle,,Manuel Montt 432 - Providencia,Providencia,13123,Metropolitana,-33.43191775,-70.6178441,,bip,0,activa,,2026-10-18,2026-09
+oxxo-229,OXXO Barros Borgono,OXXO,calle,,Barros Borgoño 110 – L101 - Providencia,Providencia,13123,Metropolitana,-33.42941526,-70.61862317,,bip,0,activa,,2026-10-18,2026-09
+oxxo-450,OXXO Toledo,OXXO,calle,,Pedro De Valdivia 1221-1227 - Providencia,Providencia,13123,Metropolitana,-33.43411831,-70.60884193,,bip,0,activa,,2026-10-18,2026-09
+oxxo-267,OXXO Eliodoro Yanez,OXXO,calle,,"Eliodoro Yáñez N° 1570, Local 101 - Providencia",Providencia,13123,Metropolitana,-33.43224628,-70.61511234,,bip,0,activa,,2026-10-18,2026-09
+oxxo-281,OXXO Hernando De Aguirre,OXXO,calle,,"Eliodoro Yáñez N° 2682, Local 102 - Providencia",Providencia,13123,Metropolitana,-33.42865076,-70.59807876,,bip,0,activa,,2026-10-18,2026-09
+oxxo-384,OXXO Patio Los Leones,OXXO,calle,,Av. Los Leones N°936 - Providencia,Providencia,13123,Metropolitana,-33.4332444,-70.6018721,,bip,0,activa,,2026-10-18,2026-09
+oxxo-387,OXXO Pedro De Valdivia 3,OXXO,calle,,Pedro de Valdivia 630 - Providencia,Providencia,13123,Metropolitana,-33.42900422,-70.60999188,,bip,0,activa,,2026-10-18,2026-09
+oxxo-327,OXXO Lyon 1,OXXO,calle,,Ricardo Lyon 699 - Providencia,Providencia,13123,Metropolitana,-33.42755028,-70.6076753,,alcohol|bip,0,activa,,2026-10-18,2026-09
+oxxo-513,OXXO Suecia,OXXO,calle,,Suecia 361 - Providencia,Providencia,13123,Metropolitana,-33.42383688,-70.60692128,,alcohol,0,activa,,2026-10-18,2026-09
+oxxo-230,OXXO Barros Errazuriz,OXXO,calle,,Alfredo Barros Errazuriz #1910 L-102 - Providencia,Providencia,13123,Metropolitana,-33.42672893,-70.61328371,,bip,0,activa,,2026-10-18,2026-09
+oxxo-276,OXXO General Del Canto,OXXO,calle,,Av. 11 Septiembre 1363 - Providencia,Providencia,13123,Metropolitana,-33.42922325,-70.6187597,,alcohol|bip,0,activa,,2026-10-18,2026-09
+oxxo-202,OXXO Almirante Pastene,OXXO,calle,,Almirante Pastene 163 - Providencia,Providencia,13123,Metropolitana,-33.42686905,-70.62016019,,bip,0,activa,,2026-10-18,2026-09
+oxxo-515,OXXO Santa Beatriz,OXXO,calle,,Santa Beatriz 44 - Providencia,Providencia,13123,Metropolitana,-33.4270652,-70.61768475,,,0,activa,,2026-10-18,2026-09
+oxxo-206,OXXO Antonio Bellet,OXXO,calle,,Antonio Bellet 145 - Providencia,Providencia,13123,Metropolitana,-33.42588804,-70.61756036,,bip,0,activa,,2026-10-18,2026-09
+oxxo-299,OXXO Josefina Edward,OXXO,calle,,"Los Conquistadores #1730, local 0108 - Providencia",Providencia,13123,Metropolitana,-33.42263855,-70.62191549,,bip,0,activa,,2026-10-18,2026-09
+oxxo-379,OXXO Padre Mariano,OXXO,calle,,Padre Mariano 73 local 2 - Providencia,Providencia,13123,Metropolitana,-33.4255744,-70.61614557,,bip,0,activa,,2026-10-18,2026-09
+oxxo-302,OXXO La Concepcion,OXXO,calle,,La Concepción 120 - Providencia,Providencia,13123,Metropolitana,-33.42432683,-70.61608532,,alcohol|bip,0,activa,,2026-10-18,2026-09
+oxxo-343,OXXO Marchant Pereira,OXXO,calle,,"Marchant Pereira 102,Local 2 - Providencia",Providencia,13123,Metropolitana,-33.425241,-70.61365016,,bip,0,activa,,2026-10-18,2026-09
+oxxo-278,OXXO Guardia Vieja,OXXO,calle,,Guardia Vieja 109 - Providencia,Providencia,13123,Metropolitana,-33.42361651,-70.61043779,,alcohol|bip,0,activa,,2026-10-18,2026-09
+oxxo-503,OXXO Metro Los Leones 2,OXXO,calle,,Av. Providencia 2296 Local 01 - Providencia,Providencia,13123,Metropolitana,-33.42070564,-70.60856239,,,0,activa,,2026-10-18,2026-09
+oxxo-357,OXXO Metro Los Leones,OXXO,calle,,Av.Providencia 2304 Local 18 - Providencia,Providencia,13123,Metropolitana,-33.4205044,-70.60800665,,bip,0,activa,,2026-10-18,2026-09
+oxxo-283,OXXO Holanda Pio X,OXXO,calle,,Holanda N°228 - Providencia,Providencia,13123,Metropolitana,-33.42122213,-70.60322936,,bip,0,activa,,2026-10-18,2026-09
+oxxo-326,OXXO Luis Thayer Ojeda,OXXO,calle,,Luis Thayer Ojeda 183 - Providencia,Providencia,13123,Metropolitana,-33.42033873,-70.60246888,,alcohol|bip,0,activa,,2026-10-18,2026-09
+oxxo-496,OXXO Luis Thayer Ojeda 2,OXXO,calle,,Luis Thayer Ojeda 20 - Providencia,Providencia,13123,Metropolitana,-33.41879511,-70.60250503,,,0,activa,,2026-10-18,2026-09
+oxxo-361,OXXO Metro Tobalaba,OXXO,calle,,"Av. Nueva Providencia N°2700, Locales 2-3 - Providencia",Providencia,13123,Metropolitana,-33.41825462,-70.60177981,,bip,0,activa,,2026-10-18,2026-09
+oxxo-449,OXXO Tobalaba 1,OXXO,calle,,Avda. Providencia 2671 - Las Condes,Providencia,13123,Metropolitana,-33.41800566,-70.60215126,,bip,0,activa,,2026-10-18,2026-09
+oxxo-345,OXXO Mardoqueo Fernandez,OXXO,calle,,Mardoqueo Fernandez #91 local 2 - Providencia,Providencia,13123,Metropolitana,-33.42106506,-70.60674073,,bip,0,activa,,2026-10-18,2026-09
+oxxo-485,OXXO Las Bellotas,OXXO,calle,,"Las Bellotas 207, Local 149 - Providencia",Providencia,13123,Metropolitana,-33.42253977,-70.60837285,,,0,activa,,2026-10-18,2026-09
+oxxo-410,OXXO Providencia 2,OXXO,calle,,Av.Providencia 2382 - Providencia,Providencia,13123,Metropolitana,-33.41973008,-70.6062623,,bip,0,activa,,2026-10-18,2026-09
+pronto-4468,Pronto Express Antonio Bellet,Pronto,calle,Pronto Calle,Av. Providencia 1604,Providencia,13123,Metropolitana,-33.42685252845481,-70.6164830127227,cne-1847,App Copec|Cajero Automático|Cocina|Delivery,0,activa,,2026-10-18,2026-09
+pronto-4513,Pronto Express Bellavista Pio Nono,Pronto,calle,Pronto Calle,Bellavista No 4 Esq Pio Nono,Providencia,13123,Metropolitana,-33.4346984,-70.6354458,cne-1848,App Copec|Escanea y Paga,0,activa,,2026-10-18,2026-09
+pronto-4530,Pronto Express Bustamante,Pronto,bencinera,Pronto Express,Av. Bustamante N° 648,Ñuñoa,13120,Metropolitana,-33.45051063502,-70.6291828697,cne-1794,App Copec|Cajero Automático,0,activa,,2026-10-18,2026-09
+pronto-4547,Pronto Express Diagonal Oriente,Pronto,bencinera,Pronto Express,Diagonal Oriente N° 4312,Ñuñoa,13120,Metropolitana,-33.45109525173,-70.5855922745,cne-1796,App Copec,0,activa,,2026-10-18,2026-09
+pronto-4326,Pronto Express Eliodoro Yañez,Pronto,bencinera,Pronto Express,Av. Eliodoro Yañez N° 1960,Providencia,13123,Metropolitana,-33.43142678057,-70.6102499856,cne-1840,App Copec|Cajero Automático|Delivery,0,activa,,2026-10-18,2026-09
+pronto-4380,Pronto Express Francisco Bilbao II,Pronto,bencinera,Pronto Express,Av. Francisco Bilbao N° 2682,Providencia,13123,Metropolitana,-33.43590258572,-70.5958800369,cne-1846,App Copec|Cajero Automático,0,activa,,2026-10-18,2026-09
+pronto-4569,Pronto Express Holanda,Pronto,calle,Pronto Calle,California 2530,Providencia,13123,Metropolitana,-33.43506843459003,-70.59864501704178,cne-1846,Abono y Retiro|App Copec|Baños|Delivery,0,activa,,2026-10-18,2026-09
+pronto-4319,Pronto Express Irarrazaval II,Pronto,bencinera,Pronto Express,Av. Irarrazaval N° 1102,Ñuñoa,13120,Metropolitana,-33.45306018585,-70.6191086385,cne-1789,App Copec|Cajero Automático,0,activa,,2026-10-18,2026-09
+pronto-4322,Pronto Express Irarrazaval III,Pronto,bencinera,Pronto Express,Av. Irarrazaval N° 5277,Ñuñoa,13120,Metropolitana,-33.45403237007,-70.5752302279,cne-1790,App Copec|Cajero Automático,0,activa,,2026-10-18,2026-09
+pronto-4375,Pronto Express Los Leones,Pronto,bencinera,Pronto Express,Los Leones N° 2347,Providencia,13123,Metropolitana,-33.44051887794,-70.6001702705,cne-1845,App Copec|Cajero Automático,0,activa,,2026-10-18,2026-09
+pronto-4331,Pronto Express Lota,Pronto,bencinera,Pronto Express,Lota N° 2864,Providencia,13123,Metropolitana,-33.42149298162,-70.5974500633,cne-1843,App Copec|Cajero Automático|Delivery,0,activa,,2026-10-18,2026-09
+pronto-4525,Pronto Express Luis Thayer Ojeda,Pronto,calle,Pronto Calle,Luis Thayer Ojeda 086,Providencia,13123,Metropolitana,-33.4183181,-70.6034151,cne-1843,App Copec|Cajero Automático|Escanea y Paga,0,activa,,2026-10-18,2026-09
+pronto-4520,Pronto Express Lyon,Pronto,calle,Pronto Calle,"Av. Providencia 2202, Local 1",Providencia,13123,Metropolitana,-33.42160535867502,-70.60988885927186,cne-1840,Abono y Retiro|App Copec|Cajero Automático|Escanea y Paga,0,activa,,2026-10-18,2026-09
+pronto-4550,Pronto Express Manuel Montt,Pronto,bencinera,Pronto Express,"Manuel Montt N° 1118, Esq. Alferez",Providencia,13123,Metropolitana,-33.43799358665,-70.6156293629,cne-1844,App Copec|Cajero Automático,0,activa,,2026-10-18,2026-09
+pronto-4511,Pronto Express Metro Pedro de Valdivia,Pronto,calle,Pronto Calle,Av Providencia 1880 Local 1,Providencia,13123,Metropolitana,-33.4244766,-70.6136949,cne-1840,Abono y Retiro|App Copec|Cajero Automático|Escanea y Paga|Lockers,0,activa,,2026-10-18,2026-09
+pronto-4573,Pronto Express Padre Mariano,Pronto,calle,Pronto Calle,"Padre Mariano 76, local 1",Providencia,13123,Metropolitana,-33.4259955,-70.6190749,cne-1847,Abono y Retiro|App Copec|Baños,0,activa,,2026-10-18,2026-09
+pronto-4613,Pronto Express Panorámico,Pronto,bencinera,Express,"Guardia Vieja 142, Providencia.",Providencia,13123,Metropolitana,-33.4237893,-70.61171291678,cne-1840,,0,activa,,2026-10-18,2026-09
+pronto-4504,Pronto Express Pedro De Valdivia,Pronto,bencinera,Pronto Express,Pedro De Valdivia N° 4298,Ñuñoa,13120,Metropolitana,-33.46205499709,-70.6059387951,cne-1791,App Copec|Cajero Automático|Delivery,0,activa,,2026-10-18,2026-09
+pronto-4492,Pronto Express Providencia,Pronto,bencinera,Pronto Express,Av. Providencia N° 1072,Providencia,13123,Metropolitana,-33.4304018163,-70.6231119064,cne-1847,App Copec|Baños|Cajero Automático|Delivery,0,activa,,2026-10-18,2026-09
+pronto-4329,Pronto Express Salvador,Pronto,bencinera,Pronto Express,Salvador N° 1368,Providencia,13123,Metropolitana,-33.44582415961,-70.6226344078,cne-1841,App Copec|Baños|Cajero Automático,0,activa,,2026-10-18,2026-09
+pronto-4536,Pronto Express Tobalaba,Pronto,bencinera,Pronto Express,Av. Tobalaba N° 1895,Providencia,13123,Metropolitana,-33.430056,-70.586922,cne-1849,App Copec|Baños|Cajero Automático,0,activa,,2026-10-18,2026-09
+pronto-4462,Pronto Express USS Cede Los Leones,Pronto,calle,Pronto Express (Univ),Lota 2465,Providencia,13123,Metropolitana,-33.4221261,-70.6084382,cne-1843,Abono y Retiro|App Copec|Cocina|Escanea y Paga,0,activa,,2026-10-18,2026-09
+pronto-4332,Pronto Express Vicuña Mackenna IV,Pronto,bencinera,Pronto Express,Vicuña Mackenna N° 654,Ñuñoa,13120,Metropolitana,-33.44986227419,-70.6309988642,cne-1788,App Copec|Baños|Cajero Automático,0,activa,,2026-10-18,2026-09
+pronto-4410,Pronto Santa Maria,Pronto,bencinera,Pronto Express,Av. Santa Maria N° 0716,Providencia,13123,Metropolitana,-33.43099396622,-70.6264144154,cne-1848,App Copec|Baños|Cajero Automático|Wifi Clientes,0,activa,,2026-10-18,2026-09
+pronto-4421,Pronto Vicuña Mackenna 1990,Pronto,bencinera,P100,Vicuña Mackenna Nº 1990,Ñuñoa,13120,Metropolitana,-33.46952186584,-70.6244453869,cne-1797,Abono y Retiro|App Copec|Baños|Blue Express|Cajero Automático|Cocina|Delivery|Escanea y Paga|Wifi Clientes,0,activa,,2026-10-18,2026-09
+pronto-4517,Punto Irarrazabal II,Pronto,bencinera,Punto,Irarrazabal N° 4102,Ñuñoa,13120,Metropolitana,-33.45535981904,-70.5882176846,cne-1793,App Copec|Baños|Cajero Automático|Delivery,0,activa,,2026-10-18,2026-09
+pronto-4378,Punto San Eugenio,Pronto,bencinera,Punto,San Eugenio N° 1602,Ñuñoa,13120,Metropolitana,-33.46705465291,-70.6231837268,cne-1795,App Copec|Cajero Automático|Delivery,0,activa,,2026-10-18,2026-09
+upa--33.4325-70.5849,Upa Providencia,Upa,bencinera,Upa,Av. Francisco Bilbao 3785 - Tobalaba,Providencia,13123,Metropolitana,-33.4324580388387,-70.584858345312,cne-1854,Baños|Cajero|Delivery|Movilidad|Recargas y Medios de Pago|Wifi,0,activa,,2026-10-18,2026-09
+upa--33.4502-70.6050,Upita Nuñoa,Upa,bencinera,Upita,Av. Pedro de Valdivia 3014/Simón Bolivar,Ñuñoa,13120,Metropolitana,-33.4501999260454,-70.6050000598285,cne-1804,Baños|Cajero|Delivery|Recargas y Medios de Pago|Wifi,0,activa,,2026-10-18,2026-09
+upa--33.4580-70.5724,Upita Nuñoa,Upa,bencinera,Upita,Av. Francisco Villagra 5681/A. Vespucio,Ñuñoa,13120,Metropolitana,-33.4580157023952,-70.572408340401,cne-1805,Baños|Cajero|Delivery|Recargas y Medios de Pago|Wifi,0,activa,,2026-10-18,2026-09
+upa--33.4286-70.6249,Upita Providencia,Upa,bencinera,Upita,Av. Sta.María 0888/Piñones,Providencia,13123,Metropolitana,-33.428612249013,-70.6249286037965,cne-1857,Baños|Cajero|Delivery|Movilidad|Recargas y Medios de Pago|Wifi,0,activa,,2026-10-18,2026-09
+upa--33.4650-70.5986,Upa Nuñoa,Upa,bencinera,Upa,Av. José Pedro Alessandri 1135/Grecia,Ñuñoa,13120,Metropolitana,-33.4650155363848,-70.5986409920546,cne-1807,Baños|Cajero|Delivery|Recargas y Medios de Pago|Wifi,0,activa,,2026-10-18,2026-09
+astop-29,aStop Cajero,aStop,bencinera,Estación De Servicio,"Bilbao 1492 Esq. Antonio Varas, Providencia",Providencia,13123,Metropolitana,-33.43885535671679,-70.61407066904994,cne-1850,Aire|Baños|Cajero|Kerosene|Subway,0,activa,,2026-10-18,2026-09
+astop-52,aStop Cajero,aStop,bencinera,Estación De Servicio,"J.P.Alessandri 475/C.Velasco Macul, Ñuñoa",Ñuñoa,13120,Metropolitana,-33.45932100346004,-70.5983384002445,cne-1801,Aire|Baños|Cajero|Kerosene|Subway,0,activa,,2026-10-18,2026-09
+astop-169,aStop Cajero,aStop,bencinera,Estación De Servicio,AV.ELEODORO YANEZ 921 PROVIDENCIA,Providencia,13123,Metropolitana,-33.43367223177879,-70.62291264553599,cne-1851,Aire|Baños|Cajero,0,activa,,2026-10-18,2026-09
+spid-bilbao,Spid Bilbao,Spid,calle,,Av.Bilbao 2433,Providencia,13123,Metropolitana,-33.436965,-70.6001726,,,0,activa,,2026-07-31,2026-09
+spid-irarrazaval,Spid Irarrázaval,Spid,calle,,"Av Irarrázaval 2848-B,2846",Ñuñoa,13120,Metropolitana,-33.4544048,-70.6014868,,,0,activa,,2026-07-31,2026-09
+spid-los-leones-ii,Spid Los Leones II,Spid,calle,,Los Leones 1355,Providencia,13123,Metropolitana,-33.4264333,-70.6102842,,,0,activa,,2026-07-31,2026-09
+spid-luis-thayer-ojeda,Spid Luis Thayer Ojeda,Spid,calle,,"Luis Thayer Ojada 172, local 3",Providencia,13123,Metropolitana,-33.4179132,-70.6046259,,,0,activa,,2026-07-31,2026-09
+spid-sucre,Spid Sucre,Spid,calle,,Manuel Montt 2835,Ñuñoa,13120,Metropolitana,-33.4530736,-70.6126491,,,0,activa,,2026-07-31,2026-09
+spid-lyon,Spid Lyon,Spid,calle,,Ricardo Lyon 100,Providencia,13123,Metropolitana,-33.4228634,-70.6092376,,,0,activa,,2026-07-31,2026-09
+spid-general-holley,Spid General Holley,Spid,calle,,General Holley esq. Suecia,Providencia,13123,Metropolitana,-33.4202398,-70.6084589,,,0,activa,,2026-07-31,2026-09
+spid-antonio-bellet,Spid Antonio Bellet,Spid,calle,,Americo Vespucio Nte. 1090,Providencia,13123,Metropolitana,-33.4261639,-70.6175486,,,0,activa,,2026-07-31,2026-09
+spid-brown-sur,Spid Brown Sur,Spid,calle,,Brown Sur 48,Ñuñoa,13120,Metropolitana,-33.4558307,-70.5917363,,,0,activa,,2026-07-31,2026-09

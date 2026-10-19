@@ -20,11 +20,13 @@ from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(RAIZ / "SCRAPER" / "MINSAL_scraper"))
+sys.path.insert(0, str(RAIZ / "SCRAPER" / "CONVENIENCIA"))
 
 import pytest  # noqa: E402
 
 import exportar_farmacias_app  # noqa: E402
 import exportar_movimientos_app  # noqa: E402
+import exportar_verticales_app  # noqa: E402
 
 try:
     from maestro_farmacias import CLASIFICACION
@@ -95,6 +97,41 @@ def test_csvs_publicados_respetan_el_esquema():
 def test_tipos_y_formatos_del_exportador_son_los_del_pipeline():
     assert exportar_farmacias_app.TIPOS_VALIDOS == {t for t, _ in CLASIFICACION.values()}
     assert exportar_farmacias_app.FORMATOS_VALIDOS == {f for _, f in CLASIFICACION.values()}
+
+
+# ── B4: capas de bencineras y conveniencia ───────────────────────────────────
+
+def test_verticales_exportador_coincide_con_sus_tipos():
+    assert exportar_verticales_app.ESQUEMA_BENCINERAS == campos_interface("Bencinera")
+    assert exportar_verticales_app.ESQUEMA_CONVENIENCIA == campos_interface("TiendaConveniencia")
+
+
+def test_csvs_de_verticales_publicados_respetan_el_esquema():
+    datos = RAIZ / "src" / "data"
+    assert cabecera(datos / "bencineras.csv") == exportar_verticales_app.ESQUEMA_BENCINERAS
+    assert cabecera(datos / "conveniencia.csv") == exportar_verticales_app.ESQUEMA_CONVENIENCIA
+
+
+def test_catalogos_de_verticales_igual_en_tipos_y_exportador():
+    for union, catalogo in (("SegmentoBencinera", exportar_verticales_app.TIPOS_BENCINERAS),
+                            ("FormatoBencinera", exportar_verticales_app.FORMATOS_BENCINERAS),
+                            ("FormatoConveniencia", exportar_verticales_app.FORMATOS_CONVENIENCIA)):
+        m = re.search(rf"export type {union} =(.*?);", TYPES, re.S)
+        assert m and set(literales(m.group(1))) == catalogo, union
+
+
+@requiere_pipeline
+def test_marcas_de_conveniencia_iguales_en_pipeline_tipo_y_constantes():
+    from maestro_conveniencia import ADAPTADORES, OPERADOR
+    union = re.search(r"export type MarcaConveniencia =(.*?);", TYPES, re.S)
+    lista = re.search(r"export const MARCAS_CONVENIENCIA[^=]*= \[(.*?)\];", CONSTANTS, re.S)
+    colores = re.search(r"export const COLORES_CONVENIENCIA[^=]*= \{(.*?)\};", CONSTANTS, re.S)
+    assert union and lista and colores
+    pipeline = set(OPERADOR)
+    assert len(ADAPTADORES) == len(pipeline), "una marca del scraper sin operador"
+    assert set(literales(union.group(1))) == pipeline, "types.ts ≠ OPERADOR"
+    assert set(literales(lista.group(1))) == pipeline, "MARCAS_CONVENIENCIA ≠ OPERADOR"
+    assert set(re.findall(r'"([^"]+)":', colores.group(1))) == pipeline
 
 
 # ── B1: la demografía tipada es la del CSV real ──────────────────────────────

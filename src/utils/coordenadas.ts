@@ -12,3 +12,12 @@ import { Farmacia } from "../types";
 export function conCoordConfiable<T extends Pick<Farmacia, "coord_dudosa">>(fs: T[]): T[] {
   return fs.filter((f) => !f.coord_dudosa);
 }
+
+/**
+ * Locales de las capas de bencineras y conveniencia que se pueden dibujar:
+ * punto confiable y presente. La CNE publica alguna estación sin coordenada;
+ * se cuenta en la capa, pero no tiene dónde ir en el mapa.
+ */
+export function dibujables<T extends { coord_dudosa?: boolean; lat: number; lon: number }>(fs: T[]): T[] {
+  return conCoordConfiable(fs).filter((f) => Number.isFinite(f.lat) && Number.isFinite(f.lon));
+}

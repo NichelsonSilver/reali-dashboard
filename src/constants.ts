@@ -1,4 +1,7 @@
-import { CadenaFarmaceutica, FormatoLocal, SegmentoLocal } from "./types";
+import {
+  CadenaFarmaceutica, FormatoLocal, SegmentoLocal,
+  FormatoBencinera, FormatoConveniencia, MarcaConveniencia, SegmentoBencinera,
+} from "./types";
 import type { GrupoNSE } from "./utils/territorio";
 
 // Las 13 marcas del maestro, en orden de tamaño de red. Tiene que coincidir con
@@ -62,6 +65,40 @@ export const COLORES_CADENA: Record<CadenaFarmaceutica, string> = {
   "La Rebaja": "#EA580C",
   "Independiente": "#92400e",
   "Otra": "#64748b",
+};
+
+// ── Capas de otros verticales ────────────────────────────────────────────────
+// Banderas con color propio; las demás (127 en la CNE) van en gris. Las tres
+// mayoristas suman ~80% de las estaciones.
+export const COLORES_BANDERA: Record<string, string> = {
+  "Copec":  "#D7282F",
+  "Shell":  "#E0A800",
+  "Aramco": "#0072BC",
+};
+export const COLOR_BANDERA_OTRA = "#64748b";
+
+export const ETIQUETA_SEGMENTO_BENCINERA: Record<SegmentoBencinera, string> = {
+  mayorista: "Mayorista", regional: "Regional", independiente: "Independiente",
+};
+
+export const ETIQUETA_FORMATO_BENCINERA: Record<FormatoBencinera, string> = {
+  combustible: "Combustibles líquidos", gas_vehicular: "Gas vehicular", sin_dato: "Sin dato",
+};
+
+// Tiene que coincidir con MARCAS en SCRAPER/CONVENIENCIA/scraper_conveniencia.py
+// (aStop sale de la marca "aramco" del scraper).
+export const MARCAS_CONVENIENCIA: MarcaConveniencia[] = ["OXXO", "Pronto", "Upa", "aStop", "Spid"];
+
+export const COLORES_CONVENIENCIA: Record<MarcaConveniencia, string> = {
+  "OXXO":   "#C8102E",
+  "Pronto": "#F28C00",
+  "Upa":    "#00843D",
+  "aStop":  "#1E3A8A",
+  "Spid":   "#E8308A",
+};
+
+export const ETIQUETA_FORMATO_CONVENIENCIA: Record<FormatoConveniencia, string> = {
+  calle: "De calle", bencinera: "En estación de servicio",
 };
 
 export const REGIONES_CHILE = [
