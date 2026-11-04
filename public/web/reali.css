@@ -305,7 +305,7 @@ body{background:#ffffff;color:#0B1A2E}
 .faq-a p{color:#6B7280}
 
 /* ═══════════════════════════════════════════════════════════════
-   ADICIONES MULTI-PÁGINA (2026-08) — subpáginas /sig /comparador /panel
+   ADICIONES MULTI-PÁGINA (2026-08) — subpáginas /sig /comparador
    ════════════════════════════════════════════════════════════ */
 
 /* Nav: link de página activa */
@@ -358,26 +358,6 @@ body{background:#ffffff;color:#0B1A2E}
 .data-source{background:#ffffff;border:1px solid rgba(0,0,0,0.08);border-radius:var(--radius-md);padding:20px}
 .data-source .ds-name{font-family:var(--font-mono);font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent-deep);margin-bottom:6px}
 .data-source p{font-size:13px;color:#6B7280;line-height:1.5}
-
-/* Gate de acceso (/panel) */
-.gate-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--midnight);padding:24px}
-.gate-card{width:360px;background:var(--graphite);border:1px solid rgba(255,255,255,0.08);border-radius:var(--radius-lg);padding:36px;box-shadow:var(--shadow-lg)}
-.gate-card .gate-logo{height:26px;margin-bottom:6px}
-.gate-card .gate-sub{font-family:var(--font-mono);font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--bone-muted);margin-bottom:26px}
-.gate-card label{display:block;font-family:var(--font-mono);font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--bone-muted);margin-bottom:8px}
-.gate-card input{width:100%;background:rgba(0,0,0,0.3);border:1px solid var(--graphite-3);border-radius:var(--radius-sm);padding:11px 14px;font-family:var(--font-body);font-size:14px;color:var(--bone);outline:none;transition:border-color 200ms ease}
-.gate-card input:focus{border-color:var(--accent-dim)}
-.gate-card input.error{border-color:var(--negative)}
-.gate-card .gate-error{font-size:12px;color:#E57373;margin-top:8px;display:none}
-.gate-card button{width:100%;margin-top:20px;justify-content:center;padding:12px}
-.gate-foot{font-family:var(--font-mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:#3d4759;margin-top:22px;text-align:center}
-
-/* Panel privado (post-gate) */
-.panel-shell{min-height:100vh;background:var(--midnight);color:var(--bone);display:none;flex-direction:column}
-.panel-shell header{display:flex;align-items:center;justify-content:space-between;padding:18px 32px;border-bottom:1px solid rgba(255,255,255,0.07)}
-.panel-empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:48px;gap:14px}
-.panel-empty h1{font-family:var(--font-display);font-size:clamp(24px,4vw,40px);letter-spacing:-0.02em;color:var(--bone)}
-.panel-empty p{font-size:15px;color:var(--bone-muted);max-width:440px;line-height:1.7}
 
 @media(max-width:900px){
   .page-hero{padding:110px 24px 48px}

@@ -16,8 +16,6 @@ export default defineConfig({
             req.url = '/web/sig.html'
           } else if (path === '/comparador' || path === '/comparador/') {
             req.url = '/web/comparador.html'
-          } else if (path === '/panel' || path === '/panel/') {
-            req.url = '/web/panel.html'
           } else if (path === '/comparador-demo' || path === '/comparador-demo/') {
             req.url = '/comparador-demo/index.html'
           } else if (path === '/dashboard' || path === '/dashboard/') {
