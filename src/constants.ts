@@ -1,6 +1,7 @@
 import {
   CadenaFarmaceutica, FormatoLocal, SegmentoLocal,
   FormatoBencinera, FormatoConveniencia, MarcaConveniencia, SegmentoBencinera,
+  FormatoFerreteria, MarcaFerreteria,
 } from "./types";
 import type { GrupoNSE } from "./utils/territorio";
 
@@ -99,6 +100,20 @@ export const COLORES_CONVENIENCIA: Record<MarcaConveniencia, string> = {
 
 export const ETIQUETA_FORMATO_CONVENIENCIA: Record<FormatoConveniencia, string> = {
   calle: "De calle", bencinera: "En estación de servicio",
+};
+
+// Tiene que coincidir con TIPO en SCRAPER/FERRETERIAS/maestro_ferreterias.py.
+export const MARCAS_FERRETERIA: MarcaFerreteria[] = ["Sodimac", "Easy", "Chilemat", "Independiente"];
+
+export const COLORES_FERRETERIA: Record<MarcaFerreteria, string> = {
+  "Sodimac":       "#0072CE",
+  "Easy":          "#D7282F",
+  "Chilemat":      "#2E7D32",
+  "Independiente": "#8A6D3B",
+};
+
+export const ETIQUETA_FORMATO_FERRETERIA: Record<FormatoFerreteria, string> = {
+  hogar: "Mejoramiento del hogar", constructor: "Para constructores", ferreteria: "Ferretería",
 };
 
 export const REGIONES_CHILE = [

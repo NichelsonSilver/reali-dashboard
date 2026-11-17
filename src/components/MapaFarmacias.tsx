@@ -2,14 +2,15 @@ import { useState, useMemo, useEffect, useRef } from "react";
 import { MapContainer, TileLayer, GeoJSON, useMap } from "react-leaflet";
 import type { Feature } from "geojson";
 import L from "leaflet";
-import { Bencinera, Farmacia, TiendaConveniencia } from "../types";
+import { Bencinera, Farmacia, Ferreteria, TiendaConveniencia } from "../types";
 import {
   COLORES_CADENA, ETIQUETA_SEGMENTO, LOGO_CADENA, EMAIL_REPORTES, TILES, type TileKey,
   COLORES_BANDERA, COLOR_BANDERA_OTRA, ETIQUETA_SEGMENTO_BENCINERA, ETIQUETA_FORMATO_BENCINERA,
   COLORES_CONVENIENCIA, ETIQUETA_FORMATO_CONVENIENCIA, MARCAS_CONVENIENCIA,
+  COLORES_FERRETERIA, ETIQUETA_FORMATO_FERRETERIA, MARCAS_FERRETERIA,
 } from "../constants";
 import { useManzanasRM, type ManzanaProps } from "../hooks/useGeoCapas";
-import { useBencineras, useConveniencia } from "../hooks/useCapasVerticales";
+import { useBencineras, useConveniencia, useFerreterias } from "../hooks/useCapasVerticales";
 import { dibujables } from "../utils/coordenadas";
 import {
   colorParaValor, CORTES, PALETA, ETIQUETA_VARIABLE, type VariableCoropleta,
@@ -118,7 +119,8 @@ function FarmaciasLayer({ farmacias, logosOn }: { farmacias: Farmacia[]; logosOn
 
 // ── Capas de otros verticales ────────────────────────────────────────────────
 // Forma propia por vertical para que no se confundan con las farmacias (círculos)
-// aunque compartan color: estación = cuadrado, tienda de conveniencia = rombo.
+// aunque compartan color: estación = cuadrado, tienda de conveniencia = rombo,
+// ferretería = triángulo.
 
 const COMBUSTIBLE: Record<string, string> = {
   DI: "Diésel", KE: "Kerosene", GLP: "GLP", GNC: "GNC",
@@ -174,7 +176,41 @@ function popupConveniencia(t: TiendaConveniencia, col: string): string {
   </div>`;
 }
 
-function marcaForma(col: string, forma: "cuadrado" | "rombo", temporal: boolean) {
+function popupFerreteria(f: Ferreteria, col: string): string {
+  const fecha = f.fecha_dato ? f.fecha_dato.split("-").reverse().join("-") : "";
+  const sii = f.cadena === "Independiente";
+  // El DOMICILIO de una sociedad chica suele ser la casa del dueño o el
+  // contador: el punto ubica la empresa, no necesariamente el mesón.
+  const domicilio = f.tipo_direccion === "DOMICILIO"
+    ? `<div class="addr" style="color:#9A6206">Dirección tributaria de la sociedad: puede no ser el local</div>`
+    : "";
+  return `<div class="fpopup">
+    <h4>${escapeHtml(f.nombre)}</h4>
+    <div class="addr">${escapeHtml(f.direccion)}</div>
+    ${avisoTemporal(f.estado, f.cerrada_desde)}
+    ${domicilio}
+    <div class="grid2">
+      ${fila("Marca", f.cadena, col)}
+      ${fila("Comuna", f.comuna)}
+      ${fila("Formato", ETIQUETA_FORMATO_FERRETERIA[f.formato] ?? f.formato)}
+      ${f.rubros ? fila("Servicios", f.rubros.split("|").join(" · ")) : ""}
+    </div>
+    ${fecha ? `<div class="addr" style="margin-top:6px">${sii ? "Directorio SII" : "Dato del buscador de la marca"} al ${fecha}</div>` : ""}
+  </div>`;
+}
+
+type Forma = "cuadrado" | "rombo" | "triangulo";
+
+function marcaForma(col: string, forma: Forma, temporal: boolean) {
+  if (forma === "triangulo") {
+    const relleno = temporal
+      ? `fill="none" stroke="${col}" stroke-width="1.5" stroke-dasharray="2 1.5"`
+      : `fill="${col}" stroke="#fff" stroke-width="1.5"`;
+    return L.divIcon({
+      html: `<svg width="13" height="12" viewBox="0 0 13 12" style="overflow:visible;filter:drop-shadow(0 0 0.5px rgba(0,0,0,.5))"><polygon points="6.5,1 12,11 1,11" ${relleno} stroke-linejoin="round"/></svg>`,
+      className: "", iconSize: [13, 12], iconAnchor: [6.5, 7], popupAnchor: [0, -7],
+    });
+  }
   const giro = forma === "rombo" ? "transform:rotate(45deg);" : "";
   const relleno = temporal ? `border:1.5px dashed ${col};background:transparent` : `border:1.5px solid #fff;background:${col}`;
   return L.divIcon({
@@ -186,7 +222,7 @@ function marcaForma(col: string, forma: "cuadrado" | "rombo", temporal: boolean)
 function PuntosLayer<T extends { lat: number; lon: number; estado?: string }>({
   puntos, color, forma, popup,
 }: {
-  puntos: T[]; color: (p: T) => string; forma: "cuadrado" | "rombo"; popup: (p: T, col: string) => string;
+  puntos: T[]; color: (p: T) => string; forma: Forma; popup: (p: T, col: string) => string;
 }) {
   const map = useMap();
   useEffect(() => {
@@ -205,6 +241,7 @@ function PuntosLayer<T extends { lat: number; lon: number; estado?: string }>({
 
 const colorTienda = (t: TiendaConveniencia) => COLORES_CONVENIENCIA[t.cadena] ?? COLOR_BANDERA_OTRA;
 const colorEstacion = (b: Bencinera) => colorBandera(b.cadena);
+const colorFerreteria = (f: Ferreteria) => COLORES_FERRETERIA[f.cadena] ?? COLOR_BANDERA_OTRA;
 
 interface ResultadoBusqueda { lat: number; lon: number; display: string; }
 
@@ -276,6 +313,7 @@ export default function MapaFarmacias({ farmacias, region, comuna, onComunaClick
   const [farmaciasOn, setFarmaciasOn] = useState(true);
   const [bencinerasOn, setBencinerasOn] = useState(false);
   const [convOn, setConvOn] = useState(false);
+  const [ferrOn, setFerrOn] = useState(false);
   const [manzanasOn, setManzanasOn] = useState(false);
   const [comunasOn, setComunasOn] = useState(false);
   const [logosOn, setLogosOn] = useState(false);
@@ -316,6 +354,7 @@ export default function MapaFarmacias({ farmacias, region, comuna, onComunaClick
 
   const bencineras = useBencineras(bencinerasOn);
   const conveniencia = useConveniencia(convOn);
+  const ferreterias = useFerreterias(ferrOn);
   // La capa cuenta todos los locales de la zona; dibuja los de punto confiable.
   const bencinerasZona = useMemo(
     () => enZona(bencineras.datos ?? [], region, comuna), [bencineras.datos, region, comuna]);
@@ -323,8 +362,12 @@ export default function MapaFarmacias({ farmacias, region, comuna, onComunaClick
     () => enZona(conveniencia.datos ?? [], region, comuna), [conveniencia.datos, region, comuna]);
   const bencinerasMapa = useMemo(() => dibujables(bencinerasZona), [bencinerasZona]);
   const convMapa = useMemo(() => dibujables(convZona), [convZona]);
+  const ferrZona = useMemo(
+    () => enZona(ferreterias.datos ?? [], region, comuna), [ferreterias.datos, region, comuna]);
+  const ferrMapa = useMemo(() => dibujables(ferrZona), [ferrZona]);
   const sinPunto = (bencinerasOn ? bencinerasZona.length - bencinerasMapa.length : 0)
-    + (convOn ? convZona.length - convMapa.length : 0);
+    + (convOn ? convZona.length - convMapa.length : 0)
+    + (ferrOn ? ferrZona.length - ferrMapa.length : 0);
   // Banderas con color propio que hay en la zona, para la leyenda.
   const banderasZona = useMemo(
     () => Object.keys(COLORES_BANDERA).filter((b) => bencinerasMapa.some((e) => e.cadena === b)),
@@ -333,6 +376,8 @@ export default function MapaFarmacias({ farmacias, region, comuna, onComunaClick
   const hayOtraBandera = bencinerasMapa.some((e) => !(e.cadena in COLORES_BANDERA));
   const marcasZona = useMemo(
     () => MARCAS_CONVENIENCIA.filter((m) => convMapa.some((t) => t.cadena === m)), [convMapa]);
+  const marcasFerrZona = useMemo(
+    () => MARCAS_FERRETERIA.filter((m) => ferrMapa.some((f) => f.cadena === m)), [ferrMapa]);
 
   // Descarga manzanas cuando se activa cualquiera de las dos capas que lo necesita.
   const { data: manzanas, loading: loadingManz } = useManzanasRM(manzanasOn || comunasOn);
@@ -412,6 +457,9 @@ export default function MapaFarmacias({ farmacias, region, comuna, onComunaClick
         )}
         {convOn && (
           <PuntosLayer puntos={convMapa} color={colorTienda} forma="rombo" popup={popupConveniencia} />
+        )}
+        {ferrOn && (
+          <PuntosLayer puntos={ferrMapa} color={colorFerreteria} forma="triangulo" popup={popupFerreteria} />
         )}
         <BuscadorEfecto resultado={resultadoBusqueda} />
       </MapContainer>
@@ -521,12 +569,20 @@ export default function MapaFarmacias({ farmacias, region, comuna, onComunaClick
           {bencineras.error && <span style={{ color: "#C13B3B" }}>· error</span>}
         </label>
 
-        <label style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 11, color: C.text2, cursor: "pointer", marginBottom: 8 }}>
+        <label style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 11, color: C.text2, cursor: "pointer", marginBottom: 4 }}>
           <input type="checkbox" checked={convOn} onChange={(e) => setConvOn(e.target.checked)} />
           <span style={{ width: 8, height: 8, background: C.text3, transform: "rotate(45deg)", flexShrink: 0 }} />
           Tiendas de conveniencia
           {conveniencia.loading && <span style={{ color: C.text3 }}>· cargando…</span>}
           {conveniencia.error && <span style={{ color: "#C13B3B" }}>· error</span>}
+        </label>
+
+        <label style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 11, color: C.text2, cursor: "pointer", marginBottom: 8 }}>
+          <input type="checkbox" checked={ferrOn} onChange={(e) => setFerrOn(e.target.checked)} />
+          <svg width="10" height="9" viewBox="0 0 10 9" style={{ flexShrink: 0 }}><polygon points="5,0 10,9 0,9" fill={C.text3} /></svg>
+          Ferreterías
+          {ferreterias.loading && <span style={{ color: C.text3 }}>· cargando…</span>}
+          {ferreterias.error && <span style={{ color: "#C13B3B" }}>· error</span>}
         </label>
 
         <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.07em", textTransform: "uppercase", color: C.text3, marginBottom: 6 }}>
@@ -581,13 +637,14 @@ export default function MapaFarmacias({ farmacias, region, comuna, onComunaClick
           farmaciasOn && { n: farmacias.length, lbl: "farmacias" },
           bencinerasOn && bencineras.datos && { n: bencinerasZona.length, lbl: "bencineras" },
           convOn && conveniencia.datos && { n: convZona.length, lbl: "tiendas de conveniencia" },
+          ferrOn && ferreterias.datos && { n: ferrZona.length, lbl: "ferreterías" },
         ].filter((x): x is { n: number; lbl: string } => !!x).map((x, i) => (
           <span key={x.lbl}>
             {i > 0 && " · "}
             <span className="num" style={{ color: C.accentText, fontWeight: 700 }}>{x.n}</span> {x.lbl}
           </span>
         ))}
-        {!farmaciasOn && !bencinerasOn && !convOn && <span>Sin capas de locales encendidas</span>}
+        {!farmaciasOn && !bencinerasOn && !convOn && !ferrOn && <span>Sin capas de locales encendidas</span>}
         {sinPunto > 0 && (
           <div style={{ fontSize: 9.5, color: C.text3, marginTop: 2 }}>
             <span className="num">{sinPunto}</span> sin punto confiable: se cuentan, no se dibujan
@@ -596,7 +653,8 @@ export default function MapaFarmacias({ farmacias, region, comuna, onComunaClick
       </div>
 
       {/* Leyenda: una sección por capa de locales encendida */}
-      {(farmaciasOn || (bencinerasOn && bencinerasMapa.length > 0) || (convOn && marcasZona.length > 0)) && (
+      {(farmaciasOn || (bencinerasOn && bencinerasMapa.length > 0) || (convOn && marcasZona.length > 0)
+        || (ferrOn && marcasFerrZona.length > 0)) && (
       <div style={{
         position: "absolute", bottom: 14, right: 14, zIndex: 400,
         background: CTRL_BG, border: `1px solid ${C.border}`,
@@ -617,12 +675,25 @@ export default function MapaFarmacias({ farmacias, region, comuna, onComunaClick
           </div>
         )}
         {convOn && marcasZona.length > 0 && (
-          <div style={{ marginBottom: farmaciasOn ? 8 : 0 }}>
+          <div style={{ marginBottom: farmaciasOn || (ferrOn && marcasFerrZona.length > 0) ? 8 : 0 }}>
             <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.07em", textTransform: "uppercase", color: C.text3, marginBottom: 6 }}>Conveniencia</div>
             <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
               {marcasZona.map((m) => (
                 <div key={m} style={{ display: "flex", alignItems: "center", gap: 6 }}>
                   <span style={{ width: 8, height: 8, background: COLORES_CONVENIENCIA[m], transform: "rotate(45deg)", flexShrink: 0 }} />
+                  <span style={{ fontSize: 10, color: C.text2 }}>{m}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+        {ferrOn && marcasFerrZona.length > 0 && (
+          <div style={{ marginBottom: farmaciasOn ? 8 : 0 }}>
+            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.07em", textTransform: "uppercase", color: C.text3, marginBottom: 6 }}>Ferreterías</div>
+            <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+              {marcasFerrZona.map((m) => (
+                <div key={m} style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                  <svg width="10" height="9" viewBox="0 0 10 9" style={{ flexShrink: 0 }}><polygon points="5,0 10,9 0,9" fill={COLORES_FERRETERIA[m]} /></svg>
                   <span style={{ fontSize: 10, color: C.text2 }}>{m}</span>
                 </div>
               ))}

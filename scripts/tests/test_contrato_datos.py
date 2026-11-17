@@ -21,6 +21,7 @@ from pathlib import Path
 RAIZ = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(RAIZ / "SCRAPER" / "MINSAL_scraper"))
 sys.path.insert(0, str(RAIZ / "SCRAPER" / "CONVENIENCIA"))
+sys.path.insert(0, str(RAIZ / "SCRAPER" / "FERRETERIAS"))
 
 import pytest  # noqa: E402
 
@@ -99,23 +100,28 @@ def test_tipos_y_formatos_del_exportador_son_los_del_pipeline():
     assert exportar_farmacias_app.FORMATOS_VALIDOS == {f for _, f in CLASIFICACION.values()}
 
 
-# ── B4: capas de bencineras y conveniencia ───────────────────────────────────
+# ── B4: capas de bencineras, conveniencia y ferreterías ───────────────────────────────────
 
 def test_verticales_exportador_coincide_con_sus_tipos():
     assert exportar_verticales_app.ESQUEMA_BENCINERAS == campos_interface("Bencinera")
     assert exportar_verticales_app.ESQUEMA_CONVENIENCIA == campos_interface("TiendaConveniencia")
+    assert exportar_verticales_app.ESQUEMA_FERRETERIAS == campos_interface("Ferreteria")
 
 
 def test_csvs_de_verticales_publicados_respetan_el_esquema():
     datos = RAIZ / "src" / "data"
     assert cabecera(datos / "bencineras.csv") == exportar_verticales_app.ESQUEMA_BENCINERAS
     assert cabecera(datos / "conveniencia.csv") == exportar_verticales_app.ESQUEMA_CONVENIENCIA
+    assert cabecera(datos / "ferreterias.csv") == exportar_verticales_app.ESQUEMA_FERRETERIAS
 
 
 def test_catalogos_de_verticales_igual_en_tipos_y_exportador():
     for union, catalogo in (("SegmentoBencinera", exportar_verticales_app.TIPOS_BENCINERAS),
                             ("FormatoBencinera", exportar_verticales_app.FORMATOS_BENCINERAS),
-                            ("FormatoConveniencia", exportar_verticales_app.FORMATOS_CONVENIENCIA)):
+                            ("FormatoConveniencia", exportar_verticales_app.FORMATOS_CONVENIENCIA),
+                            ("SegmentoFerreteria", exportar_verticales_app.TIPOS_FERRETERIAS),
+                            ("FormatoFerreteria", exportar_verticales_app.FORMATOS_FERRETERIAS),
+                            ("TipoDireccionSII", exportar_verticales_app.TIPOS_DIRECCION - {""})):
         m = re.search(rf"export type {union} =(.*?);", TYPES, re.S)
         assert m and set(literales(m.group(1))) == catalogo, union
 
@@ -131,6 +137,19 @@ def test_marcas_de_conveniencia_iguales_en_pipeline_tipo_y_constantes():
     assert len(ADAPTADORES) == len(pipeline), "una marca del scraper sin operador"
     assert set(literales(union.group(1))) == pipeline, "types.ts ≠ OPERADOR"
     assert set(literales(lista.group(1))) == pipeline, "MARCAS_CONVENIENCIA ≠ OPERADOR"
+    assert set(re.findall(r'"([^"]+)":', colores.group(1))) == pipeline
+
+
+@requiere_pipeline
+def test_marcas_de_ferreteria_iguales_en_pipeline_tipo_y_constantes():
+    from maestro_ferreterias import TIPO
+    union = re.search(r"export type MarcaFerreteria =(.*?);", TYPES, re.S)
+    lista = re.search(r"export const MARCAS_FERRETERIA[^=]*= \[(.*?)\];", CONSTANTS, re.S)
+    colores = re.search(r"export const COLORES_FERRETERIA[^=]*= \{(.*?)\};", CONSTANTS, re.S)
+    assert union and lista and colores
+    pipeline = set(TIPO)
+    assert set(literales(union.group(1))) == pipeline, "types.ts ≠ TIPO"
+    assert set(literales(lista.group(1))) == pipeline, "MARCAS_FERRETERIA ≠ TIPO"
     assert set(re.findall(r'"([^"]+)":', colores.group(1))) == pipeline
 
 

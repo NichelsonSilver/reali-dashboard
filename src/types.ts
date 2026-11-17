@@ -66,7 +66,7 @@ export type CadenaFarmaceutica =
   | "Independiente"
   | "Otra";
 
-// === CAPAS DE OTROS VERTICALES (bencineras, conveniencia) ===
+// === CAPAS DE OTROS VERTICALES (bencineras, conveniencia, ferreterías) ===
 
 /**
  * Una estación de servicio del maestro CNE (scripts/exportar_verticales_app.py).
@@ -132,6 +132,46 @@ export interface TiendaConveniencia {
 export type MarcaConveniencia = "OXXO" | "Pronto" | "Upa" | "aStop" | "Spid";
 
 export type FormatoConveniencia = "calle" | "bencinera";
+
+/**
+ * Una ferretería del maestro (buscador de cada marca + directorio SII).
+ * Entorno del mapa, igual que bencineras y conveniencia.
+ */
+export interface Ferreteria {
+  id: string;
+  nombre: string;
+  cadena: MarcaFerreteria;
+  tipo: SegmentoFerreteria;
+  /** hogar (Easy, Homecenter) | constructor | ferreteria de barrio. */
+  formato: FormatoFerreteria;
+  direccion: string;
+  comuna: string;
+  cod_comuna?: number;
+  region: string;
+  lat: number;
+  lon: number;
+  /** Servicios o rubros que publica la marca, separados por '|'. */
+  rubros?: string;
+  /**
+   * Solo las del SII. DOMICILIO es la dirección tributaria de la sociedad:
+   * a menudo la casa del dueño o el contador, no el local.
+   */
+  tipo_direccion?: TipoDireccionSII;
+  coord_dudosa?: boolean;
+  estado?: EstadoLocal;
+  cerrada_desde?: string;
+  /** Fecha del dato, 'AAAA-MM-DD' (captura del buscador o del SII). */
+  fecha_dato?: string;
+  fecha_corte?: string;
+}
+
+export type MarcaFerreteria = "Easy" | "Sodimac" | "Chilemat" | "Independiente";
+
+export type SegmentoFerreteria = "cadena" | "independiente";
+
+export type FormatoFerreteria = "hogar" | "constructor" | "ferreteria";
+
+export type TipoDireccionSII = "CASA MATRIZ" | "SUCURSAL" | "DOMICILIO";
 
 // === DEMOGRAFÍA ===
 

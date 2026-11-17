@@ -1,0 +1,7 @@
+id,nombre,cadena,tipo,formato,direccion,comuna,cod_comuna,region,lat,lon,rubros,tipo_direccion,coord_dudosa,estado,cerrada_desde,fecha_dato,fecha_corte
+easy-costanera-center,Easy Costanera Center,Easy,cadena,hogar,"Av. Andrés Bello 2447, Providencia, Región Metropolitana",Providencia,13123,Metropolitana,-33.417804,-70.606622,Banco de Pruebas|Perforador de Lavaplatos|Tintometría|Trasplante de Plantas,,0,activa,,2026-11-17,2026-10
+easy-portal-nunoa,Easy Portal Ñuñoa,Easy,cadena,hogar,"Av. José Pedro Alessandri 1166, Ñuñoa, Región Metropolitana",Ñuñoa,13120,Metropolitana,-33.465226,-70.597375,Tintometría|Trasplante de Plantas,,0,activa,,2026-11-17,2026-10
+sodimac-66,Sodimac Ñuble,Sodimac,cadena,hogar,,Ñuñoa,13120,Metropolitana,-33.4660846,-70.6259161,,,0,activa,,2026-11-17,2026-10
+sodimac-33,Sodimac Ñuñoa,Sodimac,cadena,hogar,,Ñuñoa,13120,Metropolitana,-33.4630284,-70.5754018,,,0,activa,,2026-11-17,2026-10
+chilemat-ferreteria-noriega_-33.45660_-70.60090,Ferreteria Noriega,Chilemat,independiente,ferreteria,"Chile España N°96, Ñuñoa",Ñuñoa,13120,Metropolitana,-33.4566,-70.6009,Construcción|Herramientas,,0,activa,,2026-11-17,2026-10
+chilemat-ferreteria-noriega_-33.45620_-70.60690,Ferreteria Noriega,Chilemat,independiente,ferreteria,"Avda. Irarrazaval N° 2712, Ñuñoa",Ñuñoa,13120,Metropolitana,-33.4562,-70.6069,Construcción|Herramientas,,0,activa,,2026-11-17,2026-10

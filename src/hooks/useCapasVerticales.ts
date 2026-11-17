@@ -1,16 +1,18 @@
 import { useEffect, useState } from "react";
 import Papa from "papaparse";
 import {
-  Bencinera, EstadoLocal, FormatoBencinera, FormatoConveniencia,
-  MarcaConveniencia, SegmentoBencinera, TiendaConveniencia,
+  Bencinera, EstadoLocal, Ferreteria, FormatoBencinera, FormatoConveniencia,
+  FormatoFerreteria, MarcaConveniencia, MarcaFerreteria, SegmentoBencinera,
+  SegmentoFerreteria, TiendaConveniencia, TipoDireccionSII,
 } from "../types";
 
-// Las capas de bencineras y conveniencia se piden recién al encenderlas: el
+// Las capas de otros verticales se piden recién al encenderlas: el
 // import dinámico de `?raw` deja cada CSV en su propio chunk, fuera del bundle
 // que carga la página. Una promesa por capa: encender y apagar no re-descarga.
 const CARGAS = {
   bencineras: () => import("../data/bencineras.csv?raw").then((m) => m.default),
   conveniencia: () => import("../data/conveniencia.csv?raw").then((m) => m.default),
+  ferreterias: () => import("../data/ferreterias.csv?raw").then((m) => m.default),
 };
 type Capa = keyof typeof CARGAS;
 const cache = new Map<Capa, Promise<string>>();
@@ -58,6 +60,15 @@ const PARSERS = {
     servicios: texto(row.servicios),
     fecha_dato: texto(row.fecha_dato),
   }),
+  ferreterias: (row: Fila): Ferreteria => ({
+    ...base(row),
+    cadena: row.cadena?.trim() as MarcaFerreteria,
+    tipo: row.tipo?.trim() as SegmentoFerreteria,
+    formato: row.formato?.trim() as FormatoFerreteria,
+    rubros: texto(row.rubros),
+    tipo_direccion: texto(row.tipo_direccion) as TipoDireccionSII | undefined,
+    fecha_dato: texto(row.fecha_dato),
+  }),
 };
 
 function useCapa<T>(capa: Capa, activa: boolean, parse: (r: Fila) => T) {
@@ -89,4 +100,8 @@ export function useBencineras(activa: boolean) {
 
 export function useConveniencia(activa: boolean) {
   return useCapa("conveniencia", activa, PARSERS.conveniencia);
+}
+
+export function useFerreterias(activa: boolean) {
+  return useCapa("ferreterias", activa, PARSERS.ferreterias);
 }

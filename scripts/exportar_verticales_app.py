@@ -1,13 +1,14 @@
 """
-exportar_verticales_app.py — Maestros de bencineras y conveniencia → base de la app.
+exportar_verticales_app.py — Maestros de bencineras, conveniencia y ferreterías → base de la app.
 
-Mismo papel que exportar_farmacias_app.py para los verticales 2 y 3: la
+Mismo papel que exportar_farmacias_app.py para los verticales 2, 3 y 4: la
 traducción dominio → UI vive acá y solo acá (`lng` → `lon`, `nombre_local` →
 `nombre`, región oficial → corta con la misma REGION_CORTA, sin fallback).
 
 Lo que NO viaja a la app:
   · `operador` de conveniencia: dice quién opera la marca, y la guarda del
     espejo público bloquea el nombre del cliente. El dato vive en el maestro.
+    En ferreterías tampoco viaja, por la misma regla aunque hoy no choque.
   · `fuente`, `id_fuente`, `requiere_revision`, `en_fuente`: plomería del pipeline.
   · las filas `cerrada`, igual que en farmacias.
 
@@ -15,13 +16,16 @@ Lo que NO viaja a la app:
 la de la captura, pero una marca leída de un archivo (Spid desde Wayback)
 trae la de la copia. Así la edad del dato llega al popup.
 
+`tipo_direccion` (ferreterías SII) viaja: el DOMICILIO de una sociedad chica
+suele ser la casa del dueño o el contador, no el local, y el popup lo dice.
+
 Escribe los maestros privados en datos_maestros/; de ahí manda
 tools/generar_demo.py, que recorta la muestra publicable.
 
 Uso:
     python scripts/exportar_verticales_app.py \
         --bencineras  SCRAPER/BENCINERAS/EXCEL_WS/MAESTRO_BENCINERAS_<corte>.xlsx \
-        --conveniencia SCRAPER/CONVENIENCIA/EXCEL_WS/MAESTRO_CONVENIENCIA_<corte>.xlsx
+        --conveniencia SCRAPER/CONVENIENCIA/EXCEL_WS/MAESTRO_CONVENIENCIA_<corte>.xlsx         --ferreterias SCRAPER/FERRETERIAS/EXCEL_WS/MAESTRO_FERRETERIAS_<corte>.xlsx
     # --verificar: valida sin escribir
 """
 
@@ -41,7 +45,8 @@ RAIZ = Path(__file__).resolve().parents[1]
 MAESTROS = RAIZ / "datos_maestros"
 
 # Esquemas que consumen src/hooks/useCapasVerticales.ts. Cambiarlos obliga a
-# tocar `Bencinera` / `TiendaConveniencia` en src/types.ts en el mismo commit.
+# tocar `Bencinera` / `TiendaConveniencia` / `Ferreteria` en src/types.ts en el
+# mismo commit.
 ESQUEMA_BENCINERAS = ["id", "nombre", "cadena", "tipo", "formato", "direccion",
                       "comuna", "cod_comuna", "region", "lat", "lon", "combustibles",
                       "atencion", "electrolinera", "coord_dudosa", "estado",
@@ -50,10 +55,17 @@ ESQUEMA_CONVENIENCIA = ["id", "nombre", "cadena", "formato", "tipologia", "direc
                         "comuna", "cod_comuna", "region", "lat", "lon", "id_estacion_cne",
                         "servicios", "coord_dudosa", "estado", "cerrada_desde",
                         "fecha_dato", "fecha_corte"]
+ESQUEMA_FERRETERIAS = ["id", "nombre", "cadena", "tipo", "formato", "direccion",
+                       "comuna", "cod_comuna", "region", "lat", "lon", "rubros",
+                       "tipo_direccion", "coord_dudosa", "estado", "cerrada_desde",
+                       "fecha_dato", "fecha_corte"]
 
 TIPOS_BENCINERAS = {"mayorista", "regional", "independiente"}
 FORMATOS_BENCINERAS = {"combustible", "gas_vehicular", "sin_dato"}
 FORMATOS_CONVENIENCIA = {"calle", "bencinera"}
+TIPOS_FERRETERIAS = {"cadena", "independiente"}
+FORMATOS_FERRETERIAS = {"hogar", "constructor", "ferreteria"}
+TIPOS_DIRECCION = {"", "CASA MATRIZ", "SUCURSAL", "DOMICILIO"}
 
 
 def _texto(serie):
@@ -98,11 +110,27 @@ def traducir_conveniencia(maestro):
         "tipologia":       _texto(maestro["tipologia"]),
         "id_estacion_cne": _texto(maestro["id_estacion_cne"]),
         "servicios":       _texto(maestro["servicios"]),
-        # "pronto 2026-10-18" · "spid archivo 2026-07-31 + decisión 2026-09":
-        # la primera fecha completa es la del dato.
-        "fecha_dato":      maestro["fuente"].astype(str).str.extract(r"(\d{4}-\d{2}-\d{2})")[0],
+        "fecha_dato":      _fecha_de_fuente(maestro),
     })
     return df[ESQUEMA_CONVENIENCIA]
+
+
+def _fecha_de_fuente(maestro):
+    # "pronto 2026-10-18" · "spid archivo 2026-07-31 + decisión 2026-09":
+    # la primera fecha completa es la del dato.
+    return maestro["fuente"].astype(str).str.extract(r"(\d{4}-\d{2}-\d{2})")[0]
+
+
+def traducir_ferreterias(maestro):
+    df = pd.DataFrame({
+        **_comunes(maestro),
+        "tipo":           maestro["tipo"],
+        "rubros":         _texto(maestro["rubros"]),
+        # Solo las del SII lo traen; las de buscador quedan vacías.
+        "tipo_direccion": _texto(maestro.get("tipo_direccion", pd.Series(index=maestro.index, dtype=object))).str.upper(),
+        "fecha_dato":     _fecha_de_fuente(maestro),
+    })
+    return df[ESQUEMA_FERRETERIAS]
 
 
 def validar(df, maestro, tipos=None, formatos=None):
@@ -128,6 +156,10 @@ def validar(df, maestro, tipos=None, formatos=None):
         problemas.append(f"formatos fuera del catálogo o vacíos: {sorted(raros)}")
     if df["fecha_corte"].nunique() != 1:
         problemas.append(f"fecha_corte no es única: {sorted(df['fecha_corte'].unique())}")
+    if "tipo_direccion" in df:
+        raros = set(df["tipo_direccion"]) - TIPOS_DIRECCION
+        if raros:
+            problemas.append(f"tipo_direccion fuera del catálogo: {sorted(raros)}")
     if "fecha_dato" in df and df["fecha_dato"].isna().any():
         problemas.append(f"{int(df['fecha_dato'].isna().sum())} filas sin fecha_dato "
                          "(la `fuente` del maestro no trae fecha)")
@@ -143,6 +175,7 @@ def validar(df, maestro, tipos=None, formatos=None):
 VERTICALES = {
     "bencineras":   (traducir_bencineras, TIPOS_BENCINERAS, FORMATOS_BENCINERAS),
     "conveniencia": (traducir_conveniencia, None, FORMATOS_CONVENIENCIA),
+    "ferreterias":  (traducir_ferreterias, TIPOS_FERRETERIAS, FORMATOS_FERRETERIAS),
 }
 
 
@@ -172,15 +205,16 @@ def exportar(vertical, maestro_path, salida, solo_verificar=False):
 
 
 if __name__ == "__main__":
-    ap = argparse.ArgumentParser(description="Maestros de bencineras y conveniencia → base de la app")
+    ap = argparse.ArgumentParser(description="Maestros de bencineras, conveniencia y ferreterías → base de la app")
     ap.add_argument("--bencineras", help="MAESTRO_BENCINERAS_<corte>.xlsx")
     ap.add_argument("--conveniencia", help="MAESTRO_CONVENIENCIA_<corte>.xlsx")
+    ap.add_argument("--ferreterias", help="MAESTRO_FERRETERIAS_<corte>.xlsx")
     ap.add_argument("--verificar", action="store_true", help="valida sin escribir; exit 1 si hay problemas")
     args = ap.parse_args()
-    if not (args.bencineras or args.conveniencia):
-        ap.error("indica --bencineras y/o --conveniencia")
+    if not (args.bencineras or args.conveniencia or args.ferreterias):
+        ap.error("indica al menos uno de --bencineras, --conveniencia, --ferreterias")
     problemas = []
-    for vertical in ("bencineras", "conveniencia"):
+    for vertical in VERTICALES:
         ruta = getattr(args, vertical)
         if ruta:
             problemas += exportar(vertical, ruta, MAESTROS / f"{vertical}.csv", args.verificar)
